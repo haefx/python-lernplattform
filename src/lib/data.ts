@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { isStaleLearnerDuplicate } from "./learnerDedup";
 import type { StoredLearner } from "./learnerBoard";
 import type { Exercise, Flashcard, Lesson, LessonProgress, SiteProgress } from "./types";
 import { getSupabaseAdmin, isSupabaseConfigured } from "./supabase/server";
@@ -462,6 +463,38 @@ export async function getLearnerRecords(): Promise<StoredLearner[]> {
   return readJson<StoredLearner[]>(learnersPath, []);
 }
 
+export async function deleteLearnerRecords(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+
+  if (isSupabaseConfigured()) {
+    const { error } = await getSupabaseAdmin()
+      .from("pcep_learners")
+      .delete()
+      .in("id", ids);
+    if (error) throw error;
+    return;
+  }
+
+  const learners = await readJson<StoredLearner[]>(learnersPath, []);
+  const remaining = learners.filter((learner) => !ids.includes(learner.id));
+  await writeJson(learnersPath, remaining);
+}
+
+async function pruneStaleLearnerDuplicates(
+  currentId: string,
+  displayName: string,
+  lessonProgress: LessonProgress[],
+): Promise<void> {
+  const learners = await getLearnerRecords();
+  const staleIds = learners
+    .filter((learner) =>
+      isStaleLearnerDuplicate(learner, currentId, displayName, lessonProgress),
+    )
+    .map((learner) => learner.id);
+
+  await deleteLearnerRecords(staleIds);
+}
+
 export async function upsertLearnerRecord(
   id: string,
   displayName: string,
@@ -469,6 +502,8 @@ export async function upsertLearnerRecord(
 ): Promise<StoredLearner> {
   const updatedAt = new Date().toISOString();
   const trimmedName = displayName.trim();
+
+  await pruneStaleLearnerDuplicates(id, trimmedName, lessonProgress);
 
   if (isSupabaseConfigured()) {
     const { data, error } = await getSupabaseAdmin()

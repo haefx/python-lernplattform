@@ -1,3 +1,4 @@
+import { dedupeLearnerBoardEntries } from "./learnerDedup";
 import { getCompletionCount } from "./lessonCompletion";
 import type { LessonProgress } from "./types";
 
@@ -125,7 +126,7 @@ export function buildLearnerBoard(
   lessons: LessonMeta[],
   currentVisitorId?: string,
 ): LearnerBoardEntry[] {
-  return learners
+  const entries = learners
     .map((learner) =>
       formatLearnerStatus(
         learner.id,
@@ -138,11 +139,7 @@ export function buildLearnerBoard(
     .map((entry) => ({
       ...entry,
       isCurrentUser: currentVisitorId ? entry.id === currentVisitorId : false,
-    }))
-    .sort((a, b) => {
-      if (b.percentComplete !== a.percentComplete) {
-        return b.percentComplete - a.percentComplete;
-      }
-      return a.displayName.localeCompare(b.displayName, "de");
-    });
+    }));
+
+  return dedupeLearnerBoardEntries(entries);
 }

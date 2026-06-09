@@ -7,9 +7,7 @@ AS $$
 DECLARE
   reset_at timestamptz := now();
 BEGIN
-  UPDATE pcep_learners
-  SET lesson_progress = '[]'::jsonb,
-      updated_at = reset_at;
+  DELETE FROM pcep_learners;
 
   DELETE FROM pcep_lesson_progress;
 

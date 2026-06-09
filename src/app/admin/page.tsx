@@ -152,7 +152,7 @@ export default function AdminPage() {
     setResetError("");
 
     const confirmed = confirm(
-      "Alle Lernfortschritte und Lernmonitor-Einträge zurücksetzen?\n\nLektionen, Lernkarten, Übungen und Namen im Monitor bleiben erhalten.",
+      "Alle Lernfortschritte und Lernmonitor-Einträge zurücksetzen?\n\nLektionen, Lernkarten und Übungen bleiben erhalten. Namen erscheinen im Monitor wieder, sobald Lernende die Seite öffnen.",
     );
     if (!confirmed) return;
 
@@ -175,7 +175,7 @@ export default function AdminPage() {
       if (data.resetAt) acknowledgeProgressReset(data.resetAt);
 
       setResetMessage(
-        "Fortschritt zurückgesetzt. Lernmonitor und alle Durchläufe sind auf 0 % – Namen, Lektionen und Karten bleiben bestehen.",
+        "Fortschritt zurückgesetzt. Der Lernmonitor ist leer – Lernende erscheinen mit ihrem Namen wieder, sobald sie die Seite öffnen.",
       );
     } catch {
       setResetError("Zurücksetzen fehlgeschlagen.");
@@ -603,8 +603,8 @@ export default function AdminPage() {
             </p>
             <ul className="text-sm opacity-80 list-disc list-inside space-y-1">
               <li>Bleibt erhalten: Lektionen, Lernkarten, Übungen</li>
-              <li>Bleibt erhalten: Namen im Lernmonitor</li>
               <li>Bleibt erhalten: Namen der Nutzer auf ihren Geräten</li>
+              <li>Im Monitor: Namen erscheinen wieder beim nächsten Seitenbesuch</li>
             </ul>
             <p className="text-sm opacity-70">
               Alle Besucher erhalten beim nächsten Seitenaufruf ebenfalls einen
