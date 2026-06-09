@@ -44,12 +44,20 @@ next-env.d.ts
 # generierte Supabase-Seed-Artefakte
 scripts/seed.sql
 scripts/seed-part*.sql
+scripts/seed-flashcards*.sql
+scripts/seed-content.sql
+scripts/seed-exercises.sql
+scripts/seed-update.sql
+scripts/seed-cards-exercises.sql
 scripts/out*.sql
 scripts/mcp-req*.json
 scripts/q*.json
 scripts/card-chunk-*.sql
 scripts/seed-parts.json
 scripts/seed-oneline.txt
+scripts/run-flashcard-seed-chunks.mjs
+scripts/split-flashcard-seed.mjs
 
-.vercel
-.env*
+# Supabase CLI / lokale Lernmonitor-Testdaten
+supabase/.temp/
+data/learners.json
