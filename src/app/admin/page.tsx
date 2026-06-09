@@ -186,8 +186,7 @@ export default function AdminPage() {
           <div className="card-body">
             <h1 className="card-title text-2xl">Admin-Zugang</h1>
             <p className="text-sm opacity-70">
-              Lektionen, Lernkarten und Übungen verwalten. Standard-Passwort:
-              <code className="ml-1">pcep-admin-2026</code>
+              Lektionen, Lernkarten und Übungen verwalten.
             </p>
             <form onSubmit={handleLogin} className="flex flex-col gap-4 mt-4">
               <input

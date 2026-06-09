@@ -160,6 +160,25 @@ export default function FlashcardDeck({
     finishLesson,
   ]);
 
+  const goPrevCard = useCallback(() => {
+    if (currentIndex === 0) return;
+
+    if (currentIndex % CARDS_PER_BLOCK === 0) {
+      const exerciseIdx = currentIndex / CARDS_PER_BLOCK - 1;
+      if (exercises[exerciseIdx]) {
+        setActiveExerciseIndex(exerciseIdx);
+        setMode("exercise");
+        setFlipped(false);
+        setHasViewedBack(false);
+        return;
+      }
+    }
+
+    setCurrentIndex(currentIndex - 1);
+    setFlipped(false);
+    setHasViewedBack(false);
+  }, [currentIndex, exercises]);
+
   const restartLesson = useCallback(() => {
     clearLessonProgress(lessonId);
     const reset = getInitialLessonState(cards, exercises, [], [], false);
@@ -317,7 +336,15 @@ export default function FlashcardDeck({
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-between gap-3">
+        <button
+          type="button"
+          className="btn btn-ghost"
+          onClick={goPrevCard}
+          disabled={currentIndex === 0}
+        >
+          Zurück
+        </button>
         <button
           type="button"
           className="btn btn-primary"
