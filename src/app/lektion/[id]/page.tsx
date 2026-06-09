@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import FlashcardDeck from "@/components/FlashcardDeck";
+import VisitorLessonGate from "@/components/VisitorLessonGate";
 import {
   getCardsByLesson,
   getExercisesByLesson,
   getLessonById,
-  getProgress,
 } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
@@ -22,19 +22,13 @@ export default async function LessonPage({
     notFound();
   }
 
-  const [cards, exercises, progress] = await Promise.all([
+  const [cards, exercises] = await Promise.all([
     getCardsByLesson(id),
     getExercisesByLesson(id),
-    getProgress(),
   ]);
 
-  if (!progress.onboarded) {
-    redirect("/");
-  }
-
-  const lessonProgress = progress.lessonProgress.find((p) => p.lessonId === id);
-
   return (
+    <VisitorLessonGate>
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <div className="breadcrumbs text-sm mb-4">
         <ul>
@@ -62,12 +56,8 @@ export default async function LessonPage({
         lessonTitle={lesson.title}
         cards={cards}
         exercises={exercises}
-        initialCompletedIds={lessonProgress?.completedCardIds ?? []}
-        initialCompletedExerciseIds={
-          lessonProgress?.completedExerciseIds ?? []
-        }
-        initialLessonCompleted={lessonProgress?.lessonCompleted ?? false}
       />
     </div>
+    </VisitorLessonGate>
   );
 }

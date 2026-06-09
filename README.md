@@ -36,15 +36,32 @@ ADMIN_PASSWORD=dein-sicheres-passwort
 | `/` | Startseite mit Fortschritt & Lektionsübersicht |
 | `/lektion/[id]` | Lernkarten einer Lektion |
 | `/admin` | Lektionen freigeben, Karten verwalten |
-| `data/` | JSON-Daten (Lektionen, Karten, Fortschritt) |
+| `data/` | JSON-Fallback für lokale Entwicklung ohne Supabase |
+| `supabase/` | Datenbank-Migrationen (`pcep_*` Tabellen) |
 
 ## Lektion 1
 
 Enthält **20 PCEP-Lernkarten** zu Python-Grundlagen (bereits freigegeben).
 
-## Deployment
+## Supabase (Produktion / Vercel)
 
-Für Vercel/Netlify: Das `data/`-Verzeichnis ist schreibbar im Dev-Modus. Für Produktion empfiehlt sich später eine Datenbank (z. B. Supabase).
+Die App nutzt **Supabase**, sobald `NEXT_PUBLIC_SUPABASE_URL` und `SUPABASE_SERVICE_ROLE_KEY` gesetzt sind. Ohne diese Variablen fallen Lektionen, Karten und Fortschritt auf die JSON-Dateien in `data/` zurück (nur lokal sinnvoll).
+
+1. Kopiere `.env.local.example` nach `.env.local`
+2. Trage URL und **Service Role Key** ein (Supabase Dashboard → Project Settings → API)
+3. Optional Inhalte neu laden: `npm run seed:supabase`
+
+Tabellen haben das Präfix `pcep_` und liegen im Projekt **Website Projekt TableHeroes** (`beoxjrswwrcsubazbojy`).
+
+### Vercel-Umgebungsvariablen
+
+| Variable | Beschreibung |
+|----------|--------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase-Projekt-URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service Role (nur Server, geheim!) |
+| `ADMIN_PASSWORD` | Passwort für `/admin` |
+
+## Deployment
 
 ```bash
 npm run build

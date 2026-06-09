@@ -1,12 +1,18 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Exercise, Flashcard } from "@/lib/types";
 import {
   CARDS_PER_BLOCK,
   getExerciseIndexAfterCard,
   getInitialLessonState,
 } from "@/lib/lessonFlow";
+import {
+  clearLessonProgress,
+  getLessonProgress,
+  markCardComplete,
+  toggleExerciseComplete,
+} from "@/lib/visitorProgress";
 import ExerciseGate from "./ExerciseGate";
 import FlipCard from "./FlipCard";
 import LessonPyto from "./LessonPyto";
@@ -18,9 +24,6 @@ interface FlashcardDeckProps {
   lessonTitle: string;
   cards: Flashcard[];
   exercises: Exercise[];
-  initialCompletedIds: string[];
-  initialCompletedExerciseIds: string[];
-  initialLessonCompleted: boolean;
 }
 
 type ViewMode = "card" | "exercise" | "done";
@@ -30,66 +33,61 @@ export default function FlashcardDeck({
   lessonTitle,
   cards,
   exercises,
-  initialCompletedIds,
-  initialCompletedExerciseIds,
-  initialLessonCompleted,
 }: FlashcardDeckProps) {
-  const initial = getInitialLessonState(
-    cards,
-    exercises,
-    initialCompletedIds,
-    initialCompletedExerciseIds,
-    initialLessonCompleted
-  );
-
-  const [completedIds, setCompletedIds] = useState<string[]>(initialCompletedIds);
-  const [completedExerciseIds, setCompletedExerciseIds] = useState<string[]>(
-    initialCompletedExerciseIds
-  );
-  const [mode, setMode] = useState<ViewMode>(initial.mode);
-  const [currentIndex, setCurrentIndex] = useState(initial.cardIndex);
+  const [ready, setReady] = useState(false);
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
+  const [completedExerciseIds, setCompletedExerciseIds] = useState<string[]>([]);
+  const [mode, setMode] = useState<ViewMode>("card");
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [activeExerciseIndex, setActiveExerciseIndex] = useState<number | null>(
-    initial.exerciseIndex
+    null,
   );
   const [flipped, setFlipped] = useState(false);
   const [hasViewedBack, setHasViewedBack] = useState(false);
   const [savingExercise, setSavingExercise] = useState(false);
+
+  useEffect(() => {
+    const lp = getLessonProgress(lessonId);
+    const initial = getInitialLessonState(
+      cards,
+      exercises,
+      lp?.completedCardIds ?? [],
+      lp?.completedExerciseIds ?? [],
+      lp?.lessonCompleted ?? false,
+    );
+
+    setCompletedIds(lp?.completedCardIds ?? []);
+    setCompletedExerciseIds(lp?.completedExerciseIds ?? []);
+    setMode(initial.mode);
+    setCurrentIndex(initial.cardIndex);
+    setActiveExerciseIndex(initial.exerciseIndex);
+    setReady(true);
+  }, [lessonId, cards, exercises]);
 
   const currentCard = cards[currentIndex];
   const currentExercise =
     activeExerciseIndex !== null ? exercises[activeExerciseIndex] : null;
 
   const saveCardProgress = useCallback(
-    async (cardId: string) => {
-      const res = await fetch("/api/progress", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lessonId, cardId }),
-      });
-      if (!res.ok) return;
-      const data = await res.json();
-      setCompletedIds(data.lessonProgress.completedCardIds);
+    (cardId: string) => {
+      const lp = markCardComplete(lessonId, cardId, cards, exercises);
+      setCompletedIds(lp.completedCardIds);
     },
-    [lessonId]
+    [lessonId, cards, exercises],
   );
 
-  const toggleExerciseComplete = useCallback(async () => {
+  const handleToggleExerciseComplete = useCallback(() => {
     if (!currentExercise) return;
     setSavingExercise(true);
-    const res = await fetch("/api/progress", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        lessonId,
-        exerciseId: currentExercise.id,
-        type: "exercise",
-      }),
-    });
+    const ids = toggleExerciseComplete(
+      lessonId,
+      currentExercise.id,
+      cards,
+      exercises,
+    );
+    setCompletedExerciseIds(ids);
     setSavingExercise(false);
-    if (!res.ok) return;
-    const data = await res.json();
-    setCompletedExerciseIds(data.completedExerciseIds);
-  }, [lessonId, currentExercise]);
+  }, [lessonId, currentExercise, cards, exercises]);
 
   const handleFlip = useCallback(() => {
     setFlipped((prev) => {
@@ -118,11 +116,11 @@ export default function FlashcardDeck({
     setHasViewedBack(false);
   }, [activeExerciseIndex, cards.length, finishLesson]);
 
-  const goNextCard = useCallback(async () => {
+  const goNextCard = useCallback(() => {
     if (!currentCard) return;
 
     if (!completedIds.includes(currentCard.id)) {
-      await saveCardProgress(currentCard.id);
+      saveCardProgress(currentCard.id);
     }
 
     const exerciseIdx = getExerciseIndexAfterCard(currentIndex);
@@ -153,15 +151,35 @@ export default function FlashcardDeck({
     finishLesson,
   ]);
 
+  const restartLesson = useCallback(() => {
+    clearLessonProgress(lessonId);
+    const reset = getInitialLessonState(cards, exercises, [], [], false);
+    setCompletedIds([]);
+    setCompletedExerciseIds([]);
+    setMode(reset.mode === "done" ? "card" : reset.mode);
+    setCurrentIndex(0);
+    setActiveExerciseIndex(null);
+    setFlipped(false);
+    setHasViewedBack(false);
+  }, [lessonId, cards, exercises]);
+
   const completedCount = useMemo(
     () => cards.filter((c) => completedIds.includes(c.id)).length,
-    [cards, completedIds]
+    [cards, completedIds],
   );
 
   const exerciseCompletedCount = useMemo(
     () => exercises.filter((e) => completedExerciseIds.includes(e.id)).length,
-    [exercises, completedExerciseIds]
+    [exercises, completedExerciseIds],
   );
+
+  if (!ready) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
+  }
 
   if (cards.length === 0) {
     return (
@@ -184,41 +202,28 @@ export default function FlashcardDeck({
       <div className="flex flex-col gap-6 py-8">
         {pytoSection}
         <div className="flex flex-col items-center gap-6">
-        <div className="text-6xl">🎉</div>
-        <h2 className="text-2xl font-bold text-center">
-          {lessonTitle} abgeschlossen!
-        </h2>
-        <p className="text-center opacity-70 max-w-md">
-          Du hast alle {cards.length} Lernkarten und {exercises.length}{" "}
-          Übungen durchgearbeitet.
-        </p>
-        <ProgressBar value={cards.length} max={cards.length} label="Lernkarten" />
-        <ProgressBar
-          value={exerciseCompletedCount}
-          max={exercises.length}
-          label="Übungen"
-        />
-        <div className="flex gap-3">
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              const reset = getInitialLessonState(cards, exercises, [], [], false);
-              setCompletedIds([]);
-              setCompletedExerciseIds([]);
-              setMode(reset.mode === "done" ? "card" : reset.mode);
-              setCurrentIndex(0);
-              setActiveExerciseIndex(null);
-              setFlipped(false);
-              setHasViewedBack(false);
-            }}
-          >
-            Von vorne wiederholen
-          </button>
-          <a href="/" className="btn btn-ghost">
-            Zur Übersicht
-          </a>
-        </div>
+          <div className="text-6xl">🎉</div>
+          <h2 className="text-2xl font-bold text-center">
+            {lessonTitle} abgeschlossen!
+          </h2>
+          <p className="text-center opacity-70 max-w-md">
+            Du hast alle {cards.length} Lernkarten und {exercises.length}{" "}
+            Übungen durchgearbeitet.
+          </p>
+          <ProgressBar value={cards.length} max={cards.length} label="Lernkarten" />
+          <ProgressBar
+            value={exerciseCompletedCount}
+            max={exercises.length}
+            label="Übungen"
+          />
+          <div className="flex gap-3">
+            <button type="button" className="btn btn-primary" onClick={restartLesson}>
+              Von vorne wiederholen
+            </button>
+            <a href="/" className="btn btn-ghost">
+              Zur Übersicht
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -241,7 +246,7 @@ export default function FlashcardDeck({
           index={activeExerciseIndex}
           isCompleted={isExerciseDone}
           saving={savingExercise}
-          onToggleComplete={toggleExerciseComplete}
+          onToggleComplete={handleToggleExerciseComplete}
         />
 
         <div className="flex justify-end">

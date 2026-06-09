@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generierte Supabase-Seed-Artefakte
+scripts/seed.sql
+scripts/seed-part*.sql
+scripts/out*.sql
+scripts/mcp-req*.json
+scripts/q*.json
+scripts/card-chunk-*.sql
+scripts/seed-parts.json
+scripts/seed-oneline.txt

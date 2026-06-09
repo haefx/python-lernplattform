@@ -1,20 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { usePathname } from "next/navigation";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import type { LessonWithStats } from "@/lib/types";
 import { getPytoForHome } from "@/lib/pyto";
+import {
+  clearAllVisitorData,
+  getVisitorState,
+  setVisitorOnboarded,
+} from "@/lib/visitor";
+import {
+  computeProgressTotals,
+  enrichLessonsWithProgress,
+  PROGRESS_UPDATED_EVENT,
+  type LessonWithCardCount,
+} from "@/lib/visitorProgress";
 import LessonCard from "./LessonCard";
 import ProgressBar from "./ProgressBar";
 import PytoMascot from "./PytoMascot";
 
 interface HomeClientProps {
-  lessons: LessonWithStats[];
-  totalCards: number;
-  totalCompleted: number;
-  lessonsDone: number;
-  initialName: string;
-  initialOnboarded: boolean;
+  lessons: LessonWithCardCount[];
 }
 
 function clearLocalCodeStorage() {
@@ -26,65 +32,84 @@ function clearLocalCodeStorage() {
   keysToRemove.forEach((k) => localStorage.removeItem(k));
 }
 
-export default function HomeClient({
-  lessons,
-  totalCards,
-  totalCompleted,
-  lessonsDone,
-  initialName,
-  initialOnboarded,
-}: HomeClientProps) {
-  const router = useRouter();
-  const [onboarded, setOnboarded] = useState(initialOnboarded);
-  const [name, setName] = useState(initialName);
+export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
+  const pathname = usePathname();
+  const [hydrated, setHydrated] = useState(false);
+  const [onboarded, setOnboarded] = useState(false);
+  const [name, setName] = useState("");
   const [nameInput, setNameInput] = useState("");
-  const [saving, setSaving] = useState(false);
-  const [resetting, setResetting] = useState(false);
   const [error, setError] = useState("");
+  const [lessons, setLessons] = useState<LessonWithStats[]>([]);
+  const [totalCards, setTotalCards] = useState(0);
+  const [totalCompleted, setTotalCompleted] = useState(0);
+  const [lessonsDone, setLessonsDone] = useState(0);
+
+  const refreshProgress = useCallback(() => {
+    const enriched = enrichLessonsWithProgress(baseLessons);
+    const totals = computeProgressTotals(enriched);
+    setLessons(enriched);
+    setTotalCards(totals.totalCards);
+    setTotalCompleted(totals.totalCompleted);
+    setLessonsDone(totals.lessonsDone);
+  }, [baseLessons]);
+
+  useEffect(() => {
+    const visitor = getVisitorState();
+    setName(visitor.name);
+    setOnboarded(visitor.onboarded);
+    refreshProgress();
+    setHydrated(true);
+  }, [refreshProgress]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    refreshProgress();
+  }, [pathname, hydrated, refreshProgress]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const onUpdate = () => refreshProgress();
+    window.addEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
+    return () => window.removeEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
+  }, [hydrated, refreshProgress]);
 
   const pyto = getPytoForHome(onboarded, totalCompleted, totalCards);
 
-  async function handleNameSubmit(e: FormEvent) {
+  function handleNameSubmit(e: FormEvent) {
     e.preventDefault();
     const trimmed = nameInput.trim();
     if (!trimmed) {
       setError("Bitte gib deinen Namen ein.");
       return;
     }
-    setSaving(true);
-    setError("");
-    const res = await fetch("/api/progress", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ learnerName: trimmed, onboarded: true }),
-    });
-    setSaving(false);
-    if (!res.ok) {
-      setError("Speichern fehlgeschlagen. Bitte erneut versuchen.");
-      return;
-    }
+    setVisitorOnboarded(trimmed);
     setName(trimmed);
     setOnboarded(true);
-    router.refresh();
+    setError("");
   }
 
-  async function handleReset() {
+  function handleReset() {
     if (
       !confirm(
-        "Wirklich alles zurücksetzen? Name, Fortschritt und gespeicherter Code gehen verloren."
+        "Willkommensbildschirm erneut anzeigen? Name, Lernfortschritt und gespeicherter Übungscode werden auf diesem Gerät gelöscht."
       )
     ) {
       return;
     }
-    setResetting(true);
-    const res = await fetch("/api/progress", { method: "DELETE" });
-    setResetting(false);
-    if (!res.ok) return;
+    clearAllVisitorData();
     clearLocalCodeStorage();
     setName("");
     setNameInput("");
     setOnboarded(false);
-    router.refresh();
+    refreshProgress();
+  }
+
+  if (!hydrated) {
+    return (
+      <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center">
+        <span className="loading loading-spinner loading-lg" />
+      </div>
+    );
   }
 
   if (!onboarded) {
@@ -125,16 +150,8 @@ export default function HomeClient({
                 />
               </label>
               {error && <p className="text-error text-sm text-center">{error}</p>}
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
-                disabled={saving}
-              >
-                {saving ? (
-                  <span className="loading loading-spinner" />
-                ) : (
-                  "Los geht's!"
-                )}
+              <button type="submit" className="btn btn-primary btn-lg">
+                Los geht&apos;s!
               </button>
             </form>
           </div>
@@ -184,15 +201,10 @@ export default function HomeClient({
           <h2 className="text-2xl font-bold">Lektionen</h2>
           <button
             type="button"
-            className="btn btn-outline btn-error btn-sm"
+            className="btn btn-outline btn-sm"
             onClick={handleReset}
-            disabled={resetting}
           >
-            {resetting ? (
-              <span className="loading loading-spinner loading-xs" />
-            ) : (
-              "Alles zurücksetzen"
-            )}
+            Willkommen erneut anzeigen
           </button>
         </div>
 
