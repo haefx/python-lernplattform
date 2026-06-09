@@ -2,11 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import FlashcardDeck from "@/components/FlashcardDeck";
 import VisitorLessonGate from "@/components/VisitorLessonGate";
+import LessonUnlockGate from "@/components/LessonUnlockGate";
 import {
   getCardsByLesson,
   getExercisesByLesson,
   getLessonById,
+  getLessons,
 } from "@/lib/data";
+import { findNextLesson, getLessonNumber } from "@/lib/lessonAccess";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +19,7 @@ export default async function LessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const lesson = await getLessonById(id);
+  const [lesson, allLessons] = await Promise.all([getLessonById(id), getLessons()]);
 
   if (!lesson || !lesson.published) {
     notFound();
@@ -27,8 +30,12 @@ export default async function LessonPage({
     getExercisesByLesson(id),
   ]);
 
+  const lessonNumber = getLessonNumber(lesson, allLessons);
+  const nextLesson = findNextLesson(lesson, allLessons);
+
   return (
     <VisitorLessonGate>
+    <LessonUnlockGate lesson={lesson} allLessons={allLessons}>
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <div className="breadcrumbs text-sm mb-4">
         <ul>
@@ -54,10 +61,18 @@ export default async function LessonPage({
       <FlashcardDeck
         lessonId={lesson.id}
         lessonTitle={lesson.title}
+        lessonNumber={lessonNumber}
+        totalLessons={allLessons.length}
+        nextLesson={
+          nextLesson
+            ? { title: nextLesson.title, published: nextLesson.published }
+            : undefined
+        }
         cards={cards}
         exercises={exercises}
       />
     </div>
+    </LessonUnlockGate>
     </VisitorLessonGate>
   );
 }

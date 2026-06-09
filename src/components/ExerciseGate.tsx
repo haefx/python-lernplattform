@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Exercise } from "@/lib/types";
 import dynamic from "next/dynamic";
 import CodeBlock from "./CodeBlock";
+import RichContent from "./RichContent";
 
 const PythonPlayground = dynamic(() => import("./PythonPlayground"), {
   ssr: false,
@@ -42,7 +43,7 @@ export default function ExerciseGate({
         </div>
 
         <h2 className="card-title text-xl">{exercise.title}</h2>
-        <p className="text-sm opacity-80 whitespace-pre-wrap">{exercise.task}</p>
+        <RichContent content={exercise.task} size="sm" />
 
         <PythonPlayground
           exerciseId={exercise.id}
@@ -80,12 +81,10 @@ export default function ExerciseGate({
             <p className="text-xs font-semibold uppercase opacity-60 mb-2">
               Lösung & Hinweise
             </p>
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {exercise.solution}
-            </p>
+            <RichContent content={exercise.solution} size="sm" />
             {exercise.notes && (
               <div className="alert alert-warning mt-3 py-2 text-sm">
-                <span>⚠️ {exercise.notes}</span>
+                <RichContent content={exercise.notes} size="sm" />
               </div>
             )}
             {exercise.solutionCode && (

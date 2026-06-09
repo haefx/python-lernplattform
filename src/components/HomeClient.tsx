@@ -2,17 +2,20 @@
 
 import { usePathname } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import type { LessonWithStats } from "@/lib/types";
+import { enrichLessonAccess } from "@/lib/lessonAccess";
 import { getPytoForHome } from "@/lib/pyto";
 import {
   clearAllVisitorData,
+  getAnnouncedLessonIds,
   getVisitorState,
+  markLessonsAnnounced,
   markVisitorReturning,
   setVisitorOnboarded,
 } from "@/lib/visitor";
 import {
   computeProgressTotals,
   enrichLessonsWithProgress,
+  getLessonProgressList,
   PROGRESS_UPDATED_EVENT,
   type LessonWithCardCount,
 } from "@/lib/visitorProgress";
@@ -43,19 +46,68 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
   const [name, setName] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [error, setError] = useState("");
-  const [lessons, setLessons] = useState<LessonWithStats[]>([]);
   const [totalCards, setTotalCards] = useState(0);
   const [totalCompleted, setTotalCompleted] = useState(0);
   const [lessonsDone, setLessonsDone] = useState(0);
+  const [lessons, setLessons] = useState(
+    enrichLessonAccess(
+      enrichLessonsWithProgress(baseLessons),
+      getLessonProgressList(),
+    ),
+  );
+  const [newlyAvailableLesson, setNewlyAvailableLesson] = useState<{
+    id: string;
+    title: string;
+    lessonNumber: number;
+  } | null>(null);
 
   const refreshProgress = useCallback(() => {
+    const progress = getLessonProgressList();
     const enriched = enrichLessonsWithProgress(baseLessons);
+    const withAccess = enrichLessonAccess(enriched, progress);
     const totals = computeProgressTotals(enriched);
-    setLessons(enriched);
+    const announced = getAnnouncedLessonIds();
+
+    const silentAnnounceIds = withAccess
+      .filter(
+        (lesson) =>
+          lesson.lessonNumber === 1 &&
+          lesson.published &&
+          !announced.includes(lesson.id),
+      )
+      .map((lesson) => lesson.id);
+    if (silentAnnounceIds.length > 0) {
+      markLessonsAnnounced(silentAnnounceIds);
+    }
+
+    const announcedAfterSilent = getAnnouncedLessonIds();
+    const newlyAvailable =
+      withAccess.find(
+        (lesson) =>
+          lesson.accessState === "available" &&
+          lesson.lessonNumber > 1 &&
+          !announcedAfterSilent.includes(lesson.id),
+      ) ?? null;
+
+    setLessons(withAccess);
     setTotalCards(totals.totalCards);
     setTotalCompleted(totals.totalCompleted);
     setLessonsDone(totals.lessonsDone);
+    setNewlyAvailableLesson(
+      newlyAvailable
+        ? {
+            id: newlyAvailable.id,
+            title: newlyAvailable.title,
+            lessonNumber: newlyAvailable.lessonNumber,
+          }
+        : null,
+    );
   }, [baseLessons]);
+
+  useEffect(() => {
+    if (!newlyAvailableLesson) return;
+    markLessonsAnnounced([newlyAvailableLesson.id]);
+  }, [newlyAvailableLesson]);
 
   useEffect(() => {
     const visitor = getVisitorState();
@@ -84,7 +136,13 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     return () => window.removeEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
   }, [hydrated, refreshProgress]);
 
-  const pyto = getPytoForHome(onboarded, totalCompleted, totalCards);
+  const pyto = getPytoForHome(
+    onboarded,
+    totalCompleted,
+    totalCards,
+    lessons,
+    newlyAvailableLesson,
+  );
 
   function handleNameSubmit(e: FormEvent) {
     e.preventDefault();
@@ -99,6 +157,7 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     setIsReturning(false);
     setError("");
     scheduleLearnerBoardSync();
+    refreshProgress();
   }
 
   function handleReset() {
@@ -174,6 +233,8 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     );
   }
 
+  const totalCatalogLessons = baseLessons.length;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <section className="dashboard-hero rounded-2xl shadow-md border-2 border-base-300 mb-8 overflow-hidden">
@@ -188,7 +249,7 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
           </p>
 
           <PytoMascot
-            key={`dashboard-${totalCompleted}`}
+            key={`dashboard-${totalCompleted}-${newlyAvailableLesson?.id ?? "none"}`}
             variant={pyto.variant}
             message={pyto.message}
             size="md"
@@ -198,14 +259,14 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="badge badge-primary badge-lg">PCEP Vorbereitung</span>
             <span className="badge badge-outline badge-lg">
-              {lessonsDone}/{lessons.length} Lektionen abgeschlossen
+              {lessonsDone}/{totalCatalogLessons} Lektionen abgeschlossen
             </span>
           </div>
 
           <ProgressBar
             value={totalCompleted}
             max={totalCards}
-            label="Dein Lernfortschritt"
+            label="Dein Lernfortschritt (alle Lektionen)"
           />
         </div>
       </section>
@@ -226,7 +287,7 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
 
         {lessons.length === 0 ? (
           <div className="alert alert-info">
-            <span>Noch keine Lektionen freigegeben.</span>
+            <span>Noch keine Lektionen angelegt.</span>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2">

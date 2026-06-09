@@ -1,3 +1,10 @@
+import type { LessonWithStats } from "./types";
+import {
+  allLessonsCompleted,
+  allPublishedLessonsCompleted,
+  hasUnpublishedLessons,
+} from "./lessonAccess";
+
 export const PYTO_LESSON_COMPLETE_VIDEO =
   "/images/pyto/Lesson_complete.mp4";
 
@@ -17,13 +24,41 @@ export type PytoVariant = keyof typeof PYTO_IMAGES;
 export function getPytoForHome(
   onboarded: boolean,
   completedCards: number,
-  totalCards: number
+  totalCards: number,
+  lessons: LessonWithStats[],
+  newlyAvailableLesson?: { title: string; lessonNumber: number } | null,
 ): { variant: PytoVariant; message: string } {
   if (!onboarded) {
     return {
       variant: "buch",
       message:
         "Hallo! Ich bin Pyto, dein Lerntutor. Wie heißt du? Dann legen wir los mit Python!",
+    };
+  }
+
+  if (newlyAvailableLesson) {
+    return {
+      variant: "froehlich",
+      message: `Gute Neuigkeiten! ${newlyAvailableLesson.title} ist jetzt verfügbar – du kannst weitermachen!`,
+    };
+  }
+
+  if (allLessonsCompleted(lessons)) {
+    return {
+      variant: "erfolg",
+      message:
+        "Wow, alle vier Lektionen geschafft! Du bist bereit für die PCEP-Prüfung. Ich bin stolz auf dich!",
+    };
+  }
+
+  if (
+    allPublishedLessonsCompleted(lessons) &&
+    hasUnpublishedLessons(lessons)
+  ) {
+    return {
+      variant: "erfolg",
+      message:
+        "Starke Leistung! Du hast alle verfügbaren Lektionen abgeschlossen. Lektionen 2–4 kommen bald – ich sage dir Bescheid, sobald du weitermachen kannst!",
     };
   }
 
@@ -35,15 +70,30 @@ export function getPytoForHome(
     };
   }
 
-  if (totalCards > 0 && completedCards >= totalCards) {
+  const publishedLessons = lessons.filter((lesson) => lesson.published);
+  const publishedCardTotal = publishedLessons.reduce(
+    (sum, lesson) => sum + lesson.cardCount,
+    0,
+  );
+  const publishedCardDone = publishedLessons.reduce(
+    (sum, lesson) => sum + lesson.completedCards,
+    0,
+  );
+
+  if (
+    publishedCardTotal > 0 &&
+    publishedCardDone >= publishedCardTotal &&
+    hasUnpublishedLessons(lessons)
+  ) {
     return {
       variant: "erfolg",
       message:
-        "Wow, alle Karten geschafft! Du bist bereit für die PCEP-Prüfung. Ich bin stolz auf dich!",
+        "Du hast alle aktuell verfügbaren Karten geschafft! Die nächsten Lektionen sind in Vorbereitung.",
     };
   }
 
-  const percent = totalCards > 0 ? (completedCards / totalCards) * 100 : 0;
+  const percent =
+    totalCards > 0 ? (completedCards / totalCards) * 100 : 0;
 
   if (percent >= 50) {
     return {
@@ -62,7 +112,7 @@ export function getPytoForHome(
 export function getPytoForLesson(
   completedCards: number,
   totalCards: number,
-  onExercise: boolean
+  onExercise: boolean,
 ): { variant: PytoVariant; message: string } {
   if (onExercise) {
     return {
@@ -90,5 +140,31 @@ export function getPytoForLesson(
   return {
     variant: "nachdenklich",
     message: `Noch ${totalCards - completedCards} Fragen – du bist auf einem guten Weg!`,
+  };
+}
+
+export function getPytoForLessonComplete(
+  lessonNumber: number,
+  totalLessons: number,
+  nextLesson?: { title: string; published: boolean },
+): { variant: PytoVariant; message: string } {
+  if (lessonNumber >= totalLessons) {
+    return {
+      variant: "erfolg",
+      message:
+        "Alle Lektionen geschafft! Du bist bereit für die PCEP-Prüfung – ich bin stolz auf dich!",
+    };
+  }
+
+  if (nextLesson?.published) {
+    return {
+      variant: "froehlich",
+      message: `Lektion ${lessonNumber} geschafft! Als Nächstes wartet ${nextLesson.title} auf dich.`,
+    };
+  }
+
+  return {
+    variant: "erfolg",
+    message: `Lektion ${lessonNumber} geschafft! Die nächsten Lektionen kommen bald – ich sage dir Bescheid, sobald du weitermachen kannst.`,
   };
 }

@@ -2,6 +2,7 @@
 
 import type { Flashcard } from "@/lib/types";
 import CodeBlock from "./CodeBlock";
+import RichContent from "./RichContent";
 
 interface FlipCardProps {
   card: Flashcard;
@@ -28,12 +29,10 @@ export default function FlipCard({ card, flipped, onFlip }: FlipCardProps) {
     <div className="flip-scene w-full">
       <div className={`flip-card-inner ${flipped ? "is-flipped" : ""}`}>
         <div className="flip-card-face flip-card-front card bg-base-100 shadow-xl border border-base-300">
-          <div className="card-body justify-between min-h-[22rem]">
+          <div className="card-body justify-between min-h-[28rem]">
             <div>
               <span className="badge badge-outline mb-3">Frage</span>
-              <p className="text-xl font-medium leading-relaxed whitespace-pre-wrap">
-                {card.question}
-              </p>
+              <RichContent content={card.question} size="lg" className="font-medium" />
             </div>
 
             <div className="flex flex-col items-center mt-6">
@@ -54,7 +53,7 @@ export default function FlipCard({ card, flipped, onFlip }: FlipCardProps) {
         </div>
 
         <div className="flip-card-face flip-card-back card bg-base-100 shadow-xl border-2 border-primary">
-          <div className="card-body min-h-[22rem] overflow-y-auto">
+          <div className="card-body min-h-[28rem] overflow-y-auto">
             <div className="flex items-start justify-between gap-2 mb-3">
               <span className="badge badge-primary">Lösung</span>
               <button
@@ -68,12 +67,14 @@ export default function FlipCard({ card, flipped, onFlip }: FlipCardProps) {
               </button>
             </div>
 
-            <p className="font-semibold text-lg leading-relaxed">{card.answer}</p>
+            <RichContent content={card.answer} size="lg" className="font-semibold" />
 
             {card.detail && (
-              <p className="mt-3 text-sm leading-relaxed opacity-90 whitespace-pre-wrap">
-                {card.detail}
-              </p>
+              <RichContent
+                content={card.detail}
+                size="sm"
+                className="mt-4 opacity-95"
+              />
             )}
 
             {card.codeExample && <CodeBlock code={card.codeExample} />}

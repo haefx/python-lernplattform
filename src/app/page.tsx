@@ -1,4 +1,4 @@
-import { getCards, getExercises, getPublishedLessons } from "@/lib/data";
+import { getCards, getExercises, getLessons } from "@/lib/data";
 import HomeClient from "@/components/HomeClient";
 import type { LessonWithCardCount } from "@/lib/visitorProgress";
 
@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [lessons, cards, exercises] = await Promise.all([
-    getPublishedLessons(),
+    getLessons(),
     getCards(),
     getExercises(),
   ]);

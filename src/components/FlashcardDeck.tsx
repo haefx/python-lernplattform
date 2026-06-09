@@ -23,6 +23,9 @@ import ProgressBar from "./ProgressBar";
 interface FlashcardDeckProps {
   lessonId: string;
   lessonTitle: string;
+  lessonNumber: number;
+  totalLessons: number;
+  nextLesson?: { title: string; published: boolean };
   cards: Flashcard[];
   exercises: Exercise[];
 }
@@ -32,6 +35,9 @@ type ViewMode = "card" | "exercise" | "done";
 export default function FlashcardDeck({
   lessonId,
   lessonTitle,
+  lessonNumber,
+  totalLessons,
+  nextLesson,
   cards,
   exercises,
 }: FlashcardDeckProps) {
@@ -198,6 +204,10 @@ export default function FlashcardDeck({
       completedCards={completedCount}
       totalCards={cards.length}
       onExercise={mode === "exercise"}
+      lessonComplete={mode === "done"}
+      lessonNumber={lessonNumber}
+      totalLessons={totalLessons}
+      nextLesson={nextLesson}
     />
   );
 

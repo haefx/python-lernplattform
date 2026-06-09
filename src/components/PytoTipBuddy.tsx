@@ -9,6 +9,7 @@ import {
   DEFAULT_TIP3_MESSAGES,
   pickRandom,
 } from "@/lib/pytoTips";
+import RichContent from "./RichContent";
 
 const THINK_MS = 750;
 const SLEEP_AFTER_MS = 5000;
@@ -153,7 +154,7 @@ export default function PytoTipBuddy({ card, disabled = false }: PytoTipBuddyPro
       <div className="pyto-bubble-side w-full">
         <div className="bg-base-100 border-2 border-base-300 rounded-2xl rounded-tl-sm px-4 py-3 shadow-md min-h-[5rem]">
           <p className="text-xs font-semibold text-primary mb-1">Pyto</p>
-          <p className="text-sm leading-relaxed">{displayMessage}</p>
+          <RichContent content={displayMessage} size="sm" />
           {showLink && card.learnMoreUrl && tipCount >= 2 && (
             <a
               href={card.learnMoreUrl}

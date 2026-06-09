@@ -68,16 +68,17 @@ export default function LessonCompleteModal({
         </div>
 
         <div className="bg-base-200 p-4 sm:p-6">
-          <video
-            ref={videoRef}
-            className="lesson-complete-video mx-auto w-full max-h-[min(50vh,360px)] rounded-2xl bg-black object-contain"
-            playsInline
-            autoPlay
-            loop
-            muted
-          >
-            <source src={PYTO_LESSON_COMPLETE_VIDEO} type="video/mp4" />
-          </video>
+          <div className="lesson-complete-video-wrap mx-auto w-full max-h-[min(50vh,360px)] overflow-hidden rounded-2xl bg-black">
+            <video
+              ref={videoRef}
+              className="lesson-complete-video"
+              playsInline
+              autoPlay
+              muted
+            >
+              <source src={PYTO_LESSON_COMPLETE_VIDEO} type="video/mp4" />
+            </video>
+          </div>
         </div>
 
         <div className="flex justify-center px-6 py-5 border-t border-base-300">
