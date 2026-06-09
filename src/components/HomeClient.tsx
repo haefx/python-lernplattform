@@ -20,6 +20,7 @@ import {
   type LessonWithCardCount,
 } from "@/lib/visitorProgress";
 import { scheduleLearnerBoardSync } from "@/lib/learnerSync";
+import { applyServerProgressResetIfNeeded } from "@/lib/progressReset";
 import LessonCard from "./LessonCard";
 import LearnerMonitor from "./LearnerMonitor";
 import ProgressBar from "./ProgressBar";
@@ -110,12 +111,24 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
   }, [newlyAvailableLesson]);
 
   useEffect(() => {
-    const visitor = getVisitorState();
-    setName(visitor.name);
-    setOnboarded(visitor.onboarded);
-    setIsReturning(visitor.returning);
-    refreshProgress();
-    setHydrated(true);
+    let cancelled = false;
+
+    void (async () => {
+      const wasReset = await applyServerProgressResetIfNeeded();
+      if (cancelled) return;
+
+      const visitor = getVisitorState();
+      setName(visitor.name);
+      setOnboarded(visitor.onboarded);
+      setIsReturning(visitor.returning);
+      refreshProgress();
+      if (wasReset) scheduleLearnerBoardSync();
+      setHydrated(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [refreshProgress]);
 
   useEffect(() => {

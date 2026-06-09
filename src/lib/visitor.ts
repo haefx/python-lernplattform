@@ -75,3 +75,5 @@ export function clearAllVisitorData(): void {
     window.dispatchEvent(new Event("pcep-progress-updated"));
   }
 }
+
+export { clearVisitorProgressOnly } from "./progressReset";

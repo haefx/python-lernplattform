@@ -319,6 +319,7 @@ export async function getProgress(): Promise<SiteProgress> {
         completedAt: lp.completed_at ?? undefined,
       })),
       updatedAt: site?.updated_at ?? new Date().toISOString(),
+      progressResetAt: site?.progress_reset_at ?? undefined,
     };
   }
 
@@ -333,7 +334,66 @@ export async function getProgress(): Promise<SiteProgress> {
     onboarded: raw.onboarded ?? Boolean(raw.learnerName),
     lessonProgress: raw.lessonProgress ?? [],
     updatedAt: raw.updatedAt,
+    progressResetAt: raw.progressResetAt,
   };
+}
+
+export async function getProgressResetAt(): Promise<string | null> {
+  const progress = await getProgress();
+  return progress.progressResetAt ?? null;
+}
+
+/** Setzt Lernmonitor und Fortschritt zurück; Lektionen, Karten und Namen bleiben. */
+export async function resetAllProgress(): Promise<string> {
+  const resetAt = new Date().toISOString();
+
+  if (isSupabaseConfigured()) {
+    const supabase = getSupabaseAdmin();
+
+    const { error: learnersErr } = await supabase
+      .from("pcep_learners")
+      .update({ lesson_progress: [], updated_at: resetAt })
+      .neq("id", "");
+    if (learnersErr) throw learnersErr;
+
+    const { error: lessonProgressErr } = await supabase
+      .from("pcep_lesson_progress")
+      .delete()
+      .neq("lesson_id", "");
+    if (lessonProgressErr) throw lessonProgressErr;
+
+    const { error: siteErr } = await supabase.from("pcep_site_progress").upsert(
+      {
+        id: "default",
+        learner_name: "",
+        onboarded: false,
+        updated_at: resetAt,
+        progress_reset_at: resetAt,
+      },
+      { onConflict: "id" },
+    );
+    if (siteErr) throw siteErr;
+
+    return resetAt;
+  }
+
+  const learners = await readJson<StoredLearner[]>(learnersPath, []);
+  const clearedLearners = learners.map((learner) => ({
+    ...learner,
+    lessonProgress: [],
+    updatedAt: resetAt,
+  }));
+  await writeJson(learnersPath, clearedLearners);
+
+  await writeJson(progressPath, {
+    learnerName: "",
+    onboarded: false,
+    lessonProgress: [],
+    updatedAt: resetAt,
+    progressResetAt: resetAt,
+  } satisfies SiteProgress);
+
+  return resetAt;
 }
 
 export async function saveProgress(progress: SiteProgress): Promise<void> {

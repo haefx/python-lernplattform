@@ -3,8 +3,12 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import type { Exercise, Flashcard, Lesson } from "@/lib/types";
 import { linesToMessages, messagesToLines } from "@/lib/pytoTips";
+import {
+  acknowledgeProgressReset,
+  clearVisitorProgressOnly,
+} from "@/lib/progressReset";
 
-type AdminTab = "lektionen" | "karten" | "uebungen";
+type AdminTab = "lektionen" | "karten" | "uebungen" | "fortschritt";
 
 const EMPTY_CARD = {
   question: "",
@@ -86,6 +90,8 @@ export default function AdminPage() {
   const [editExercise, setEditExercise] = useState(EMPTY_EXERCISE);
 
   const [saving, setSaving] = useState(false);
+  const [resetMessage, setResetMessage] = useState("");
+  const [resetError, setResetError] = useState("");
 
   const loadData = useCallback(async () => {
     const res = await fetch("/api/admin/lessons");
@@ -139,6 +145,43 @@ export default function AdminPage() {
   async function handleLogout() {
     await fetch("/api/admin/auth", { method: "DELETE" });
     setAuthenticated(false);
+  }
+
+  async function handleResetProgress() {
+    setResetMessage("");
+    setResetError("");
+
+    const confirmed = confirm(
+      "Alle Lernfortschritte und Lernmonitor-Einträge zurücksetzen?\n\nLektionen, Lernkarten, Übungen und Namen im Monitor bleiben erhalten.",
+    );
+    if (!confirmed) return;
+
+    const reallyConfirmed = confirm(
+      "Letzte Bestätigung: Alle Fortschrittsdaten werden unwiderruflich gelöscht.",
+    );
+    if (!reallyConfirmed) return;
+
+    setSaving(true);
+    try {
+      const res = await fetch("/api/admin/reset-progress", { method: "POST" });
+      const data = (await res.json()) as { resetAt?: string; error?: string };
+
+      if (!res.ok) {
+        setResetError(data.error ?? "Zurücksetzen fehlgeschlagen.");
+        return;
+      }
+
+      clearVisitorProgressOnly();
+      if (data.resetAt) acknowledgeProgressReset(data.resetAt);
+
+      setResetMessage(
+        "Fortschritt zurückgesetzt. Lernmonitor und alle Durchläufe sind auf 0 % – Namen, Lektionen und Karten bleiben bestehen.",
+      );
+    } catch {
+      setResetError("Zurücksetzen fehlgeschlagen.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   const lessonCards = cards
@@ -221,6 +264,7 @@ export default function AdminPage() {
             ["lektionen", "Lektionen"],
             ["karten", "Lernkarten"],
             ["uebungen", "Übungen"],
+            ["fortschritt", "Fortschritt"],
           ] as const
         ).map(([id, label]) => (
           <button
@@ -544,6 +588,54 @@ export default function AdminPage() {
               onCancel={editExerciseId ? () => setEditExerciseId(null) : undefined}
               saving={saving}
             />
+          </div>
+        </section>
+      )}
+
+      {tab === "fortschritt" && (
+        <section className="card bg-base-100 shadow border border-error/30">
+          <div className="card-body gap-4">
+            <h2 className="card-title text-error">Fortschritt zurücksetzen</h2>
+            <p className="text-sm opacity-80 leading-relaxed">
+              Setzt den <strong>Lernmonitor</strong> und alle gespeicherten{" "}
+              <strong>Lernfortschritte</strong> zurück (inkl. Wiederholungen und
+              abgeschlossener Karten/Übungen).
+            </p>
+            <ul className="text-sm opacity-80 list-disc list-inside space-y-1">
+              <li>Bleibt erhalten: Lektionen, Lernkarten, Übungen</li>
+              <li>Bleibt erhalten: Namen im Lernmonitor</li>
+              <li>Bleibt erhalten: Namen der Nutzer auf ihren Geräten</li>
+            </ul>
+            <p className="text-sm opacity-70">
+              Alle Besucher erhalten beim nächsten Seitenaufruf ebenfalls einen
+              leeren Fortschritt – ihre Anmeldung mit Namen bleibt bestehen.
+            </p>
+
+            {resetMessage && (
+              <div className="alert alert-success text-sm">
+                <span>{resetMessage}</span>
+              </div>
+            )}
+            {resetError && (
+              <div className="alert alert-error text-sm">
+                <span>{resetError}</span>
+              </div>
+            )}
+
+            <div>
+              <button
+                type="button"
+                className="btn btn-error"
+                onClick={() => void handleResetProgress()}
+                disabled={saving}
+              >
+                {saving ? (
+                  <span className="loading loading-spinner loading-sm" />
+                ) : (
+                  "Alle Fortschritte zurücksetzen"
+                )}
+              </button>
+            </div>
           </div>
         </section>
       )}

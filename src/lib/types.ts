@@ -49,6 +49,7 @@ export interface SiteProgress {
   onboarded: boolean;
   lessonProgress: LessonProgress[];
   updatedAt: string;
+  progressResetAt?: string;
 }
 
 export interface LessonWithStats extends Lesson {
