@@ -12,9 +12,10 @@ export async function POST() {
     return NextResponse.json({ ok: true, resetAt });
   } catch (error) {
     console.error("reset-progress failed:", error);
-    return NextResponse.json(
-      { error: "Fortschritt konnte nicht zurückgesetzt werden." },
-      { status: 500 },
-    );
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Fortschritt konnte nicht zurückgesetzt werden.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

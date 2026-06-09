@@ -343,6 +343,10 @@ export async function getProgressResetAt(): Promise<string | null> {
   return progress.progressResetAt ?? null;
 }
 
+function isServerlessDeployment(): boolean {
+  return Boolean(process.env.VERCEL);
+}
+
 /** Setzt Lernmonitor und Fortschritt zurück; Lektionen, Karten und Namen bleiben. */
 export async function resetAllProgress(): Promise<string> {
   const resetAt = new Date().toISOString();
@@ -350,31 +354,20 @@ export async function resetAllProgress(): Promise<string> {
   if (isSupabaseConfigured()) {
     const supabase = getSupabaseAdmin();
 
-    const { error: learnersErr } = await supabase
-      .from("pcep_learners")
-      .update({ lesson_progress: [], updated_at: resetAt })
-      .neq("id", "");
-    if (learnersErr) throw learnersErr;
+    const { data, error } = await supabase.rpc("pcep_reset_all_progress");
+    if (error) throw error;
 
-    const { error: lessonProgressErr } = await supabase
-      .from("pcep_lesson_progress")
-      .delete()
-      .neq("lesson_id", "");
-    if (lessonProgressErr) throw lessonProgressErr;
-
-    const { error: siteErr } = await supabase.from("pcep_site_progress").upsert(
-      {
-        id: "default",
-        learner_name: "",
-        onboarded: false,
-        updated_at: resetAt,
-        progress_reset_at: resetAt,
-      },
-      { onConflict: "id" },
-    );
-    if (siteErr) throw siteErr;
+    if (typeof data === "string" && data) {
+      return data;
+    }
 
     return resetAt;
+  }
+
+  if (isServerlessDeployment()) {
+    throw new Error(
+      "Supabase ist auf Vercel nicht konfiguriert. Bitte NEXT_PUBLIC_SUPABASE_URL und SUPABASE_SERVICE_ROLE_KEY als Umgebungsvariablen setzen.",
+    );
   }
 
   const learners = await readJson<StoredLearner[]>(learnersPath, []);
