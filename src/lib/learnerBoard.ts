@@ -1,4 +1,8 @@
 import { dedupeLearnerBoardEntries } from "./learnerDedup";
+import {
+  getCompletedLessonNumbers,
+  normalizeMazeCompletedLevels,
+} from "./achievements";
 import { getCompletionCount } from "./lessonCompletion";
 import type { LessonProgress } from "./types";
 
@@ -14,6 +18,7 @@ export interface StoredLearner {
   id: string;
   displayName: string;
   lessonProgress: LessonProgress[];
+  mazeCompletedLevels?: number[];
   updatedAt: string;
 }
 
@@ -27,6 +32,8 @@ export interface LearnerBoardEntry {
   completionCount: number;
   isRepeating: boolean;
   label: string;
+  lessonMedals: number[];
+  mazeMedals: number[];
   isCurrentUser?: boolean;
 }
 
@@ -80,6 +87,7 @@ export function formatLearnerStatus(
   displayName: string,
   lessonProgress: LessonProgress[],
   lessons: LessonMeta[],
+  mazeCompletedLevels: number[] = [],
 ): LearnerBoardEntry | null {
   const sorted = [...lessons].sort((a, b) => a.order - b.order);
   if (sorted.length === 0) return null;
@@ -110,6 +118,8 @@ export function formatLearnerStatus(
     currentRunPercent,
     completionCount,
     isRepeating,
+    lessonMedals: getCompletedLessonNumbers(lessonProgress, lessons),
+    mazeMedals: normalizeMazeCompletedLevels(mazeCompletedLevels),
     label: buildLearnerLabel(
       displayName,
       lessonNumber,
@@ -133,6 +143,7 @@ export function buildLearnerBoard(
         learner.displayName,
         learner.lessonProgress,
         lessons,
+        learner.mazeCompletedLevels,
       ),
     )
     .filter((entry): entry is LearnerBoardEntry => entry !== null)

@@ -497,34 +497,53 @@ body {
   }
 }
 
+.achievement-badge,
 .lesson-achievement-badge {
-  position: absolute;
-  top: -0.65rem;
-  right: -0.65rem;
-  z-index: 10;
-  display: grid;
+  position: relative;
+  display: inline-grid;
   place-items: center;
   width: 3rem;
   height: 3rem;
   padding: 0;
   border: none;
   background: transparent;
-  cursor: pointer;
   filter: drop-shadow(0 4px 8px rgb(0 0 0 / 0.22));
   transition: transform 0.2s ease, filter 0.2s ease;
+  vertical-align: middle;
 }
 
-.lesson-achievement-badge:hover {
+.lesson-achievement-badge {
+  position: absolute;
+  top: -0.65rem;
+  right: -0.65rem;
+  z-index: 10;
+}
+
+.achievement-badge--interactive {
+  cursor: pointer;
+}
+
+.achievement-badge--interactive:hover {
   transform: scale(1.08) rotate(-4deg);
   filter: drop-shadow(0 6px 12px rgb(0 0 0 / 0.28));
 }
 
-.lesson-achievement-badge:focus-visible {
+.achievement-badge--interactive:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
   border-radius: 9999px;
 }
 
+.achievement-badge--sm {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+.achievement-badge--sm .achievement-badge__medal {
+  font-size: 0.72rem;
+}
+
+.achievement-badge__ribbon,
 .lesson-achievement-badge__ribbon {
   position: absolute;
   inset: 0;
@@ -535,6 +554,7 @@ body {
     inset 0 -3px 6px rgb(0 0 0 / 0.18);
 }
 
+.achievement-badge__medal,
 .lesson-achievement-badge__medal {
   position: relative;
   z-index: 1;
@@ -544,20 +564,38 @@ body {
   text-shadow: 0 1px 0 rgb(255 255 255 / 0.45);
 }
 
+.achievement-badge__medal--tight {
+  font-size: 0.82rem;
+  letter-spacing: -0.14em;
+}
+
+.achievement-medals-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+[data-theme="dark"] .achievement-badge__ribbon,
 [data-theme="dark"] .lesson-achievement-badge__ribbon {
   border-color: #ffe9a8;
 }
 
+[data-theme="contrast"] .achievement-badge__ribbon,
 [data-theme="contrast"] .lesson-achievement-badge__ribbon {
   border-width: 3px;
   border-color: #000;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .achievement-badge--interactive,
   .lesson-achievement-badge {
     transition: none;
   }
 
+  .achievement-badge--interactive:hover,
   .lesson-achievement-badge:hover {
     transform: none;
   }

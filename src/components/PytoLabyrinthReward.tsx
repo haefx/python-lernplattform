@@ -1,17 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import AchievementBadge from "@/components/AchievementBadge";
+import { getMazeMedalIcon, getMazeMedalTitle } from "@/lib/achievements";
 
 interface PytoLabyrinthRewardProps {
   completedLevels: number[];
 }
 
-export default function PytoLabyrinthReward({ completedLevels }: PytoLabyrinthRewardProps) {
-  const level1Done = completedLevels.includes(1);
-  const level2Done = completedLevels.includes(2);
-  const level3Done = completedLevels.includes(3);
-  const level4Done = completedLevels.includes(4);
+function levelStatusBadge(levelId: number, completedLevels: number[]) {
+  const done = completedLevels.includes(levelId);
+  if (done) return { className: "badge-success", text: "✓" };
 
+  if (levelId === 1) return { className: "badge-outline", text: "offen" };
+  const prevDone = completedLevels.includes(levelId - 1);
+  if (prevDone) return { className: "badge-outline", text: "freigeschaltet" };
+  return { className: "badge-ghost", text: "🔒" };
+}
+
+export default function PytoLabyrinthReward({ completedLevels }: PytoLabyrinthRewardProps) {
   return (
     <section className="maze-reward-card rounded-2xl border-2 border-primary/40 shadow-md mb-8 overflow-hidden">
       <div className="p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center">
@@ -26,35 +33,39 @@ export default function PytoLabyrinthReward({ completedLevels }: PytoLabyrinthRe
             Steuere Pyto mit Python-Code durch Nebel und Level. Je weniger du auf
             Ausführen klickst, desto besser dein Highscore.
           </p>
-          <div className="flex flex-wrap gap-2 justify-center sm:justify-start text-sm mb-4">
-            <span className={`badge ${level1Done ? "badge-success" : "badge-outline"}`}>
-              Level 1 {level1Done ? "✓" : "offen"}
-            </span>
-            <span
-              className={`badge ${
-                level2Done ? "badge-success" : level1Done ? "badge-outline" : "badge-ghost"
-              }`}
-            >
-              Level 2 {level2Done ? "✓" : level1Done ? "freigeschaltet" : "🔒"}
-            </span>
-            <span
-              className={`badge ${
-                level3Done ? "badge-success" : level2Done ? "badge-outline" : "badge-ghost"
-              }`}
-            >
-              Level 3 {level3Done ? "✓" : level2Done ? "freigeschaltet" : "🔒"}
-            </span>
-            <span
-              className={`badge ${
-                level4Done ? "badge-success" : level3Done ? "badge-outline" : "badge-ghost"
-              }`}
-            >
-              Level 4 {level4Done ? "✓" : level3Done ? "freigeschaltet" : "🔒"}
-            </span>
+
+          <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start text-sm mb-4">
+            {[1, 2, 3, 4].map((levelId) => {
+              const done = completedLevels.includes(levelId);
+              const status = levelStatusBadge(levelId, completedLevels);
+              return (
+                <span key={levelId} className="inline-flex items-center gap-1">
+                  {done && (
+                    <AchievementBadge
+                      icon={getMazeMedalIcon(levelId)}
+                      title={getMazeMedalTitle(levelId)}
+                      size="sm"
+                    />
+                  )}
+                  <span className={`badge ${status.className}`}>
+                    Level {levelId} {status.text}
+                  </span>
+                </span>
+              );
+            })}
+            <button type="button" className="btn btn-sm btn-outline btn-disabled" disabled>
+              Level 5 · Coming Soon
+            </button>
           </div>
-          <Link href="/labyrinth" className="btn btn-primary btn-lg">
-            Zum Python Labyrinth Spiel
-          </Link>
+
+          <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+            <Link href="/labyrinth" className="btn btn-primary btn-lg">
+              Zum Python Labyrinth Spiel
+            </Link>
+            <button type="button" className="btn btn-lg btn-outline btn-disabled" disabled>
+              Level 5 · Coming Soon
+            </button>
+          </div>
         </div>
       </div>
     </section>

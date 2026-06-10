@@ -6,6 +6,7 @@ import {
   getPublishedLessons,
   upsertLearnerRecord,
 } from "@/lib/data";
+import { normalizeMazeCompletedLevels } from "@/lib/achievements";
 import { buildLearnerBoard, type LessonMeta } from "@/lib/learnerBoard";
 import type { LessonProgress } from "@/lib/types";
 
@@ -41,10 +42,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { visitorId, displayName, lessonProgress } = body as {
+  const { visitorId, displayName, lessonProgress, mazeCompletedLevels } = body as {
     visitorId?: string;
     displayName?: string;
     lessonProgress?: LessonProgress[];
+    mazeCompletedLevels?: number[];
   };
 
   if (!visitorId?.trim()) {
@@ -66,6 +68,7 @@ export async function POST(request: Request) {
     visitorId.trim(),
     displayName.trim().slice(0, 40),
     lessonProgress,
+    normalizeMazeCompletedLevels(mazeCompletedLevels),
   );
 
   return NextResponse.json({ ok: true });

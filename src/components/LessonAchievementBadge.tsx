@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { getLessonMedalIcon, getLessonMedalTitle } from "@/lib/achievements";
+import AchievementBadge from "./AchievementBadge";
 import LessonCompleteModal from "./LessonCompleteModal";
 
 interface LessonAchievementBadgeProps {
+  lessonNumber: number;
   lessonTitle: string;
   show: boolean;
 }
 
 export default function LessonAchievementBadge({
+  lessonNumber,
   lessonTitle,
   show,
 }: LessonAchievementBadgeProps) {
@@ -18,18 +22,12 @@ export default function LessonAchievementBadge({
 
   return (
     <>
-      <button
-        type="button"
-        className="lesson-achievement-badge"
+      <AchievementBadge
+        icon={getLessonMedalIcon(lessonNumber)}
+        title={`${getLessonMedalTitle(lessonNumber)} – Erfolg nochmal ansehen`}
         onClick={() => setOpen(true)}
-        title="Erfolg nochmal ansehen"
-        aria-label="Lektions-Erfolg mit Pyto-Video ansehen"
-      >
-        <span className="lesson-achievement-badge__ribbon" aria-hidden />
-        <span className="lesson-achievement-badge__medal" aria-hidden>
-          ★
-        </span>
-      </button>
+        className="lesson-achievement-badge"
+      />
 
       <LessonCompleteModal
         open={open}

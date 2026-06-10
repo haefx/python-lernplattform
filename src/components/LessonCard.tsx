@@ -24,7 +24,9 @@ export default function LessonCard({ lesson }: LessonCardProps) {
   );
 
   const showAchievement =
-    lesson.lessonNumber === 1 && lesson.lessonCompleted && !isComingSoon;
+    (lesson.lessonNumber === 1 || lesson.lessonNumber === 2) &&
+    lesson.lessonCompleted &&
+    !isComingSoon;
 
   return (
     <div
@@ -37,6 +39,7 @@ export default function LessonCard({ lesson }: LessonCardProps) {
       }`}
     >
       <LessonAchievementBadge
+        lessonNumber={lesson.lessonNumber}
         lessonTitle={lesson.title}
         show={showAchievement}
       />

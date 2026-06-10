@@ -464,6 +464,7 @@ type LearnerRow = {
   id: string;
   display_name: string;
   lesson_progress: LessonProgress[];
+  maze_completed_levels?: number[] | null;
   updated_at: string;
 };
 
@@ -472,6 +473,7 @@ function mapLearner(row: LearnerRow): StoredLearner {
     id: row.id,
     displayName: row.display_name,
     lessonProgress: row.lesson_progress ?? [],
+    mazeCompletedLevels: row.maze_completed_levels ?? [],
     updatedAt: row.updated_at,
   };
 }
@@ -527,9 +529,13 @@ export async function upsertLearnerRecord(
   id: string,
   displayName: string,
   lessonProgress: LessonProgress[],
+  mazeCompletedLevels: number[] = [],
 ): Promise<StoredLearner> {
   const updatedAt = new Date().toISOString();
   const trimmedName = displayName.trim();
+  const normalizedMazeLevels = [...new Set(mazeCompletedLevels.filter((level) => level >= 1 && level <= 4))].sort(
+    (a, b) => a - b,
+  );
 
   await pruneStaleLearnerDuplicates(id, trimmedName, lessonProgress);
 
@@ -541,6 +547,7 @@ export async function upsertLearnerRecord(
           id,
           display_name: trimmedName,
           lesson_progress: lessonProgress,
+          maze_completed_levels: normalizedMazeLevels,
           updated_at: updatedAt,
         },
         { onConflict: "id" },
@@ -557,6 +564,7 @@ export async function upsertLearnerRecord(
     id,
     displayName: trimmedName,
     lessonProgress,
+    mazeCompletedLevels: normalizedMazeLevels,
     updatedAt,
   };
   const idx = learners.findIndex((learner) => learner.id === id);

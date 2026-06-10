@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import AchievementMedalsRow from "@/components/AchievementMedalsRow";
 import type { LearnerBoardEntry } from "@/lib/learnerBoard";
 import { PROGRESS_UPDATED_EVENT } from "@/lib/visitorProgress";
 import { getOrCreateVisitorId } from "@/lib/visitor";
@@ -91,6 +92,10 @@ export default function LearnerMonitor() {
               aria-hidden
             />
             <span>
+              <AchievementMedalsRow
+                lessonMedals={entry.lessonMedals}
+                mazeMedals={entry.mazeMedals}
+              />
               <strong>{entry.displayName}</strong>
               {entry.isCurrentUser && (
                 <span className="ml-2 text-xs opacity-60">(du)</span>

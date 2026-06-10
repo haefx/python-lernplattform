@@ -33,6 +33,9 @@ export async function syncLearnerBoard(): Promise<void> {
   });
 
   try {
+    const { readMazeProgress } = await import("./maze/progress");
+    const mazeCompletedLevels = readMazeProgress().completedLevels;
+
     await fetch("/api/learners", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,6 +43,7 @@ export async function syncLearnerBoard(): Promise<void> {
         visitorId,
         displayName: name.trim(),
         lessonProgress,
+        mazeCompletedLevels,
       }),
     });
   } catch {

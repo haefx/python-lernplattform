@@ -45,6 +45,10 @@ import { runMazePython } from "@/lib/maze/python";
 import type { MazeLevelDef, MazeRobot, MazeRuntimeState } from "@/lib/maze/types";
 import { LASER_FIRE_TICKS } from "@/lib/maze/types";
 import { loadPyodideRuntime } from "@/lib/pyodide";
+import { getMazeMedalIcon, getMazeMedalTitle } from "@/lib/achievements";
+import AchievementBadge from "@/components/AchievementBadge";
+import { scheduleLearnerBoardSync } from "@/lib/learnerSync";
+import { PROGRESS_UPDATED_EVENT } from "@/lib/visitorProgress";
 import MazeCodeBar from "./MazeCodeBar";
 import MazeGrid from "./MazeGrid";
 import MazeCelebration from "./MazeCelebration";
@@ -60,6 +64,11 @@ type GamePhase = "welcome" | "playing";
 function getCodeKey(levelId: number, adminPreview: boolean): string {
   const prefix = adminPreview ? CODE_PREVIEW_STORAGE_KEY : CODE_STORAGE_KEY;
   return `${prefix}-${levelId}`;
+}
+
+function notifyMazeProgressUpdated(): void {
+  scheduleLearnerBoardSync();
+  window.dispatchEvent(new Event(PROGRESS_UPDATED_EVENT));
 }
 
 interface MazeGameProps {
@@ -332,6 +341,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     );
     const nextProgress = markMazeLevelComplete(level.id, adminPreview);
     setProgress(nextProgress);
+    notifyMazeProgressUpdated();
     void submitLevelScore(sessionExecuteCountRef.current);
     if (winTimerRef.current) clearTimeout(winTimerRef.current);
     winTimerRef.current = setTimeout(() => {
@@ -476,6 +486,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     } else if (current.status === "won") {
       const nextProgress = markMazeLevelComplete(level.id, adminPreview);
       setProgress(nextProgress);
+      notifyMazeProgressUpdated();
       void submitLevelScore(sessionExecuteCountRef.current);
       if (winTimerRef.current) clearTimeout(winTimerRef.current);
       winTimerRef.current = setTimeout(() => {
@@ -568,7 +579,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
         )}
       </div>
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-4 flex flex-wrap gap-2 items-center">
         {MAZE_LEVELS.map((item) => {
           const unlocked = isMazeLevelUnlocked(item.id, progress, adminPreview);
           const selectable = isLevelSelectable(item);
@@ -576,25 +587,36 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
           const active = item.id === levelId;
 
           return (
-            <button
-              key={item.id}
-              type="button"
-              className={`btn btn-sm ${active ? "btn-primary" : "btn-outline"} ${
-                !unlocked || !selectable ? "btn-disabled" : ""
-              }`}
-              onClick={() => handleSelectLevel(item.id)}
-              disabled={!unlocked || !selectable}
-            >
-              {item.comingSoon
-                ? adminPreview
-                  ? "Level 3 (Vorschau)"
-                  : "Level 3 (bald)"
-                : `Level ${item.id}`}
-              {completed && selectable ? " ✓" : ""}
-              {!unlocked && selectable ? " 🔒" : ""}
-            </button>
+            <span key={item.id} className="inline-flex items-center gap-1">
+              {completed && selectable && (
+                <AchievementBadge
+                  icon={getMazeMedalIcon(item.id)}
+                  title={getMazeMedalTitle(item.id)}
+                  size="sm"
+                />
+              )}
+              <button
+                type="button"
+                className={`btn btn-sm ${active ? "btn-primary" : "btn-outline"} ${
+                  !unlocked || !selectable ? "btn-disabled" : ""
+                }`}
+                onClick={() => handleSelectLevel(item.id)}
+                disabled={!unlocked || !selectable}
+              >
+                {item.comingSoon
+                  ? adminPreview
+                    ? `Level ${item.id} (Vorschau)`
+                    : `Level ${item.id} (bald)`
+                  : `Level ${item.id}`}
+                {completed && selectable ? " ✓" : ""}
+                {!unlocked && selectable ? " 🔒" : ""}
+              </button>
+            </span>
           );
         })}
+        <button type="button" className="btn btn-sm btn-outline btn-disabled" disabled>
+          Level 5 · Coming Soon
+        </button>
       </div>
 
       {gamePhase === "welcome" ? (
