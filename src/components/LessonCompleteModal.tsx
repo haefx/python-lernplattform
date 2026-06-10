@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { PYTO_LESSON_COMPLETE_VIDEO } from "@/lib/pyto";
+import { getLessonCompleteVideo } from "@/lib/pyto";
 
 interface LessonCompleteModalProps {
   open: boolean;
+  lessonNumber: number;
   lessonTitle: string;
   onClose: () => void;
 }
 
 export default function LessonCompleteModal({
   open,
+  lessonNumber,
   lessonTitle,
   onClose,
 }: LessonCompleteModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoSrc = getLessonCompleteVideo(lessonNumber);
 
   useEffect(() => {
     if (!open) return;
@@ -70,13 +73,14 @@ export default function LessonCompleteModal({
         <div className="bg-base-200 p-4 sm:p-6">
           <div className="lesson-complete-video-wrap mx-auto w-full max-h-[min(50vh,360px)] overflow-hidden rounded-2xl bg-black">
             <video
+              key={videoSrc}
               ref={videoRef}
               className="lesson-complete-video"
               playsInline
               autoPlay
               muted
             >
-              <source src={PYTO_LESSON_COMPLETE_VIDEO} type="video/mp4" />
+              <source src={videoSrc} type="video/mp4" />
             </video>
           </div>
         </div>

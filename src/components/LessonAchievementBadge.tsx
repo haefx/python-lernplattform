@@ -31,6 +31,7 @@ export default function LessonAchievementBadge({
 
       <LessonCompleteModal
         open={open}
+        lessonNumber={lessonNumber}
         lessonTitle={lessonTitle}
         onClose={() => setOpen(false)}
       />

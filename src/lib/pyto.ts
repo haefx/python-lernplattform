@@ -12,6 +12,15 @@ export const PYTO_LESSON_COMPLETE_VIDEO = assetUrl(
   "/images/pyto/Lesson_complete.mp4",
 );
 
+export const PYTO_LESSON_COMPLETE2_VIDEO = assetUrl(
+  "/images/pyto/Lesson_complete2.mp4",
+);
+
+export function getLessonCompleteVideo(lessonNumber: number): string {
+  if (lessonNumber === 2) return PYTO_LESSON_COMPLETE2_VIDEO;
+  return PYTO_LESSON_COMPLETE_VIDEO;
+}
+
 export const PYTO_TOP_VIEW = assetUrl("/images/pyto/pyto_top_view.png");
 
 export const PYTO_IMAGES = {

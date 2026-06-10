@@ -246,6 +246,7 @@ export default function FlashcardDeck({
       <>
         <LessonCompleteModal
           open={celebrationOpen}
+          lessonNumber={lessonNumber}
           lessonTitle={lessonTitle}
           onClose={() => setCelebrationOpen(false)}
         />
