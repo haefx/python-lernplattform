@@ -457,5 +457,230 @@
       ],
       "correctIndex": 2
     }
+  },
+  {
+    "id": "c2-07",
+    "lessonId": "lektion-2",
+    "order": 7,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\nx = 8\nif x > 10:\n    print(\"A\")\nelif x > 5:\n    print(\"B\")\nelse:\n    print(\"C\")\n```",
+    "tip": "*Nur **ein** Zweig von `if`/`elif`/`else` wird ausgeführt.*",
+    "answer": "**Kurzantwort:** ==`B`==",
+    "detail": "**`x > 10` ist falsch, aber `x > 5` ist wahr** – deshalb läuft der `elif`-Zweig.",
+    "multipleChoice": {
+      "options": ["`A`", "`B`", "`C`", "`B` und `C`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-08",
+    "lessonId": "lektion-2",
+    "order": 8,
+    "cardType": "multiple_choice",
+    "question": "Welche Ausgabe entsteht?\n\n```python\nn = 3\nwhile n > 0:\n    print(n)\n    n -= 1\n```",
+    "tip": "*Die Schleife zählt herunter, bis `n` nicht mehr `> 0` ist.*",
+    "answer": "**Kurzantwort:** ==3, 2, 1 (jeweils in einer Zeile)==",
+    "detail": "**`n` wird in jedem Durchlauf um 1 verkleinert** – bei `n == 0` endet die `while`-Bedingung.",
+    "multipleChoice": {
+      "options": ["`3, 2, 1, 0`", "`3, 2, 1`", "`1, 2, 3`", "Endlosschleife"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-09",
+    "lessonId": "lektion-2",
+    "order": 9,
+    "cardType": "multiple_choice",
+    "question": "Wie oft wird `print(\"Hallo\")` ausgeführt?\n\n```python\nwhile False:\n    print(\"Hallo\")\n```",
+    "tip": "*Die Bedingung wird **vor** dem ersten Durchlauf geprüft.*",
+    "answer": "**Kurzantwort:** ==0-mal==",
+    "detail": "**`False` ist von Anfang an falsy** – der Schleifenkörper wird nie betreten.",
+    "multipleChoice": {
+      "options": ["0-mal", "1-mal", "Unendlich oft", "SyntaxError"],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "c2-10",
+    "lessonId": "lektion-2",
+    "order": 10,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\nscore = 85\nif score >= 90:\n    print(\"A\")\nelse:\n    if score >= 80:\n        print(\"B\")\n    else:\n        print(\"C\")\n```",
+    "tip": "*Das innere `if` liegt im `else`-Zweig des äußeren `if`.*",
+    "answer": "**Kurzantwort:** ==`B`==",
+    "detail": "**85 ist kleiner als 90, aber mindestens 80** – der verschachtelte `if`-Zweig gibt `B` aus.",
+    "multipleChoice": {
+      "options": ["`A`", "`B`", "`C`", "`B` und `C`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-11",
+    "lessonId": "lektion-2",
+    "order": 11,
+    "cardType": "multiple_choice",
+    "question": "Welche Ausgabe entsteht?\n\n```python\nage = 20\nhas_ticket = True\nif age >= 18 and has_ticket:\n    print(\"Eintritt\")\nelse:\n    print(\"Abgelehnt\")\n```",
+    "tip": "*Bei `and` müssen **beide** Bedingungen wahr sein.*",
+    "answer": "**Kurzantwort:** ==`Eintritt`==",
+    "detail": "**Beide Teile sind wahr:** `age >= 18` und `has_ticket` – deshalb `Eintritt`.",
+    "multipleChoice": {
+      "options": ["`Eintritt`", "`Abgelehnt`", "`True`", "nichts"],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "c2-12",
+    "lessonId": "lektion-2",
+    "order": 12,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\nx = 0\nif x < 0 or x == 0:\n    print(\"ok\")\nelse:\n    print(\"nein\")\n```",
+    "tip": "*`or` reicht schon, wenn **eine** Seite wahr ist.*",
+    "answer": "**Kurzantwort:** ==`ok`==",
+    "detail": "**`x == 0` ist wahr** – der `or`-Ausdruck ist damit insgesamt wahr.",
+    "multipleChoice": {
+      "options": ["`ok`", "`nein`", "`False`", "SyntaxError"],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "c2-13",
+    "lessonId": "lektion-2",
+    "order": 13,
+    "cardType": "multiple_choice",
+    "question": "Welcher Ausdruck ist **wahr**?\n\n```python\nflag = False\n```",
+    "tip": "*`not` kehrt den Wahrheitswert um.*",
+    "answer": "**Kurzantwort:** ==`not flag`==",
+    "detail": "**`flag` ist `False`, also ist `not flag` gleich `True`.**",
+    "multipleChoice": {
+      "options": ["`flag`", "`not flag`", "`flag == True`", "`not not flag` und `flag`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-14",
+    "lessonId": "lektion-2",
+    "order": 14,
+    "cardType": "multiple_choice",
+    "question": "Was macht `pass` in diesem Code?\n\n```python\nif 5 > 10:\n    pass\nprint(\"fertig\")\n```",
+    "tip": "*`pass` ist ein Platzhalter – es passiert nichts.*",
+    "answer": "**Kurzantwort:** ==Tut nichts im `if`-Zweig; `fertig` wird trotzdem ausgegeben==",
+    "detail": "**Der `if`-Block ist syntaktisch gültig, bleibt aber leer.** `print(\"fertig\")` steht außerhalb und läuft immer.",
+    "multipleChoice": {
+      "options": [
+        "Beendet das Programm",
+        "Tut nichts im `if`-Zweig; `fertig` wird ausgegeben",
+        "Wirft einen Fehler",
+        "Überspringt `print(\"fertig\")`"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-15",
+    "lessonId": "lektion-2",
+    "order": 15,
+    "cardType": "multiple_choice",
+    "question": "Welche Zahlen erzeugt `list(range(2, 6))`?",
+    "tip": "*Die obere Grenze gehört **nicht** dazu.*",
+    "answer": "**Kurzantwort:** ==`[2, 3, 4, 5]`==",
+    "detail": "**`range(2, 6)` startet bei 2 und endet vor 6** – also 2, 3, 4, 5.",
+    "multipleChoice": {
+      "options": ["`[2, 3, 4, 5, 6]`", "`[2, 3, 4, 5]`", "`[2, 6]`", "`[1, 2, 3, 4, 5]`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-16",
+    "lessonId": "lektion-2",
+    "order": 16,
+    "cardType": "multiple_choice",
+    "question": "Was ist das Ergebnis?\n\n```python\nlist(range(0, 10, 3))\n```",
+    "tip": "*Der dritte Parameter ist die **Schrittweite**.*",
+    "answer": "**Kurzantwort:** ==`[0, 3, 6, 9]`==",
+    "detail": "**Es wird in Schritten von 3 gezählt**, bis 10 (exklusiv) erreicht wäre.",
+    "multipleChoice": {
+      "options": ["`[0, 3, 6, 9, 12]`", "`[0, 3, 6, 9]`", "`[3, 6, 9]`", "`[0, 1, 2, 3]`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-17",
+    "lessonId": "lektion-2",
+    "order": 17,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\nn = 1\nwhile n < 100:\n    n *= 2\n    if n == 8:\n        break\nprint(n)\n```",
+    "tip": "*`break` beendet die Schleife sofort.*",
+    "answer": "**Kurzantwort:** ==`8`==",
+    "detail": "**`n` wird verdoppelt: 2, 4, 8** – bei `n == 8` greift `break`, danach wird `8` ausgegeben.",
+    "multipleChoice": {
+      "options": ["`4`", "`8`", "`16`", "`64`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-18",
+    "lessonId": "lektion-2",
+    "order": 18,
+    "cardType": "multiple_choice",
+    "question": "Wie viele Zeilen mit `*` werden ausgegeben?\n\n```python\ncount = 0\nfor i in range(2):\n    for j in range(3):\n        print(\"*\")\n        count += 1\nprint(count)\n```",
+    "tip": "*Die innere Schleife läuft für **jeden** Durchlauf der äußeren.*",
+    "answer": "**Kurzantwort:** ==6 Sterne, `count` ist 6==",
+    "detail": "**2 × 3 = 6 Durchläufe** in der inneren Schleife – `count` endet bei 6.",
+    "multipleChoice": {
+      "options": ["3", "5", "6", "9"],
+      "correctIndex": 2
+    }
+  },
+  {
+    "id": "c2-19",
+    "lessonId": "lektion-2",
+    "order": 19,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\nfor n in range(1, 4):\n    if n == 2:\n        continue\n    print(n)\n```",
+    "tip": "*Bei `n == 2` wird nur dieser Durchlauf übersprungen.*",
+    "answer": "**Kurzantwort:** ==1 und 3 (jeweils in einer Zeile)==",
+    "detail": "**`continue` überspringt `print(n)` nur für `n == 2`.**",
+    "multipleChoice": {
+      "options": ["`1, 2, 3`", "`1` und `3`", "nur `2`", "nichts"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-20",
+    "lessonId": "lektion-2",
+    "order": 20,
+    "cardType": "multiple_choice",
+    "question": "In welcher **Reihenfolge** werden die Zweige geprüft?\n\n```python\nif x > 10:\n    ...\nelif x > 5:\n    ...\nelif x > 0:\n    ...\n```",
+    "tip": "*Python prüft von oben nach unten und stoppt beim ersten Treffer.*",
+    "answer": "**Kurzantwort:** ==Zuerst `> 10`, dann `> 5`, dann `> 0`==",
+    "detail": "**Die Reihenfolge der `elif`-Zweige ist entscheidend** – spezifischere Bedingungen sollten oft zuerst stehen.",
+    "multipleChoice": {
+      "options": [
+        "Zuerst `> 0`, dann `> 5`, dann `> 10`",
+        "Zuerst `> 10`, dann `> 5`, dann `> 0`",
+        "Alle gleichzeitig",
+        "Zufällige Reihenfolge"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c2-21",
+    "lessonId": "lektion-2",
+    "order": 21,
+    "cardType": "multiple_choice",
+    "question": "Warum ist dieser Code ungültig?\n\n```python\nif True:\nprint(\"Hallo\")\n```",
+    "tip": "*Nach einem Doppelpunkt gehört der Block eingerückt.*",
+    "answer": "**Kurzantwort:** ==`IndentationError` – der Block unter `if` muss eingerückt sein==",
+    "detail": "**Python erkennt Blöcke nur über Einrückung.** `print` muss unter `if True:` eingerückt werden.",
+    "multipleChoice": {
+      "options": [
+        "`SyntaxError` wegen `True`",
+        "`IndentationError` – fehlende Einrückung",
+        "Läuft fehlerfrei",
+        "`NameError`"
+      ],
+      "correctIndex": 1
+    }
   }
 ]

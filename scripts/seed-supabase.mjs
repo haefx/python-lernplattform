@@ -57,6 +57,9 @@ const cardRows = cards.map((c) => ({
   code_example: c.codeExample ?? null,
   learn_more_url: c.learnMoreUrl ?? null,
   learn_more_label: c.learnMoreLabel ?? null,
+  card_type: c.multipleChoice ? "multiple_choice" : c.cardType ?? "flip",
+  mc_options: c.multipleChoice?.options ?? null,
+  mc_correct_index: c.multipleChoice?.correctIndex ?? null,
 }));
 
 const exerciseRows = exercises.map((e) => ({
@@ -69,6 +72,8 @@ const exerciseRows = exercises.map((e) => ({
   notes: e.notes ?? null,
   starter_code: e.starterCode ?? null,
   solution_code: e.solutionCode ?? null,
+  exercise_type: e.gapFill ? "gap_fill" : e.exerciseType ?? "code",
+  gap_fill: e.gapFill ?? null,
 }));
 
 async function upsert(table, rows, onConflict = "id") {

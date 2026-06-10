@@ -84,5 +84,48 @@
         { "id": "d2", "text": "\"klein\"", "isDecoy": true }
       ]
     }
+  },
+  {
+    "id": "ex2-02",
+    "lessonId": "lektion-2",
+    "order": 2,
+    "title": "while-Schleife: Herunterzählen",
+    "task": "**Aufgabe:** Schreibe eine `while`-Schleife, die von **5 bis 1** herunterzählt.\n\n**Gib jede Zahl in einer eigenen Zeile aus** – danach `Fertig!`.\n\n*Beispielausgabe:*\n```\n5\n4\n3\n2\n1\nFertig!\n```",
+    "solution": "**So geht's:**\n1. Starte mit `n = 5`\n2. Solange `n > 0`: Zahl ausgeben und `n -= 1`\n3. Nach der Schleife `Fertig!` ausgeben\n\n**Merke:** Die Bedingung wird vor jedem Durchlauf geprüft.",
+    "notes": "**Typischer Fehler:** `n = n - 1` vergessen – dann entsteht eine Endlosschleife.",
+    "starterCode": "n = 5\n\n# while-Schleife hier:\n",
+    "solutionCode": "n = 5\n\nwhile n > 0:\n    print(n)\n    n -= 1\n\nprint(\"Fertig!\")"
+  },
+  {
+    "id": "ex2-03",
+    "lessonId": "lektion-2",
+    "order": 3,
+    "exerciseType": "gap_fill",
+    "title": "elif-Kette ergänzen",
+    "task": "**Lückentext:** Ziehe die **Klötzchen aus dem Pool** in die Lücken. Es gibt nur **eine** richtige Lösung.",
+    "solution": "**Lösung:**\n- Bedingung: `score >= 60`\n- Ausgabe: `\"bestanden\"`",
+    "notes": "Achte auf die richtige Vergleichsbedingung – nicht jedes Klötzchen passt!",
+    "gapFill": {
+      "template": "score = 75\nif score >= 90:\n    print(\"sehr gut\")\nelif {{g1}}:\n    print({{g2}})\nelse:\n    print(\"nicht bestanden\")",
+      "canonicalCode": "score = 75\nif score >= 90:\n    print(\"sehr gut\")\nelif score >= 60:\n    print(\"bestanden\")\nelse:\n    print(\"nicht bestanden\")",
+      "gaps": [
+        {
+          "id": "g1",
+          "answers": ["score >= 60"],
+          "blockId": "b1"
+        },
+        {
+          "id": "g2",
+          "answers": ["\"bestanden\""],
+          "blockId": "b2"
+        }
+      ],
+      "blocks": [
+        { "id": "b1", "text": "score >= 60" },
+        { "id": "b2", "text": "\"bestanden\"" },
+        { "id": "d1", "text": "score >= 80", "isDecoy": true },
+        { "id": "d2", "text": "\"nicht bestanden\"", "isDecoy": true }
+      ]
+    }
   }
 ]
