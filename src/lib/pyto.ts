@@ -1,25 +1,63 @@
+import { assetUrl } from "@/lib/assetUrl";
 import type { LessonWithStats } from "./types";
 import {
   allLessonsCompleted,
   allPublishedLessonsCompleted,
+  getLessonNumber,
   hasUnpublishedLessons,
+  sortLessonsByOrder,
 } from "./lessonAccess";
 
-export const PYTO_LESSON_COMPLETE_VIDEO =
-  "/images/pyto/Lesson_complete.mp4";
+export const PYTO_LESSON_COMPLETE_VIDEO = assetUrl(
+  "/images/pyto/Lesson_complete.mp4",
+);
+
+export const PYTO_TOP_VIEW = assetUrl("/images/pyto/pyto_top_view.png");
 
 export const PYTO_IMAGES = {
-  tutor: "/images/pyto/pyto_tutor.png",
-  froehlich: "/images/pyto/pyto_froehliches_winken.png",
-  buch: "/images/pyto/pyto_winkt_mit_buch.png",
-  erfolg: "/images/pyto/pyto_erfolg.png",
-  nachdenklich: "/images/pyto/pyto_nachdenklich.png",
-  ueberlegt: "/images/pyto/pyto_ueberlegt.png",
-  verwirrt: "/images/pyto/pyto_verwirrt.png",
-  schlafend: "/images/pyto/pyto_schlafend.png",
+  tutor: assetUrl("/images/pyto/pyto_tutor.png"),
+  froehlich: assetUrl("/images/pyto/pyto_froehliches_winken.png"),
+  buch: assetUrl("/images/pyto/pyto_winkt_mit_buch.png"),
+  erfolg: assetUrl("/images/pyto/pyto_erfolg.png"),
+  nachdenklich: assetUrl("/images/pyto/pyto_nachdenklich.png"),
+  ueberlegt: assetUrl("/images/pyto/pyto_ueberlegt.png"),
+  verwirrt: assetUrl("/images/pyto/pyto_verwirrt.png"),
+  schlafend: assetUrl("/images/pyto/pyto_schlafend.png"),
 } as const;
 
 export type PytoVariant = keyof typeof PYTO_IMAGES;
+
+function getNextUnpublishedLessonNumber(lessons: LessonWithStats[]): number | null {
+  const next = sortLessonsByOrder(lessons).find((lesson) => !lesson.published);
+  if (!next) return null;
+  return getLessonNumber(next, lessons);
+}
+
+function isLessonCompleted(lessons: LessonWithStats[], lessonNumber: number): boolean {
+  const lesson = lessons.find(
+    (item) => getLessonNumber(item, lessons) === lessonNumber,
+  );
+  return Boolean(lesson?.lessonCompleted);
+}
+
+function getCaughtUpHomeMessage(lessons: LessonWithStats[]): string {
+  const lesson1Done = isLessonCompleted(lessons, 1);
+  const lesson2Done = isLessonCompleted(lessons, 2);
+  const nextLesson = getNextUnpublishedLessonNumber(lessons);
+  const nextLessonHint = nextLesson
+    ? `Lektion ${nextLesson} ist derzeit noch nicht verfügbar – folgt aber bald!`
+    : "Die nächste Lektion folgt bald!";
+
+  if (lesson1Done && lesson2Done) {
+    return `Starke Leistung! Du hast Lektion 1 und 2 hinter dir – als Belohnung ist das Python Labyrinth Spiel für dich freigeschaltet! ${nextLessonHint}`;
+  }
+
+  if (lesson1Done) {
+    return `Starke Leistung! Du hast Lektion 1 hinter dir. ${nextLessonHint} Das Python Labyrinth Spiel schalten wir frei, sobald du auch Lektion 2 geschafft hast.`;
+  }
+
+  return `Starke Leistung! Du hast alle verfügbaren Lektionen abgeschlossen. ${nextLessonHint}`;
+}
 
 export function getPytoForHome(
   onboarded: boolean,
@@ -57,8 +95,7 @@ export function getPytoForHome(
   ) {
     return {
       variant: "erfolg",
-      message:
-        "Starke Leistung! Du hast alle verfügbaren Lektionen abgeschlossen. Lektionen 2–4 kommen bald – ich sage dir Bescheid, sobald du weitermachen kannst!",
+      message: getCaughtUpHomeMessage(lessons),
     };
   }
 
@@ -87,8 +124,7 @@ export function getPytoForHome(
   ) {
     return {
       variant: "erfolg",
-      message:
-        "Du hast alle aktuell verfügbaren Karten geschafft! Die nächsten Lektionen sind in Vorbereitung.",
+      message: getCaughtUpHomeMessage(lessons),
     };
   }
 

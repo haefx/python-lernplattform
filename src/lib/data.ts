@@ -2,6 +2,8 @@ import { promises as fs } from "fs";
 import path from "path";
 import { isStaleLearnerDuplicate } from "./learnerDedup";
 import type { StoredLearner } from "./learnerBoard";
+import type { MazeHighscoreEntry } from "./maze/highscores";
+import { sortMazeHighscores } from "./maze/highscores";
 import type { Exercise, Flashcard, Lesson, LessonProgress, SiteProgress } from "./types";
 import { getSupabaseAdmin, isSupabaseConfigured } from "./supabase/server";
 
@@ -12,6 +14,7 @@ const cardsPath = path.join(DATA_DIR, "cards.json");
 const exercisesPath = path.join(DATA_DIR, "exercises.json");
 const progressPath = path.join(DATA_DIR, "progress.json");
 const learnersPath = path.join(DATA_DIR, "learners.json");
+const mazeScoresPath = path.join(DATA_DIR, "maze-scores.json");
 
 async function readJson<T>(filePath: string, fallback: T): Promise<T> {
   try {
@@ -560,5 +563,113 @@ export async function upsertLearnerRecord(
   if (idx >= 0) learners[idx] = next;
   else learners.push(next);
   await writeJson(learnersPath, learners);
+  return next;
+}
+
+type MazeScoreRow = {
+  visitor_id: string;
+  level_id: number;
+  display_name: string;
+  execute_count: number;
+  achieved_at: string;
+};
+
+function mapMazeScore(row: MazeScoreRow): MazeHighscoreEntry {
+  return {
+    visitorId: row.visitor_id,
+    displayName: row.display_name,
+    levelId: row.level_id,
+    executeCount: row.execute_count,
+    achievedAt: row.achieved_at,
+  };
+}
+
+export async function getMazeHighscoresForLevel(
+  levelId: number,
+): Promise<MazeHighscoreEntry[]> {
+  if (isSupabaseConfigured()) {
+    const { data, error } = await getSupabaseAdmin()
+      .from("pcep_maze_scores")
+      .select("*")
+      .eq("level_id", levelId)
+      .neq("display_name", "")
+      .order("execute_count", { ascending: true })
+      .order("achieved_at", { ascending: true });
+
+    if (error) throw error;
+    return (data ?? []).map((row) => mapMazeScore(row as MazeScoreRow));
+  }
+
+  const all = await readJson<MazeHighscoreEntry[]>(mazeScoresPath, []);
+  return sortMazeHighscores(all.filter((entry) => entry.levelId === levelId));
+}
+
+export async function upsertMazeHighscore(
+  visitorId: string,
+  displayName: string,
+  levelId: number,
+  executeCount: number,
+): Promise<MazeHighscoreEntry> {
+  const trimmedName = displayName.trim().slice(0, 40) || "Spieler";
+  const achievedAt = new Date().toISOString();
+
+  if (isSupabaseConfigured()) {
+    const { data: existing, error: readError } = await getSupabaseAdmin()
+      .from("pcep_maze_scores")
+      .select("*")
+      .eq("visitor_id", visitorId)
+      .eq("level_id", levelId)
+      .maybeSingle();
+
+    if (readError) throw readError;
+
+    const current = existing as MazeScoreRow | null;
+    if (current && executeCount >= current.execute_count) {
+      return mapMazeScore(current);
+    }
+
+    const { data, error } = await getSupabaseAdmin()
+      .from("pcep_maze_scores")
+      .upsert(
+        {
+          visitor_id: visitorId,
+          level_id: levelId,
+          display_name: trimmedName,
+          execute_count: executeCount,
+          achieved_at: achievedAt,
+        },
+        { onConflict: "visitor_id,level_id" },
+      )
+      .select("*")
+      .single();
+
+    if (error) throw error;
+    return mapMazeScore(data as MazeScoreRow);
+  }
+
+  const all = await readJson<MazeHighscoreEntry[]>(mazeScoresPath, []);
+  const idx = all.findIndex(
+    (entry) => entry.visitorId === visitorId && entry.levelId === levelId,
+  );
+  const next: MazeHighscoreEntry = {
+    visitorId,
+    displayName: trimmedName,
+    levelId,
+    executeCount,
+    achievedAt,
+  };
+
+  if (idx >= 0) {
+    if (executeCount < all[idx].executeCount) {
+      all[idx] = next;
+    } else {
+      all[idx] = { ...all[idx], displayName: trimmedName };
+    }
+    await writeJson(mazeScoresPath, all);
+    return all[idx];
+  }
+
+  all.push(next);
+  await writeJson(mazeScoresPath, all);
   return next;
 }

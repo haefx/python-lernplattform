@@ -23,8 +23,8 @@ export default function AdminPreviewShell({
   return (
     <AdminPreviewContext.Provider value={true}>
       <div className="bg-warning/20 border-b border-warning/40 px-4 py-2 text-center text-sm">
-        <strong>Admin-Vorschau</strong> – kein Name nötig, Fortschritt wird nicht im
-        Lernmonitor gespeichert.{" "}
+        <strong>Admin-Vorschau</strong> – kein Lernfortschritt nötig, Testdaten werden
+        separat gespeichert.{" "}
         <Link href="/admin" className="link link-primary font-medium">
           Zurück zum Admin
         </Link>

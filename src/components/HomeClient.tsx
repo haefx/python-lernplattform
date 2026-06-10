@@ -21,9 +21,11 @@ import {
 } from "@/lib/visitorProgress";
 import { scheduleLearnerBoardSync } from "@/lib/learnerSync";
 import { applyServerProgressResetIfNeeded } from "@/lib/progressReset";
+import { isLabyrinthUnlocked, readMazeProgress } from "@/lib/maze/progress";
 import LessonCard from "./LessonCard";
 import LearnerMonitor from "./LearnerMonitor";
 import ProgressBar from "./ProgressBar";
+import PytoLabyrinthReward from "./PytoLabyrinthReward";
 import PytoMascot from "./PytoMascot";
 
 interface HomeClientProps {
@@ -61,6 +63,8 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     title: string;
     lessonNumber: number;
   } | null>(null);
+  const [labyrinthUnlocked, setLabyrinthUnlocked] = useState(false);
+  const [mazeCompletedLevels, setMazeCompletedLevels] = useState<number[]>([]);
 
   const refreshProgress = useCallback(() => {
     const progress = getLessonProgressList();
@@ -94,6 +98,8 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     setTotalCards(totals.totalCards);
     setTotalCompleted(totals.totalCompleted);
     setLessonsDone(totals.lessonsDone);
+    setLabyrinthUnlocked(isLabyrinthUnlocked(progress));
+    setMazeCompletedLevels(readMazeProgress().completedLevels);
     setNewlyAvailableLesson(
       newlyAvailable
         ? {
@@ -285,6 +291,10 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
       </section>
 
       <LearnerMonitor />
+
+      {labyrinthUnlocked && (
+        <PytoLabyrinthReward completedLevels={mazeCompletedLevels} />
+      )}
 
       <section>
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">

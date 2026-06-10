@@ -9,7 +9,7 @@ import {
   clearVisitorProgressOnly,
 } from "@/lib/progressReset";
 
-type AdminTab = "lektionen" | "karten" | "uebungen" | "fortschritt";
+type AdminTab = "lektionen" | "karten" | "uebungen" | "spiele" | "fortschritt";
 
 const EMPTY_CARD = {
   question: "",
@@ -265,6 +265,7 @@ export default function AdminPage() {
             ["lektionen", "Lektionen"],
             ["karten", "Lernkarten"],
             ["uebungen", "Übungen"],
+            ["spiele", "Spiele"],
             ["fortschritt", "Fortschritt"],
           ] as const
         ).map(([id, label]) => (
@@ -597,6 +598,44 @@ export default function AdminPage() {
               onCancel={editExerciseId ? () => setEditExerciseId(null) : undefined}
               saving={saving}
             />
+          </div>
+        </section>
+      )}
+
+      {tab === "spiele" && (
+        <section className="card bg-base-100 shadow border border-primary/30">
+          <div className="card-body gap-5">
+            <h2 className="card-title">Spiele testen</h2>
+            <p className="text-sm opacity-80 leading-relaxed">
+              Starte Belohnungs-Spiele im Admin-Modus: ohne Lektions-Fortschritt, mit
+              eigenem Test-Fortschritt im Browser.
+            </p>
+
+            <div className="rounded-xl border border-base-300 bg-base-200/50 p-5 flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+              <div className="text-4xl shrink-0" aria-hidden>
+                🤖
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-lg mb-1">Pyto&apos;s Labyrinth</h3>
+                <p className="text-sm opacity-80 mb-3">
+                  Steuere Pyto per Python-Code durch ein Labyrinth mit Fog of War. Im
+                  Testmodus sind alle Level freigeschaltet – Level 3 nur als Vorschau.
+                </p>
+                <ul className="text-sm opacity-75 list-disc list-inside space-y-1 mb-4">
+                  <li>Kein Abschluss von Lektion 2 nötig</li>
+                  <li>Separater Fortschritt (wird nicht bei Lernenden gespeichert)</li>
+                  <li>Level jederzeit im Spiel zurücksetzen</li>
+                </ul>
+                <Link
+                  href="/labyrinth?preview=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  Labyrinth testen
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       )}

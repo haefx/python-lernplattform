@@ -1,4 +1,5 @@
 import type { PyodideInterface } from "pyodide";
+import { formatPythonError } from "./pythonErrors";
 
 const PYODIDE_VERSION = "0.29.4";
 const PYODIDE_CDN = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
@@ -99,7 +100,6 @@ builtins.input = _browser_input
     await pyodide.runPythonAsync(code);
     return { stdout, stderr, error: null };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return { stdout, stderr, error: message };
+    return { stdout, stderr, error: formatPythonError(err) };
   }
 }

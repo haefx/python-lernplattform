@@ -15,3 +15,4 @@ export function setAdminPreviewActive(active: boolean): void {
 }
 
 export const ADMIN_PREVIEW_PROGRESS_KEY = "pcep-visitor-progress-preview";
+export const ADMIN_PREVIEW_MAZE_PROGRESS_KEY = "pcep-maze-progress-preview";
