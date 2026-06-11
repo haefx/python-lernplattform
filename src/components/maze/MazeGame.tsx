@@ -7,6 +7,7 @@ import {
   createInitialState,
   findBrittleInBeam,
   parseLevelGrid,
+  shouldStopMazeCommandBatch,
 } from "@/lib/maze/engine";
 import { playMazeIntro, type MazeIntroPhase } from "@/lib/maze/intro";
 import { MAZE_LEVELS, MAZE_WIN_THANKS_SPEECH } from "@/lib/maze/levels";
@@ -468,11 +469,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
         );
       }
 
-      if (
-        current.status === "blocked" ||
-        current.status === "at_goal" ||
-        current.status === "won"
-      ) {
+      if (shouldStopMazeCommandBatch(current)) {
         break;
       }
     }

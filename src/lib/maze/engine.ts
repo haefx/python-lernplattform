@@ -22,7 +22,14 @@ const DIR_VECTORS: Record<Direction, { dx: number; dy: number }> = {
   3: { dx: -1, dy: 0 },
 };
 
+/** Max. Felder Entfernung zum Beschuss (Pyto muss in Blickrichtung schauen). */
 const LASER_RANGE = 12;
+
+export function shouldStopMazeCommandBatch(state: MazeRuntimeState): boolean {
+  if (state.status === "won" || state.status === "at_goal") return true;
+  if (state.status === "blocked" && state.blockKind !== "action") return true;
+  return false;
+}
 
 function turnLeft(dir: Direction): Direction {
   return ((dir + 3) % 4) as Direction;
@@ -265,6 +272,103 @@ function applyCharge(level: MazeLevelDef, state: MazeRuntimeState): MazeRuntimeS
   };
 }
 
+function getActiveBrittleCells(
+  level: MazeLevelDef,
+  destroyedCells: Set<string>,
+): { x: number; y: number }[] {
+  const cells: { x: number; y: number }[] = [];
+  for (let y = 0; y < level.rows.length; y += 1) {
+    const row = level.rows[y] ?? "";
+    for (let x = 0; x < row.length; x += 1) {
+      if (isBrittleCell(level, x, y, destroyedCells)) {
+        cells.push({ x, y });
+      }
+    }
+  }
+  return cells;
+}
+
+function cardinalDistance(
+  from: { x: number; y: number },
+  to: { x: number; y: number },
+): number {
+  if (from.x !== to.x && from.y !== to.y) return Infinity;
+  return Math.max(Math.abs(to.x - from.x), Math.abs(to.y - from.y));
+}
+
+function isFacingToward(
+  robot: MazeRuntimeState["robot"],
+  target: { x: number; y: number },
+): boolean {
+  const dx = target.x - robot.x;
+  const dy = target.y - robot.y;
+  if (dx === 0 && dy === 0) return false;
+
+  const facing = DIR_VECTORS[robot.dir];
+  if (facing.dx !== 0) {
+    return dy === 0 && Math.sign(dx) === Math.sign(facing.dx);
+  }
+  return dx === 0 && Math.sign(dy) === Math.sign(facing.dy);
+}
+
+function isBeamBlockedBeforeBrittle(
+  level: MazeLevelDef,
+  state: Pick<MazeRuntimeState, "robot" | "destroyedCells" | "activatedLevers">,
+  target: { x: number; y: number },
+): boolean {
+  const vector = DIR_VECTORS[state.robot.dir];
+  let x = state.robot.x + vector.dx;
+  let y = state.robot.y + vector.dy;
+
+  while (x !== target.x || y !== target.y) {
+    const ch = getStaticChar(level, x, y);
+    if (ch === "#" || isDoorClosed(level, x, y, state.activatedLevers)) {
+      return true;
+    }
+    x += vector.dx;
+    y += vector.dy;
+  }
+
+  return false;
+}
+
+/** Hilfetext, wenn laser() nicht zielen kann (Laser muss aufgeladen sein). */
+export function getLaserAimMessage(
+  level: MazeLevelDef,
+  state: Pick<MazeRuntimeState, "robot" | "destroyedCells" | "activatedLevers">,
+): string {
+  const brittleCells = getActiveBrittleCells(level, state.destroyedCells);
+  if (brittleCells.length === 0) {
+    return "Keine brüchige Mauer mehr im Level.";
+  }
+
+  const wall = brittleCells[0];
+  const { robot } = state;
+  const distance = cardinalDistance(robot, wall);
+
+  if (!Number.isFinite(distance)) {
+    return "Geh direkt vor die brüchige Mauer – schräg daneben reicht nicht! Steh in derselben Reihe oder Spalte wie die Mauer.";
+  }
+
+  if (!isFacingToward(robot, wall)) {
+    return "Dreh Pyto zur brüchigen Mauer – er schaut noch in die falsche Richtung!";
+  }
+
+  if (isBeamBlockedBeforeBrittle(level, state, wall)) {
+    return "Etwas blockiert den Laserstrahl – such freie Sicht zur brüchigen Mauer!";
+  }
+
+  if (distance > LASER_RANGE) {
+    return `Pyto ist zu weit von der Mauer entfernt (${distance} Felder). Geh näher heran – direkt davor stehen!`;
+  }
+
+  if (distance > 1) {
+    return `Pyto ist noch ${distance} Felder von der Mauer entfernt. Geh direkt vor die brüchige Mauer (1 Feld Abstand)!`;
+  }
+
+  return "Keine brüchige Mauer im Visier!";
+}
+
 export function findBrittleInBeam(
   level: MazeLevelDef,
   state: Pick<MazeRuntimeState, "robot" | "destroyedCells" | "activatedLevers">,
@@ -279,7 +383,11 @@ export function findBrittleInBeam(
     if (x < 0 || y < 0 || x >= width || y >= height) return null;
 
     if (isBrittleCell(level, x, y, destroyedCells)) {
-      return { x, y };
+      const dist = Math.max(Math.abs(x - state.robot.x), Math.abs(y - state.robot.y));
+      if (dist === 1) {
+        return { x, y };
+      }
+      return null;
     }
 
     const ch = getStaticChar(level, x, y);
@@ -312,7 +420,7 @@ function applyLaser(level: MazeLevelDef, state: MazeRuntimeState): MazeRuntimeSt
       laserTarget: null,
       status: "blocked",
       blockKind: "action",
-      message: "Keine brüchige Mauer im Visier!",
+      message: getLaserAimMessage(level, state),
     };
   }
 
@@ -516,11 +624,11 @@ export function applyCommand(
   state: MazeRuntimeState,
   command: MazeCommand,
 ): MazeRuntimeState {
-  if (
-    state.status === "won" ||
-    state.status === "blocked" ||
-    state.status === "at_goal"
-  ) {
+  if (state.status === "won" || state.status === "at_goal") {
+    return state;
+  }
+
+  if (shouldStopMazeCommandBatch(state)) {
     return state;
   }
 

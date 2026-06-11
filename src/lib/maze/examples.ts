@@ -67,7 +67,7 @@ export const MAZE_CODE_EXAMPLES: MazeCodeExample[] = [
   },
   {
     title: "Mauer sprengen",
-    description: "3× laser() – brüchige Mauer zerstören.",
+    description: "Direkt vor die Mauer stellen, 3× laser() – brüchige Mauer zerstören.",
     code: "for i in range(3):\n    laser()",
   },
   {

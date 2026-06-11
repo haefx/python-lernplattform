@@ -81,7 +81,7 @@ export const MAZE_LEVELS: MazeLevelDef[] = [
     doors: [{ id: "t1", x: 5, y: 3 }],
     starterCode: `vorwaerts()
 # Laser: for i in range(5): aufladen()
-# Zur Mauer drehen und 3 Sekunden feuern: for i in range(3): laser()
+# Direkt vor die Mauer stellen, drehen, dann: for i in range(3): laser()
 `,
   },
   {
