@@ -26,7 +26,7 @@ export default function PytoLabyrinthReward({ completedLevels }: PytoLabyrinthRe
           🤖
         </div>
         <div className="flex-1 text-center sm:text-left">
-          <span className="badge badge-primary badge-lg mb-2">Belohnung · Version 0.9</span>
+          <span className="badge badge-primary badge-lg mb-2">Belohnung · Version 0.95</span>
           <h2 className="text-2xl font-bold mb-2">Python Labyrinth Spiel</h2>
           <p className="opacity-85 mb-4">
             Du hast Lektion 2 geschafft – als Belohnung wartet das Python-Labyrinth-Spiel!

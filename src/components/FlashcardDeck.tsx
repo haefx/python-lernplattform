@@ -143,7 +143,7 @@ export default function FlashcardDeck({
       saveCardProgress(currentCard.id);
     }
 
-    const exerciseIdx = getExerciseIndexAfterCard(currentIndex);
+    const exerciseIdx = getExerciseIndexAfterCard(currentIndex, cards.length);
     if (exerciseIdx !== null && exercises[exerciseIdx]) {
       setActiveExerciseIndex(exerciseIdx);
       setMode("exercise");

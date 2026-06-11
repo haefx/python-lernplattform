@@ -52,17 +52,25 @@ function isLessonCompleted(lessons: LessonWithStats[], lessonNumber: number): bo
 function getCaughtUpHomeMessage(lessons: LessonWithStats[]): string {
   const lesson1Done = isLessonCompleted(lessons, 1);
   const lesson2Done = isLessonCompleted(lessons, 2);
+  const lesson3Done = isLessonCompleted(lessons, 3);
   const nextLesson = getNextUnpublishedLessonNumber(lessons);
-  const nextLessonHint = nextLesson
-    ? `Lektion ${nextLesson} ist derzeit noch nicht verfügbar – folgt aber bald!`
-    : "Die nächste Lektion folgt bald!";
+  const nextLessonHint =
+    nextLesson === 4
+      ? "Lektion 4 – Funktionen & Fehler – ist in Arbeit und kommt bald!"
+      : nextLesson
+        ? `Lektion ${nextLesson} ist derzeit noch nicht verfügbar – folgt aber bald!`
+        : "Die nächste Lektion folgt bald!";
+
+  if (lesson1Done && lesson2Done && lesson3Done) {
+    return `Großartig! Du hast Lektion 1 bis 3 gemeistert – Listen, Tupel und Strings sitzen. Als Belohnung bleibt das Python-Labyrinth freigeschaltet. ${nextLessonHint}`;
+  }
 
   if (lesson1Done && lesson2Done) {
-    return `Starke Leistung! Du hast Lektion 1 und 2 hinter dir – als Belohnung ist das Python Labyrinth Spiel für dich freigeschaltet! ${nextLessonHint}`;
+    return `Starke Leistung! Du hast Lektion 1 und 2 hinter dir – als Belohnung ist das Python-Labyrinth für dich freigeschaltet! ${nextLessonHint}`;
   }
 
   if (lesson1Done) {
-    return `Starke Leistung! Du hast Lektion 1 hinter dir. ${nextLessonHint} Das Python Labyrinth Spiel schalten wir frei, sobald du auch Lektion 2 geschafft hast.`;
+    return `Starke Leistung! Du hast Lektion 1 hinter dir. ${nextLessonHint} Das Python-Labyrinth schalten wir frei, sobald du auch Lektion 2 geschafft hast.`;
   }
 
   return `Starke Leistung! Du hast alle verfügbaren Lektionen abgeschlossen. ${nextLessonHint}`;
@@ -205,6 +213,14 @@ export function getPytoForLessonComplete(
     return {
       variant: "froehlich",
       message: `Lektion ${lessonNumber} geschafft! Als Nächstes wartet ${nextLesson.title} auf dich.`,
+    };
+  }
+
+  if (lessonNumber === 3) {
+    return {
+      variant: "erfolg",
+      message:
+        "Lektion 3 geschafft! Listen, Tupel und Strings – du hast Datenstrukturen im Griff. **Lektion 4 – Funktionen & Fehler** kommt bald – ich sage dir Bescheid, sobald du weitermachen kannst!",
     };
   }
 

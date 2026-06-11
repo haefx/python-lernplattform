@@ -2,8 +2,9 @@ import { hasEverCompletedLesson } from "./lessonCompletion";
 import type { LessonMeta } from "./learnerBoard";
 import type { LessonProgress } from "./types";
 
-/** Lektions-Orden: 1 = ein Stern, 2 = zwei Sterne */
+/** Lektions-Orden: 1 = ein Stern, 2 = zwei Sterne, 3 = drei Sterne */
 export function getLessonMedalIcon(lessonNumber: number): string {
+  if (lessonNumber === 3) return "★★★";
   if (lessonNumber === 2) return "★★";
   return "★";
 }

@@ -197,5 +197,16 @@
         { "id": "d3", "text": "[::2]", "isDecoy": true }
       ]
     }
+  },
+  {
+    "id": "ex3-04",
+    "lessonId": "lektion-3",
+    "order": 4,
+    "title": "Tuple Unpacking",
+    "task": "**Aufgabe:** Gegeben ist das Tupel `punkt = (4, 7)`.\n\n**Schreibe Tuple Unpacking**, um die Werte in `x` und `y` zu speichern. Gib danach aus:\n\n`x=4, y=7`\n\n*Tipp:* Links vom `=` stehen die Variablen, rechts das Tupel – die Reihenfolge muss passen.",
+    "solution": "**So geht's:**\n1. `x, y = punkt` – Python weist `4` an `x` und `7` an `y` zu\n2. Ausgabe z. B. mit `print(f\"x={x}, y={y}\")` oder `print(\"x=\" + str(x) + \", y=\" + str(y))`\n\n**Merke:** Tupel sind unveränderlich, aber du kannst ihre Werte bequem entpacken.",
+    "notes": "**Typischer Fehler:** `x, y = (4, 7, 0)` liefert einen ==ValueError== – links und rechts müssen gleich viele Werte haben.",
+    "starterCode": "punkt = (4, 7)\n\n# x und y aus dem Tupel entpacken:\n",
+    "solutionCode": "punkt = (4, 7)\n\nx, y = punkt\nprint(f\"x={x}, y={y}\")"
   }
 ]

@@ -2,10 +2,20 @@ import type { Exercise, Flashcard } from "./types";
 
 export const CARDS_PER_BLOCK = 6;
 
-export function getExerciseIndexAfterCard(cardIndex: number): number | null {
-  if ((cardIndex + 1) % CARDS_PER_BLOCK !== 0) return null;
-  const exerciseIndex = (cardIndex + 1) / CARDS_PER_BLOCK - 1;
-  return exerciseIndex;
+export function getExerciseIndexAfterCard(
+  cardIndex: number,
+  totalCards?: number,
+): number | null {
+  if ((cardIndex + 1) % CARDS_PER_BLOCK === 0) {
+    return (cardIndex + 1) / CARDS_PER_BLOCK - 1;
+  }
+
+  // Letzte Karte eines unvollständigen Blocks (z. B. Karte 20 nach 18 Karten + Übung)
+  if (totalCards !== undefined && cardIndex === totalCards - 1) {
+    return Math.floor(cardIndex / CARDS_PER_BLOCK);
+  }
+
+  return null;
 }
 
 export function getInitialLessonState(
