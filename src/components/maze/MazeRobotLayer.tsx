@@ -50,33 +50,35 @@ export default function MazeRobotLayer({
           key={wallBumping ? "wall-bump" : "idle"}
           className={`maze-robot-wrap${wallBumping ? " maze-robot-wrap--wall-bump" : ""}`}
         >
-          {fieldSpeech && (
-            <div className="maze-speech-bubble" role="status">
+          {fieldSpeech ? (
+            <div className="maze-speech-bubble maze-speech-bubble--solo" role="status">
               {fieldSpeech}
             </div>
-          )}
+          ) : null}
           {laserReady && (
             <span className="maze-laser-ready-badge" aria-label="Laser aufgeladen">
               🔋
             </span>
           )}
-          <div
-            className={`maze-robot-sprite${animate ? " maze-robot-sprite--animate" : ""}${
-              shaking ? " maze-robot-sprite--shake" : ""
-            }`}
-            style={{ transform: `rotate(${DIR_ROTATION[robot.dir]}deg)` }}
-            aria-label="Pyto"
-          >
-            <span className="maze-robot-glow" aria-hidden />
-            <Image
-              src={PYTO_TOP_VIEW}
-              alt=""
-              width={44}
-              height={44}
-              className="maze-robot-image"
-              priority
-            />
-          </div>
+          {!fieldSpeech ? (
+            <div
+              className={`maze-robot-sprite${animate ? " maze-robot-sprite--animate" : ""}${
+                shaking ? " maze-robot-sprite--shake" : ""
+              }`}
+              style={{ transform: `rotate(${DIR_ROTATION[robot.dir]}deg)` }}
+              aria-label="Pyto"
+            >
+              <span className="maze-robot-glow" aria-hidden />
+              <Image
+                src={PYTO_TOP_VIEW}
+                alt=""
+                width={44}
+                height={44}
+                className="maze-robot-image"
+                priority
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

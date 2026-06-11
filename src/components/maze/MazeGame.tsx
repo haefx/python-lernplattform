@@ -122,6 +122,10 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
   const [exitChallengeSpeech, setExitChallengeSpeech] = useState<string | null>(null);
   const [wallBumpSpeech, setWallBumpSpeech] = useState<string | null>(null);
   const [wallBumping, setWallBumping] = useState(false);
+  const [engineSpeech, setEngineSpeech] = useState<string | null>(null);
+  const engineSpeechTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const FIELD_SPEECH_AUTO_HIDE_MS = 2800;
 
   const level = useMemo(
     () => MAZE_LEVELS.find((item) => item.id === levelId) ?? MAZE_LEVELS[0],
@@ -160,6 +164,8 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     setExitChallengeSpeech(null);
     setWallBumpSpeech(null);
     setWallBumping(false);
+    setEngineSpeech(null);
+    if (engineSpeechTimerRef.current) clearTimeout(engineSpeechTimerRef.current);
     if (winTimerRef.current) clearTimeout(winTimerRef.current);
   }, []);
 
@@ -532,6 +538,44 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!introComplete || celebrationActive) {
+      setEngineSpeech(null);
+      return;
+    }
+
+    const msg =
+      state?.status === "won" && state.message
+        ? state.message
+        : state?.status === "running" && state.message
+          ? state.message
+          : state?.status === "blocked" && state.message
+            ? state.message
+            : runError;
+
+    if (!msg) {
+      setEngineSpeech(null);
+      return;
+    }
+
+    setEngineSpeech(msg);
+    if (engineSpeechTimerRef.current) clearTimeout(engineSpeechTimerRef.current);
+    engineSpeechTimerRef.current = setTimeout(() => {
+      setEngineSpeech(null);
+    }, FIELD_SPEECH_AUTO_HIDE_MS);
+
+    return () => {
+      if (engineSpeechTimerRef.current) clearTimeout(engineSpeechTimerRef.current);
+    };
+  }, [
+    state?.message,
+    state?.status,
+    runError,
+    introComplete,
+    celebrationActive,
+    FIELD_SPEECH_AUTO_HIDE_MS,
+  ]);
+
   const handleCelebrationContinue = () => {
     prepareLevel(level);
   };
@@ -547,12 +591,20 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     if (celebrationActive) return MAZE_WIN_THANKS_SPEECH;
     if (introSpeech) return level.introSpeech;
     if (!introComplete) return null;
-    if (state?.status === "won" && state.message && !celebrationActive) return state.message;
-    if (state?.status === "running" && state.message) return state.message;
-    if (state?.status === "blocked" && state.message) return state.message;
-    if (runError) return runError;
+    if (engineSpeech) return engineSpeech;
     return null;
-  }, [storyPytoSpeech, exitChallengeSpeech, wallBumpSpeech, level4Speech, poopSpeech, celebrationActive, introSpeech, introComplete, level.introSpeech, state, runError]);
+  }, [
+    storyPytoSpeech,
+    exitChallengeSpeech,
+    wallBumpSpeech,
+    level4Speech,
+    poopSpeech,
+    celebrationActive,
+    introSpeech,
+    introComplete,
+    level.introSpeech,
+    engineSpeech,
+  ]);
 
   const robotAnimating =
     runPhase === "animating" ||

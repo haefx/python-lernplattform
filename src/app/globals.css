@@ -1487,6 +1487,16 @@ body {
   }
 }
 
+/* Nur Sprechblase – ohne sichtbaren Wurm darunter */
+.maze-speech-bubble--solo {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin: 0 auto;
+  max-width: min(13rem, 100%);
+}
+
 .maze-robot-sprite {
   position: relative;
   display: flex;
