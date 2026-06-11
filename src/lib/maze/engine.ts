@@ -12,6 +12,7 @@ import {
   isChargerCell,
   parseBugSpawn,
 } from "./grid";
+import { applyBugCatch } from "./level4Bug";
 import { CHARGE_TICKS, LASER_FIRE_TICKS, LEVER_HOLD_TICKS } from "./types";
 import { ensureEntranceBandRevealed, revealFromPosition } from "./vision";
 
@@ -128,6 +129,15 @@ function visionContext(
   };
 }
 
+export function revealMazeCell(
+  level: MazeLevelDef,
+  state: MazeRuntimeState,
+  x: number,
+  y: number,
+): Set<string> {
+  return revealFromPosition(level, state.revealed, x, y, visionContext(level, state));
+}
+
 export function createInitialState(level: MazeLevelDef): MazeRuntimeState {
   const { start, entrance } = parseLevelGrid(level);
   const activatedLevers = new Set<string>();
@@ -152,6 +162,7 @@ export function createInitialState(level: MazeLevelDef): MazeRuntimeState {
     entranceClosed,
     bugPosition: bugSpawn ? { ...bugSpawn } : null,
     bugCaught: false,
+    bugSlipperyEscaped: false,
     blockKind: null,
     status: "idle",
     message: null,
@@ -508,30 +519,7 @@ function applyCatch(level: MazeLevelDef, state: MazeRuntimeState): MazeRuntimeSt
     };
   }
 
-  if (state.bugCaught) {
-    return { ...state, status: "running", message: "Der Bug ist schon gefangen!" };
-  }
-
-  if (
-    !state.bugPosition ||
-    state.robot.x !== state.bugPosition.x ||
-    state.robot.y !== state.bugPosition.y
-  ) {
-    return {
-      ...state,
-      status: "blocked",
-      blockKind: "action",
-      message: "Hier ist kein Bug zum Fangen – stell dich auf dasselbe Feld!",
-    };
-  }
-
-  return {
-    ...state,
-    bugCaught: true,
-    bugPosition: null,
-    status: "running",
-    message: "Gotcha! Bug gefangen – das Tor öffnet sich!",
-  };
+  return applyBugCatch(level, state);
 }
 
 function moveRobot(
@@ -613,6 +601,7 @@ function moveRobot(
     entranceClosed: state.entranceClosed,
     bugPosition: state.bugPosition,
     bugCaught: state.bugCaught,
+    bugSlipperyEscaped: state.bugSlipperyEscaped,
     blockKind: null,
     status: atGoal ? "at_goal" : "running",
     message: null,

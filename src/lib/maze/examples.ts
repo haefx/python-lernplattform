@@ -72,7 +72,7 @@ export const MAZE_CODE_EXAMPLES: MazeCodeExample[] = [
   },
   {
     title: "Bug fangen",
-    description: "Auf dasselbe Feld wie der Bug stellen und fangen() aufrufen.",
+    description: "Neben den Bug stellen (vor, hinter oder seitlich) und fangen() aufrufen.",
     code: "fangen()",
   },
 ];

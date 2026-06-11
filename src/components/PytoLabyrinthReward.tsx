@@ -53,9 +53,7 @@ export default function PytoLabyrinthReward({ completedLevels }: PytoLabyrinthRe
                 </span>
               );
             })}
-            <button type="button" className="btn btn-sm btn-outline btn-disabled" disabled>
-              Level 5 · Coming Soon
-            </button>
+            <span className="badge badge-ghost opacity-60">Level 5 · Coming Soon</span>
           </div>
 
           <div className="flex flex-wrap gap-2 justify-center sm:justify-start">

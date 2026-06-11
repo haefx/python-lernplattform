@@ -42,7 +42,7 @@ export async function handlePoopInteractions(
   flags: PoopEventFlags,
   onSpeech: (text: string | null) => void,
 ): Promise<void> {
-  if (level.id !== 3) return;
+  if (level.id !== 5) return;
 
   const piles = parsePoopPiles(level);
   if (piles.length === 0) return;

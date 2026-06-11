@@ -7,6 +7,7 @@ import {
   createInitialState,
   findBrittleInBeam,
   parseLevelGrid,
+  revealMazeCell,
   shouldStopMazeCommandBatch,
 } from "@/lib/maze/engine";
 import { playMazeIntro, type MazeIntroPhase } from "@/lib/maze/intro";
@@ -21,7 +22,7 @@ import { commandDelayMs, expandMazeCommands, MAZE_EXPLOSION_MS, sleep } from "@/
 import {
   createPoopEventFlags,
   handlePoopInteractions,
-} from "@/lib/maze/level3Poop";
+} from "@/lib/maze/level5Poop";
 import {
   isMoveCommand,
   LEVEL3_STORY_MOVE_TRIGGER,
@@ -54,6 +55,7 @@ import MazeCodeBar from "./MazeCodeBar";
 import MazeGrid from "./MazeGrid";
 import MazeCelebration from "./MazeCelebration";
 import MazeExitChallengeModal from "./MazeExitChallengeModal";
+import MazeBugInventory from "./MazeBugInventory";
 import MazeWelcome from "./MazeWelcome";
 
 const CODE_STORAGE_KEY = "pcep-maze-code";
@@ -115,6 +117,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
   const poopFlagsRef = useRef(createPoopEventFlags());
   const [level4Speech, setLevel4Speech] = useState<string | null>(null);
   const level4FlagsRef = useRef(createLevel4EventFlags());
+  const bugMovedThisRunRef = useRef({ value: false });
   const [exitModalOpen, setExitModalOpen] = useState(false);
   const [exitChallengeSpeech, setExitChallengeSpeech] = useState<string | null>(null);
   const [wallBumpSpeech, setWallBumpSpeech] = useState<string | null>(null);
@@ -134,6 +137,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     setState(createInitialState(targetLevel));
     setRunPhase("idle");
     setRunError(null);
+    bugMovedThisRunRef.current = { value: false };
     setCelebrationActive(false);
     setGamePhase("welcome");
     moveCellsRef.current = 0;
@@ -383,6 +387,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
     }
 
     setRunPhase("animating");
+    bugMovedThisRunRef.current = { value: false };
     let current: MazeRuntimeState = runStart;
     let prev: MazeRuntimeState = runStart;
 
@@ -412,7 +417,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
 
       await sleep(commandDelayMs(command));
 
-      if (level.id === 3) {
+      if (level.id === 5) {
         await handlePoopInteractions(
           level,
           prev,
@@ -429,9 +434,36 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
           current,
           level4FlagsRef.current,
           setLevel4Speech,
+          bugMovedThisRunRef.current,
         );
         if (statePatch) {
-          current = { ...current, ...statePatch };
+          const patch = { ...statePatch };
+          if (patch.bugPosition) {
+            patch.revealed = revealMazeCell(
+              level,
+              current,
+              patch.bugPosition.x,
+              patch.bugPosition.y,
+            );
+          }
+          current = { ...current, ...patch };
+          setState({ ...current });
+        } else if (
+          command.type === "catch" &&
+          !prev.bugSlipperyEscaped &&
+          current.bugSlipperyEscaped &&
+          current.bugPosition
+        ) {
+          bugMovedThisRunRef.current.value = true;
+          current = {
+            ...current,
+            revealed: revealMazeCell(
+              level,
+              current,
+              current.bugPosition.x,
+              current.bugPosition.y,
+            ),
+          };
           setState({ ...current });
         }
       }
@@ -603,7 +635,7 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
                 {item.comingSoon
                   ? adminPreview
                     ? `Level ${item.id} (Vorschau)`
-                    : `Level ${item.id} (bald)`
+                    : `Level ${item.id} · Coming Soon`
                   : `Level ${item.id}`}
                 {completed && selectable ? " ✓" : ""}
                 {!unlocked && selectable ? " 🔒" : ""}
@@ -611,9 +643,6 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
             </span>
           );
         })}
-        <button type="button" className="btn btn-sm btn-outline btn-disabled" disabled>
-          Level 5 · Coming Soon
-        </button>
       </div>
 
       {gamePhase === "welcome" ? (
@@ -650,30 +679,35 @@ export default function MazeGame({ adminPreview = false }: MazeGameProps) {
           )}
 
           <div className="maze-shake-stage">
-            <div className="mt-4 maze-board-wrap maze-board-wrap--relative">
-              <MazeGrid
-                level={level}
-                state={state}
-                entranceOpen={entranceOpen}
-                robotOverride={introRobot}
-                fieldSpeech={fieldSpeech}
-                robotAnimate={robotAnimating}
-                storyRobot={storyRobot}
-                devilVisible={storyDevil.visible}
-                devilSpeech={storyDevil.speech}
-                laserFx={laserFx}
-                explodingCell={explodingCell}
-                shaking={storyShaking}
-                wallBumping={wallBumping}
-              />
-              {celebrationActive && (
-                <MazeCelebration
-                  onContinue={handleCelebrationContinue}
-                  levelId={level.id}
-                  executeCount={sessionExecuteCount}
-                  adminPreview={adminPreview}
+            <div className="maze-play-area mt-4">
+              <div className="maze-board-wrap maze-board-wrap--relative">
+                <MazeGrid
+                  level={level}
+                  state={state}
+                  entranceOpen={entranceOpen}
+                  robotOverride={introRobot}
+                  fieldSpeech={fieldSpeech}
+                  robotAnimate={robotAnimating}
+                  storyRobot={storyRobot}
+                  devilVisible={storyDevil.visible}
+                  devilSpeech={storyDevil.speech}
+                  laserFx={laserFx}
+                  explodingCell={explodingCell}
+                  shaking={storyShaking}
+                  wallBumping={wallBumping}
                 />
-              )}
+                {celebrationActive && (
+                  <MazeCelebration
+                    onContinue={handleCelebrationContinue}
+                    levelId={level.id}
+                    executeCount={sessionExecuteCount}
+                    adminPreview={adminPreview}
+                  />
+                )}
+              </div>
+              <MazeBugInventory
+                visible={level.id === 4 && Boolean(state?.bugCaught)}
+              />
             </div>
           </div>
 

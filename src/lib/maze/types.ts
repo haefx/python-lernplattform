@@ -81,6 +81,8 @@ export interface MazeRuntimeState {
   /** Level 4: Bug-Position (wandert durchs Labyrinth). */
   bugPosition: { x: number; y: number } | null;
   bugCaught: boolean;
+  /** Level 4: Erster Fangversuch scheitert – Bug entkommt. */
+  bugSlipperyEscaped: boolean;
   blockKind: MazeBlockKind | null;
   status: MazeRunStatus;
   message: string | null;
