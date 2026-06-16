@@ -93,6 +93,8 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [resetMessage, setResetMessage] = useState("");
   const [resetError, setResetError] = useState("");
+  const [syncMessage, setSyncMessage] = useState("");
+  const [syncError, setSyncError] = useState("");
 
   const loadData = useCallback(async () => {
     const res = await fetch("/api/admin/lessons");
@@ -285,7 +287,45 @@ export default function AdminPage() {
       {tab === "lektionen" && (
         <section className="card bg-base-100 shadow border border-base-300">
           <div className="card-body gap-6">
-            <h2 className="card-title">Lektionen</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="card-title">Lektionen</h2>
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                disabled={saving}
+                onClick={async () => {
+                  setSyncMessage("");
+                  setSyncError("");
+                  setSaving(true);
+                  const res = await fetch("/api/admin/lessons", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ action: "sync-content" }),
+                  });
+                  setSaving(false);
+                  const data = await res.json().catch(() => ({}));
+                  if (!res.ok) {
+                    setSyncError(data.error ?? "Synchronisation fehlgeschlagen.");
+                    return;
+                  }
+                  const { lessons: l, cards: c, exercises: e } = data.result ?? {};
+                  setSyncMessage(
+                    `Synchronisiert: ${l ?? 0} Lektionen, ${c ?? 0} Karten, ${e ?? 0} Übungen.`,
+                  );
+                  await loadData();
+                }}
+              >
+                Inhalte aus JSON laden
+              </button>
+            </div>
+            {syncMessage && (
+              <p className="text-sm text-success">{syncMessage}</p>
+            )}
+            {syncError && <p className="text-sm text-error">{syncError}</p>}
+            <p className="text-sm text-base-content/70">
+              Neue Lektionen aus <code className="text-xs">data/*.json</code> erscheinen hier
+              als Entwurf – danach nur noch „Freigeben“ klicken.
+            </p>
             <div className="overflow-x-auto">
               <table className="table table-sm">
                 <thead>

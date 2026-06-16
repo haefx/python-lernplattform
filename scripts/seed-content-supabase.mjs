@@ -95,6 +95,18 @@ async function upsert(table, rows, onConflict = "id") {
 
 async function main() {
   if (lessonFilter) {
+    const filteredLessons = lessons.filter((l) => l.id === lessonFilter);
+    await upsert(
+      "pcep_lessons",
+      filteredLessons.map((l) => ({
+        id: l.id,
+        title: l.title,
+        description: l.description,
+        order: l.order,
+        published: l.published,
+        pcep_topic: l.pcepTopic ?? null,
+      })),
+    );
     await upsert("pcep_flashcards", cardRows);
     await upsert("pcep_exercises", exerciseRows);
   } else {

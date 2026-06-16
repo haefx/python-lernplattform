@@ -9,6 +9,7 @@ import {
   saveLessons,
 } from "@/lib/data";
 import { isAdminAuthenticated } from "@/lib/auth";
+import { syncContentFromJsonFiles } from "@/lib/syncContentFromJson";
 import type { Exercise, Flashcard, Lesson } from "@/lib/types";
 
 async function requireAdmin() {
@@ -51,6 +52,19 @@ export async function POST(request: Request) {
 
   const body = await request.json();
   const { action } = body as { action: string };
+
+  if (action === "sync-content") {
+    const { lessonId } = body as { lessonId?: string };
+    try {
+      const result = await syncContentFromJsonFiles(
+        typeof lessonId === "string" && lessonId ? lessonId : undefined,
+      );
+      return NextResponse.json({ ok: true, result });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Sync fehlgeschlagen";
+      return NextResponse.json({ error: message }, { status: 500 });
+    }
+  }
 
   if (action === "toggle-publish") {
     const { lessonId } = body as { lessonId: string };

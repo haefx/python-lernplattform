@@ -1254,5 +1254,33 @@
       ],
       "correctIndex": 1
     }
+  },
+  {
+    "id": "c4-19",
+    "lessonId": "lektion-4",
+    "order": 19,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ndef verdoppeln(x):\n    return x * 2\n\nprint(verdoppeln(verdoppeln(2)))\n```",
+    "tip": "*Funktionen können verschachtelt aufgerufen werden – von innen nach außen.*",
+    "answer": "**Kurzantwort:** ==`8`==",
+    "detail": "**`verdoppeln(2)` → 4, dann `verdoppeln(4)` → 8.**",
+    "multipleChoice": {
+      "options": ["`4`", "`8`", "`6`", "`2`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-20",
+    "lessonId": "lektion-4",
+    "order": 20,
+    "cardType": "multiple_choice",
+    "question": "Welches Schlüsselwort macht eine Variable innerhalb einer Funktion **global** schreibbar?",
+    "tip": "*Ohne dieses Wort würde `x = …` nur lokal gelten.*",
+    "answer": "**Kurzantwort:** ==`global`==",
+    "detail": "**`global x` in der Funktion** erlaubt Zuweisung an die globale Variable – sparsam einsetzen.",
+    "multipleChoice": {
+      "options": ["`nonlocal`", "`global`", "`extern`", "`static`"],
+      "correctIndex": 1
+    }
   }
 ]

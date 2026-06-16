@@ -265,5 +265,62 @@
     "notes": "**Ohne `return` wäre das Ergebnis `None`** – für PCEP unbedingt `return` nutzen.",
     "starterCode": "# Funktion quadrat(n) definieren und mit 5 testen:\n",
     "solutionCode": "def quadrat(n):\n    return n * n\n\nprint(quadrat(5))"
+  },
+  {
+    "id": "ex4-04",
+    "lessonId": "lektion-4",
+    "order": 4,
+    "exerciseType": "gap_fill",
+    "title": "finally-Block ergänzen",
+    "task": "**Lückentext:** Ergänze den `finally`-Block – er soll **immer** `print(\"fertig\")` ausführen.",
+    "solution": "**Lösung:**\n- `finally:`\n- `print(\"fertig\")`",
+    "notes": "**`finally` läuft immer** – egal ob im `try` ein Fehler auftrat oder nicht.",
+    "gapFill": {
+      "template": "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print(\"Fehler\")\n{{g1}}\n    print(\"fertig\")",
+      "canonicalCode": "try:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print(\"Fehler\")\nfinally:\n    print(\"fertig\")",
+      "gaps": [
+        { "id": "g1", "answers": ["finally:"], "blockId": "b1" }
+      ],
+      "blocks": [
+        { "id": "b1", "text": "finally:" },
+        { "id": "d1", "text": "else:", "isDecoy": true },
+        { "id": "d2", "text": "except:", "isDecoy": true }
+      ]
+    }
+  },
+  {
+    "id": "ex4-05",
+    "lessonId": "lektion-4",
+    "order": 5,
+    "exerciseType": "gap_fill",
+    "title": "raise ValueError",
+    "task": "**Lückentext:** Wirf eine `ValueError`-Exception, wenn `alter` negativ ist.",
+    "solution": "**Lösung:**\n- `if alter < 0:`\n- `raise ValueError(\"Ungültiges Alter\")`",
+    "notes": "**`raise` bricht ab** und übergibt die Exception an den Aufrufer oder an `except`.",
+    "gapFill": {
+      "template": "def pruefe_alter(alter):\n    {{g1}}\n        {{g2}}\n    return alter",
+      "canonicalCode": "def pruefe_alter(alter):\n    if alter < 0:\n        raise ValueError(\"Ungültiges Alter\")\n    return alter",
+      "gaps": [
+        { "id": "g1", "answers": ["if alter < 0:"], "blockId": "b1" },
+        { "id": "g2", "answers": ["raise ValueError(\"Ungültiges Alter\")"], "blockId": "b2" }
+      ],
+      "blocks": [
+        { "id": "b1", "text": "if alter < 0:" },
+        { "id": "b2", "text": "raise ValueError(\"Ungültiges Alter\")" },
+        { "id": "d1", "text": "if alter > 0:", "isDecoy": true },
+        { "id": "d2", "text": "return ValueError", "isDecoy": true }
+      ]
+    }
+  },
+  {
+    "id": "ex4-06",
+    "lessonId": "lektion-4",
+    "order": 6,
+    "title": "Sichere Division in einer Funktion",
+    "task": "**Aufgabe:** Schreibe `sichere_division(a, b)`, die `a / b` zurückgibt. Bei Division durch `0` soll die Funktion **`0` zurückgeben** (mit `try/except`), nicht abstürzen.\n\nTest: `print(sichere_division(10, 0))` → `0`",
+    "solution": "**So geht's:**\n1. `try: return a / b`\n2. `except ZeroDivisionError: return 0`",
+    "notes": "**Typisches PCEP-Muster:** Fehler in einer Funktion abfangen und einen sinnvollen Rückgabewert liefern.",
+    "starterCode": "def sichere_division(a, b):\n    # try/except und return hier:\n    pass\n\nprint(sichere_division(10, 0))\nprint(sichere_division(10, 2))",
+    "solutionCode": "def sichere_division(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return 0\n\nprint(sichere_division(10, 0))\nprint(sichere_division(10, 2))"
   }
 ]
