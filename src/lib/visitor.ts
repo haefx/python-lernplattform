@@ -71,8 +71,10 @@ export function clearAllVisitorData(): void {
   clearVisitorState();
   if (typeof window !== "undefined") {
     localStorage.removeItem("pcep-visitor-progress");
+    localStorage.removeItem("pcep-challenge-progress");
     localStorage.removeItem(ANNOUNCED_LESSONS_KEY);
     window.dispatchEvent(new Event("pcep-progress-updated"));
+    window.dispatchEvent(new Event("pcep-challenge-progress-updated"));
   }
 }
 

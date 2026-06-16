@@ -977,5 +977,282 @@
       ],
       "correctIndex": 1
     }
+  },
+  {
+    "id": "c4-01",
+    "lessonId": "lektion-4",
+    "order": 1,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ndef gruss(name):\n    return f\"Hallo, {name}!\"\n\nprint(gruss(\"Pyto\"))\n```",
+    "tip": "*`return` gibt einen Wert an den Aufrufer zurück.*",
+    "answer": "**Kurzantwort:** ==`Hallo, Pyto!`==",
+    "detail": "**Die Funktion wird aufgerufen und ihr Rückgabewert wird ausgegeben.**",
+    "multipleChoice": {
+      "options": ["`Hallo, Pyto!`", "`gruss(\"Pyto\")`", "`None`", "SyntaxError"],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "c4-02",
+    "lessonId": "lektion-4",
+    "order": 2,
+    "cardType": "multiple_choice",
+    "question": "Was ist der Rückgabewert dieser Funktion?\n\n```python\ndef addiere(a, b):\n    print(a + b)\n\nresult = addiere(2, 3)\nprint(result)\n```",
+    "tip": "*Ohne `return` gibt eine Funktion implizit `None` zurück.*",
+    "answer": "**Kurzantwort:** ==`None`==",
+    "detail": "**`print` zeigt etwas an, liefert aber keinen Wert zurück** – nur `return` erzeugt einen Rückgabewert.",
+    "multipleChoice": {
+      "options": ["`5`", "`None`", "`0`", "SyntaxError"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-03",
+    "lessonId": "lektion-4",
+    "order": 3,
+    "cardType": "multiple_choice",
+    "question": "Welche Aussage zu **Parametern** ist korrekt?",
+    "tip": "*Beim Aufruf werden Argumente an Parameter gebunden.*",
+    "answer": "**Kurzantwort:** ==Parameter sind Platzhalter in der Funktionsdefinition==",
+    "detail": "**`def f(x):` – `x` ist der Parameter. Beim Aufruf `f(10)` ist `10` das Argument.**",
+    "multipleChoice": {
+      "options": [
+        "Parameter und Argumente sind immer identisch",
+        "Parameter sind Platzhalter in der Funktionsdefinition",
+        "Argumente stehen nur in der `def`-Zeile",
+        "Python erlaubt keine mehreren Parameter"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-04",
+    "lessonId": "lektion-4",
+    "order": 4,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ndef verdoppeln(x=5):\n    return x * 2\n\nprint(verdoppeln())\nprint(verdoppeln(3))\n```",
+    "tip": "*Default-Parameter werden genutzt, wenn kein Argument übergeben wird.*",
+    "answer": "**Kurzantwort:** ==`10` und `6` (jeweils in einer Zeile)==",
+    "detail": "**`verdoppeln()` nutzt den Default `5` → `10`. `verdoppeln(3)` → `6`.**",
+    "multipleChoice": {
+      "options": ["`10` und `6`", "`5` und `3`", "TypeError", "`10` und `10`"],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "c4-05",
+    "lessonId": "lektion-4",
+    "order": 5,
+    "cardType": "multiple_choice",
+    "question": "Was passiert hier?\n\n```python\nx = 10\n\ndef setze():\n    x = 5\n\nsetze()\nprint(x)\n```",
+    "tip": "*Zuweisung innerhalb einer Funktion erzeugt eine **lokale** Variable.*",
+    "answer": "**Kurzantwort:** ==`10`==",
+    "detail": "**Das globale `x` bleibt unverändert** – die Zuweisung in `setze()` betrifft nur die lokale Variable.",
+    "multipleChoice": {
+      "options": ["`5`", "`10`", "NameError", "`None`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-06",
+    "lessonId": "lektion-4",
+    "order": 6,
+    "cardType": "multiple_choice",
+    "question": "Welches Schlüsselwort beendet eine Funktion und gibt optional einen Wert zurück?",
+    "tip": "*Nicht `exit` und nicht `break` – das ist etwas anderes.*",
+    "answer": "**Kurzantwort:** ==`return`==",
+    "detail": "**`return` beendet die Funktion sofort** und übergibt den Wert an den Aufrufer.",
+    "multipleChoice": {
+      "options": ["`break`", "`return`", "`yield`", "`stop`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-07",
+    "lessonId": "lektion-4",
+    "order": 7,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ndef teile(a, b):\n    return a / b\n\nprint(teile(10, 2))\n```",
+    "tip": "*Division mit `/` liefert in Python 3 immer eine Fließkommazahl.*",
+    "answer": "**Kurzantwort:** ==`5.0`==",
+    "detail": "**`10 / 2` ergibt `5.0`** – der Rückgabewert wird ausgegeben.",
+    "multipleChoice": {
+      "options": ["`5`", "`5.0`", "`2`", "ZeroDivisionError"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-08",
+    "lessonId": "lektion-4",
+    "order": 8,
+    "cardType": "multiple_choice",
+    "question": "Was passiert beim Aufruf?\n\n```python\ndef teile(a, b):\n    return a / b\n\nprint(teile(8, 0))\n```",
+    "tip": "*Division durch null ist in Python nicht erlaubt.*",
+    "answer": "**Kurzantwort:** ==`ZeroDivisionError`==",
+    "detail": "**Ohne `try/except` bricht das Programm mit einer Exception ab.**",
+    "multipleChoice": {
+      "options": ["`0`", "`8`", "`ZeroDivisionError`", "`None`"],
+      "correctIndex": 2
+    }
+  },
+  {
+    "id": "c4-09",
+    "lessonId": "lektion-4",
+    "order": 9,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ntry:\n    x = int(\"abc\")\nexcept ValueError:\n    print(\"Fehler\")\nelse:\n    print(\"OK\")\n```",
+    "tip": "*`int(\"abc\")` löst einen ValueError aus – der `except`-Block läuft.*",
+    "answer": "**Kurzantwort:** ==`Fehler`==",
+    "detail": "**Die Konvertierung schlägt fehl** – `except ValueError` fängt den Fehler ab und gibt `Fehler` aus.",
+    "multipleChoice": {
+      "options": ["`OK`", "`Fehler`", "Programmabbruch ohne Ausgabe", "`abc`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-10",
+    "lessonId": "lektion-4",
+    "order": 10,
+    "cardType": "multiple_choice",
+    "question": "Welcher Block wird **immer** ausgeführt – egal ob ein Fehler auftrat oder nicht?",
+    "tip": "*Dieser Block dient oft zum Aufräumen (z. B. Datei schließen).*",
+    "answer": "**Kurzantwort:** ==`finally`==",
+    "detail": "**`try` / `except` / `else` / `finally`** – nur `finally` läuft in jedem Fall.",
+    "multipleChoice": {
+      "options": ["`else`", "`except`", "`finally`", "`return`"],
+      "correctIndex": 2
+    }
+  },
+  {
+    "id": "c4-11",
+    "lessonId": "lektion-4",
+    "order": 11,
+    "cardType": "multiple_choice",
+    "question": "Was macht `raise ValueError(\"Ungültig\")`?",
+    "tip": "*Du kannst Exceptions selbst auslösen.*",
+    "answer": "**Kurzantwort:** ==Wirft eine ValueError-Exception==",
+    "detail": "**`raise` löst eine Exception aus** – nützlich zur Eingabevalidierung in Funktionen.",
+    "multipleChoice": {
+      "options": [
+        "Gibt den String zurück",
+        "Wirft eine ValueError-Exception",
+        "Beendet nur die Funktion ohne Fehler",
+        "Ist identisch mit `return`"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-12",
+    "lessonId": "lektion-4",
+    "order": 12,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ndef ist_positiv(n):\n    if n > 0:\n        return True\n    return False\n\nprint(ist_positiv(0))\n```",
+    "tip": "*Beide `return`-Zweige sind erreichbar – bei `0` gilt `n > 0` nicht.*",
+    "answer": "**Kurzantwort:** ==`False`==",
+    "detail": "**`0` ist nicht positiv** – der zweite `return False` wird ausgeführt.",
+    "multipleChoice": {
+      "options": ["`True`", "`False`", "`None`", "SyntaxError"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-13",
+    "lessonId": "lektion-4",
+    "order": 13,
+    "cardType": "multiple_choice",
+    "question": "Was ist das Ergebnis?\n\n```python\ndef f():\n    pass\n\nprint(f())\n```",
+    "tip": "*`pass` tut nichts – ohne `return` gibt es `None`.*",
+    "answer": "**Kurzantwort:** ==`None`==",
+    "detail": "**Eine leere Funktion gibt implizit `None` zurück.**",
+    "multipleChoice": {
+      "options": ["`pass`", "`0`", "`None`", "SyntaxError"],
+      "correctIndex": 2
+    }
+  },
+  {
+    "id": "c4-14",
+    "lessonId": "lektion-4",
+    "order": 14,
+    "cardType": "multiple_choice",
+    "question": "Welche Reihenfolge der Parameter ist in Python **ungültig**?",
+    "tip": "*Parameter mit Default müssen nach denen ohne Default stehen.*",
+    "answer": "**Kurzantwort:** ==`def f(a=1, b):`==",
+    "detail": "**Nach einem Default-Parameter dürfen keine Pflichtparameter mehr folgen.**",
+    "multipleChoice": {
+      "options": ["`def f(a, b=2):`", "`def f(a=1, b):`", "`def f(a, b):`", "`def f(b=2, a=1):`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-15",
+    "lessonId": "lektion-4",
+    "order": 15,
+    "cardType": "multiple_choice",
+    "question": "Was gibt dieser Code aus?\n\n```python\ntry:\n    print(10 / 2)\nexcept ZeroDivisionError:\n    print(\"Fehler\")\nprint(\"Ende\")\n```",
+    "tip": "*Kein Fehler → `try`-Block läuft durch, danach normal weiter.*",
+    "answer": "**Kurzantwort:** ==`5.0` und `Ende` (zwei Zeilen)==",
+    "detail": "**Division gelingt** – `except` wird übersprungen, `Ende` wird trotzdem ausgegeben.",
+    "multipleChoice": {
+      "options": ["nur `5.0`", "`5.0` und `Ende`", "nur `Ende`", "`Fehler` und `Ende`"],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-16",
+    "lessonId": "lektion-4",
+    "order": 16,
+    "cardType": "multiple_choice",
+    "question": "Was beschreibt eine **Funktion** in Python am besten?",
+    "tip": "*Wiederverwendbarer Codeblock mit optionalem Rückgabewert.*",
+    "answer": "**Kurzantwort:** ==Ein benannter, wiederverwendbarer Codeblock==",
+    "detail": "**Funktionen strukturieren Programme** und vermeiden doppelten Code – zentral in PCEP Modul 4.",
+    "multipleChoice": {
+      "options": [
+        "Eine unveränderliche Datenstruktur",
+        "Ein benannter, wiederverwendbarer Codeblock",
+        "Eine Schleife mit festem Durchlauf",
+        "Ein reserviertes Schlüsselwort für Variablen"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-17",
+    "lessonId": "lektion-4",
+    "order": 17,
+    "cardType": "multiple_choice",
+    "question": "Was fängt dieser Code ab?\n\n```python\ntry:\n    n = int(input())\nexcept ValueError:\n    n = 0\n```",
+    "tip": "*Ungültige Eingaben bei `int()` lösen ValueError aus.*",
+    "answer": "**Kurzantwort:** ==Ungültige Eingaben bei der Umwandlung in `int`==",
+    "detail": "**Typisches Muster für robuste Eingaben** – bei Fehler wird `n` auf `0` gesetzt.",
+    "multipleChoice": {
+      "options": [
+        "Nur Division durch null",
+        "Ungültige Eingaben bei der Umwandlung in `int`",
+        "Syntaxfehler im Code",
+        "Indexfehler in Listen"
+      ],
+      "correctIndex": 1
+    }
+  },
+  {
+    "id": "c4-18",
+    "lessonId": "lektion-4",
+    "order": 18,
+    "cardType": "multiple_choice",
+    "question": "Welche Aussage zu **Funktionen und Exceptions** ist für PCEP korrekt?",
+    "tip": "*Modul 4 kombiniert beides – Fehlerbehandlung in Funktionen.*",
+    "answer": "**Kurzantwort:** ==`try/except` kann Fehler abfangen, ohne das ganze Programm zu beenden==",
+    "detail": "**Damit bleiben Programme stabil** – du kannst reagieren statt abstürzen zu lassen.",
+    "multipleChoice": {
+      "options": [
+        "Exceptions können nie in Funktionen auftreten",
+        "`try/except` kann Fehler abfangen, ohne das ganze Programm zu beenden",
+        "`return` und `raise` sind identisch",
+        "Funktionen dürfen keine Parameter haben"
+      ],
+      "correctIndex": 1
+    }
   }
 ]

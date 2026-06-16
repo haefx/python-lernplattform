@@ -24,9 +24,7 @@ export default function LessonCard({ lesson }: LessonCardProps) {
   );
 
   const showAchievement =
-    (lesson.lessonNumber === 1 ||
-      lesson.lessonNumber === 2 ||
-      lesson.lessonNumber === 3) &&
+    (lesson.lessonNumber >= 1 && lesson.lessonNumber <= 4) &&
     lesson.lessonCompleted &&
     !isComingSoon;
 

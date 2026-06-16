@@ -208,5 +208,62 @@
     "notes": "**Typischer Fehler:** `x, y = (4, 7, 0)` liefert einen ==ValueError== – links und rechts müssen gleich viele Werte haben.",
     "starterCode": "punkt = (4, 7)\n\n# x und y aus dem Tupel entpacken:\n",
     "solutionCode": "punkt = (4, 7)\n\nx, y = punkt\nprint(f\"x={x}, y={y}\")"
+  },
+  {
+    "id": "ex4-01",
+    "lessonId": "lektion-4",
+    "order": 1,
+    "exerciseType": "gap_fill",
+    "title": "Funktion mit return",
+    "task": "**Lückentext:** Ergänze die Funktion, die zwei Zahlen addiert und das Ergebnis zurückgibt.",
+    "solution": "**Lösung:**\n- `def add(a, b):`\n- `return a + b`",
+    "notes": "**Merke:** `return` beendet die Funktion und liefert den Wert an den Aufrufer.",
+    "gapFill": {
+      "template": "{{g1}}\n    {{g2}} a + b",
+      "canonicalCode": "def add(a, b):\n    return a + b",
+      "gaps": [
+        { "id": "g1", "answers": ["def add(a, b):"], "blockId": "b1" },
+        { "id": "g2", "answers": ["return"], "blockId": "b2" }
+      ],
+      "blocks": [
+        { "id": "b1", "text": "def add(a, b):" },
+        { "id": "b2", "text": "return" },
+        { "id": "d1", "text": "def add(a, b)", "isDecoy": true },
+        { "id": "d2", "text": "print", "isDecoy": true }
+      ]
+    }
+  },
+  {
+    "id": "ex4-02",
+    "lessonId": "lektion-4",
+    "order": 2,
+    "exerciseType": "gap_fill",
+    "title": "try/except abfangen",
+    "task": "**Lückentext:** Fange einen `ZeroDivisionError` ab und gib `0` aus, wenn die Division fehlschlägt.",
+    "solution": "**Lösung:**\n- `try:` / `except ZeroDivisionError:`\n- `print(0)` im except-Block",
+    "notes": "**Typischer PCEP-Fall:** Division durch null mit `try/except` absichern.",
+    "gapFill": {
+      "template": "try:\n    ergebnis = 10 / 0\n{{g1}}\n    print(0)",
+      "canonicalCode": "try:\n    ergebnis = 10 / 0\nexcept ZeroDivisionError:\n    print(0)",
+      "gaps": [
+        { "id": "g1", "answers": ["except ZeroDivisionError:"], "blockId": "b1" }
+      ],
+      "blocks": [
+        { "id": "b1", "text": "except ZeroDivisionError:" },
+        { "id": "d1", "text": "except Error:", "isDecoy": true },
+        { "id": "d2", "text": "finally:", "isDecoy": true }
+      ]
+    }
+  },
+  {
+    "id": "ex4-03",
+    "lessonId": "lektion-4",
+    "order": 3,
+    "title": "Eigene Funktion schreiben",
+    "task": "**Aufgabe:** Schreibe eine Funktion `quadrat(n)`, die `n * n` **zurückgibt** (`return`). Rufe sie mit `5` auf und gib das Ergebnis aus.\n\n*Erwartete Ausgabe:* `25`",
+    "solution": "**So geht's:**\n1. `def quadrat(n):`\n2. `return n * n`\n3. `print(quadrat(5))`",
+    "notes": "**Ohne `return` wäre das Ergebnis `None`** – für PCEP unbedingt `return` nutzen.",
+    "starterCode": "# Funktion quadrat(n) definieren und mit 5 testen:\n",
+    "solutionCode": "def quadrat(n):\n    return n * n\n\nprint(quadrat(5))"
   }
 ]

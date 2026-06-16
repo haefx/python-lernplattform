@@ -465,6 +465,7 @@ type LearnerRow = {
   display_name: string;
   lesson_progress: LessonProgress[];
   maze_completed_levels?: number[] | null;
+  pcep_challenge_completed?: boolean | null;
   updated_at: string;
 };
 
@@ -474,6 +475,7 @@ function mapLearner(row: LearnerRow): StoredLearner {
     displayName: row.display_name,
     lessonProgress: row.lesson_progress ?? [],
     mazeCompletedLevels: row.maze_completed_levels ?? [],
+    pcepChallengeCompleted: Boolean(row.pcep_challenge_completed),
     updatedAt: row.updated_at,
   };
 }
@@ -530,6 +532,7 @@ export async function upsertLearnerRecord(
   displayName: string,
   lessonProgress: LessonProgress[],
   mazeCompletedLevels: number[] = [],
+  pcepChallengeCompleted = false,
 ): Promise<StoredLearner> {
   const updatedAt = new Date().toISOString();
   const trimmedName = displayName.trim();
@@ -548,6 +551,7 @@ export async function upsertLearnerRecord(
           display_name: trimmedName,
           lesson_progress: lessonProgress,
           maze_completed_levels: normalizedMazeLevels,
+          pcep_challenge_completed: pcepChallengeCompleted,
           updated_at: updatedAt,
         },
         { onConflict: "id" },
@@ -565,6 +569,7 @@ export async function upsertLearnerRecord(
     displayName: trimmedName,
     lessonProgress,
     mazeCompletedLevels: normalizedMazeLevels,
+    pcepChallengeCompleted,
     updatedAt,
   };
   const idx = learners.findIndex((learner) => learner.id === id);

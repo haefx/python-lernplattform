@@ -20,7 +20,7 @@
     "title": "Lektion 3 – Datenstrukturen",
     "description": "Listen, Tupel, Strings und grundlegende Sequenz-Operationen.",
     "order": 3,
-    "published": false,
+    "published": true,
     "pcepTopic": "PCEP Modul 3: Data Collections"
   },
   {
@@ -28,7 +28,7 @@
     "title": "Lektion 4 – Funktionen & Fehler",
     "description": "Funktionsdefinition, Parameter, Rückgabewerte und Exception Handling.",
     "order": 4,
-    "published": false,
+    "published": true,
     "pcepTopic": "PCEP Modul 4: Functions and Exceptions"
   }
 ]

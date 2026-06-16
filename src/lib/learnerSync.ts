@@ -34,7 +34,9 @@ export async function syncLearnerBoard(): Promise<void> {
 
   try {
     const { readMazeProgress } = await import("./maze/progress");
+    const { readPcepChallengeProgress } = await import("./pcepChallenge/progress");
     const mazeCompletedLevels = readMazeProgress().completedLevels;
+    const pcepChallengeCompleted = readPcepChallengeProgress().completed;
 
     await fetch("/api/learners", {
       method: "POST",
@@ -44,6 +46,7 @@ export async function syncLearnerBoard(): Promise<void> {
         displayName: name.trim(),
         lessonProgress,
         mazeCompletedLevels,
+        pcepChallengeCompleted,
       }),
     });
   } catch {

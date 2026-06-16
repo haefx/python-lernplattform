@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import AchievementMedalsRow from "@/components/AchievementMedalsRow";
 import type { LearnerBoardEntry } from "@/lib/learnerBoard";
 import { PROGRESS_UPDATED_EVENT } from "@/lib/visitorProgress";
+import { PCEP_CHALLENGE_PROGRESS_EVENT } from "@/lib/pcepChallenge/progress";
 import { getOrCreateVisitorId } from "@/lib/visitor";
 import { scheduleLearnerBoardSync } from "@/lib/learnerSync";
 
@@ -36,7 +37,11 @@ export default function LearnerMonitor() {
       void loadBoard();
     };
     window.addEventListener(PROGRESS_UPDATED_EVENT, refresh);
-    return () => window.removeEventListener(PROGRESS_UPDATED_EVENT, refresh);
+    window.addEventListener(PCEP_CHALLENGE_PROGRESS_EVENT, refresh);
+    return () => {
+      window.removeEventListener(PROGRESS_UPDATED_EVENT, refresh);
+      window.removeEventListener(PCEP_CHALLENGE_PROGRESS_EVENT, refresh);
+    };
   }, [loadBoard]);
 
   if (loading) {
@@ -95,6 +100,7 @@ export default function LearnerMonitor() {
               <AchievementMedalsRow
                 lessonMedals={entry.lessonMedals}
                 mazeMedals={entry.mazeMedals}
+                pcepChallengeMedal={entry.pcepChallengeMedal}
               />
               <strong>{entry.displayName}</strong>
               {entry.isCurrentUser && (

@@ -2,11 +2,20 @@ import { hasEverCompletedLesson } from "./lessonCompletion";
 import type { LessonMeta } from "./learnerBoard";
 import type { LessonProgress } from "./types";
 
-/** Lektions-Orden: 1 = ein Stern, 2 = zwei Sterne, 3 = drei Sterne */
+/** Lektions-Orden: 1 = ein Stern, 2 = zwei Sterne, 3 = drei Sterne, 4 = vier Sterne */
 export function getLessonMedalIcon(lessonNumber: number): string {
+  if (lessonNumber === 4) return "★★★★";
   if (lessonNumber === 3) return "★★★";
   if (lessonNumber === 2) return "★★";
   return "★";
+}
+
+export function getPcepChallengeMedalIcon(): string {
+  return "🎓";
+}
+
+export function getPcepChallengeMedalTitle(): string {
+  return "PCEP-Challenge abgeschlossen";
 }
 
 /** Labyrinth-Orden nach Level */

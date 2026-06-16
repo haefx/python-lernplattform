@@ -19,6 +19,7 @@ export interface StoredLearner {
   displayName: string;
   lessonProgress: LessonProgress[];
   mazeCompletedLevels?: number[];
+  pcepChallengeCompleted?: boolean;
   updatedAt: string;
 }
 
@@ -34,6 +35,7 @@ export interface LearnerBoardEntry {
   label: string;
   lessonMedals: number[];
   mazeMedals: number[];
+  pcepChallengeMedal: boolean;
   isCurrentUser?: boolean;
 }
 
@@ -88,6 +90,7 @@ export function formatLearnerStatus(
   lessonProgress: LessonProgress[],
   lessons: LessonMeta[],
   mazeCompletedLevels: number[] = [],
+  pcepChallengeCompleted = false,
 ): LearnerBoardEntry | null {
   const sorted = [...lessons].sort((a, b) => a.order - b.order);
   if (sorted.length === 0) return null;
@@ -120,6 +123,7 @@ export function formatLearnerStatus(
     isRepeating,
     lessonMedals: getCompletedLessonNumbers(lessonProgress, lessons),
     mazeMedals: normalizeMazeCompletedLevels(mazeCompletedLevels),
+    pcepChallengeMedal: pcepChallengeCompleted,
     label: buildLearnerLabel(
       displayName,
       lessonNumber,
@@ -144,6 +148,7 @@ export function buildLearnerBoard(
         learner.lessonProgress,
         lessons,
         learner.mazeCompletedLevels,
+        Boolean(learner.pcepChallengeCompleted),
       ),
     )
     .filter((entry): entry is LearnerBoardEntry => entry !== null)

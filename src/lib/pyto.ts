@@ -61,6 +61,10 @@ function getCaughtUpHomeMessage(lessons: LessonWithStats[]): string {
         ? `Lektion ${nextLesson} ist derzeit noch nicht verfügbar – folgt aber bald!`
         : "Die nächste Lektion folgt bald!";
 
+  if (lesson1Done && lesson2Done && lesson3Done && isLessonCompleted(lessons, 4)) {
+    return "Alle vier Lektionen geschafft! Die PCEP-Challenge mit 12 Prüfungsfragen wartet auf der Startseite auf dich.";
+  }
+
   if (lesson1Done && lesson2Done && lesson3Done) {
     return `Großartig! Du hast Lektion 1 bis 3 gemeistert – Listen, Tupel und Strings sitzen. Als Belohnung bleibt das Python-Labyrinth freigeschaltet. ${nextLessonHint}`;
   }
@@ -102,7 +106,7 @@ export function getPytoForHome(
     return {
       variant: "erfolg",
       message:
-        "Wow, alle vier Lektionen geschafft! Du bist bereit für die PCEP-Prüfung. Ich bin stolz auf dich!",
+        "Wow, alle vier Lektionen geschafft! Die **PCEP-Challenge** wartet auf dich – 12 Prüfungsfragen gegen die Uhr. Ich bin stolz auf dich!",
     };
   }
 
@@ -201,11 +205,11 @@ export function getPytoForLessonComplete(
   totalLessons: number,
   nextLesson?: { title: string; published: boolean },
 ): { variant: PytoVariant; message: string } {
-  if (lessonNumber >= totalLessons) {
+  if (lessonNumber >= totalLessons || lessonNumber === 4) {
     return {
       variant: "erfolg",
       message:
-        "Alle Lektionen geschafft! Du bist bereit für die PCEP-Prüfung – ich bin stolz auf dich!",
+        "Wow! Du hast **alle vier Lektionen** geschafft – ich bin stolz auf dich! Auf der Startseite ist jetzt die **PCEP-Challenge** freigeschaltet: 12 Prüfungsfragen, deine Zeit wird gemessen. Zeig, was du drauf hast!",
     };
   }
 

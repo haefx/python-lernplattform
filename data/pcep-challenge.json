@@ -1,0 +1,103 @@
+[
+  {
+    "id": "pcep-01",
+    "order": 1,
+    "topic": "Operatoren",
+    "question": "Was ist das Ergebnis?\n\n```python\nprint(2 + 3 * 4)\n```",
+    "options": ["`20`", "`14`", "`24`", "`9`"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-02",
+    "order": 2,
+    "topic": "Strings",
+    "question": "Was gibt dieser Code aus?\n\n```python\ntext = \"Python\"\nprint(text[1:4])\n```",
+    "options": ["`Pyt`", "`yth`", "`ytho`", "`Python`"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-03",
+    "order": 3,
+    "topic": "Listen",
+    "question": "Was enthält `liste` nach diesem Code?\n\n```python\nliste = [1, 2]\nliste.append([3])\n```",
+    "options": ["`[1, 2, 3]`", "`[1, 2, [3]]`", "`[3, 1, 2]`", "TypeError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-04",
+    "order": 4,
+    "topic": "Schleifen",
+    "question": "Wie oft wird `Hallo` ausgegeben?\n\n```python\nfor i in range(3):\n    if i == 1:\n        break\n    print(\"Hallo\")\n```",
+    "options": ["0-mal", "1-mal", "2-mal", "3-mal"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-05",
+    "order": 5,
+    "topic": "Funktionen",
+    "question": "Was gibt `print(f(2))` aus?\n\n```python\ndef f(x):\n    return x + 1\n```",
+    "options": ["`2`", "`3`", "`None`", "SyntaxError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-06",
+    "order": 6,
+    "topic": "Funktionen",
+    "question": "Was ist der Wert von `result`?\n\n```python\ndef g():\n    print(\"Hi\")\n\nresult = g()\n```",
+    "options": ["`\"Hi\"`", "`None`", "`0`", "NameError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-07",
+    "order": 7,
+    "topic": "Exceptions",
+    "question": "Welche Exception tritt auf?\n\n```python\nint(\"42a\")\n```",
+    "options": ["TypeError", "ValueError", "SyntaxError", "IndexError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-08",
+    "order": 8,
+    "topic": "Boolesche Logik",
+    "question": "Was ist das Ergebnis?\n\n```python\nprint(not True and False or True)\n```",
+    "options": ["`True`", "`False`", "SyntaxError", "`None`"],
+    "correctIndex": 0
+  },
+  {
+    "id": "pcep-09",
+    "order": 9,
+    "topic": "Built-ins",
+    "question": "Was gibt dieser Code aus?\n\n```python\nprint(len([10, 20, 30]))\n```",
+    "options": ["`30`", "`3`", "`60`", "TypeError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-10",
+    "order": 10,
+    "topic": "if/elif",
+    "question": "Was wird ausgegeben?\n\n```python\nx = 5\nif x > 10:\n    print(\"A\")\nelif x > 3:\n    print(\"B\")\nelse:\n    print(\"C\")\n```",
+    "options": ["`A`", "`B`", "`C`", "nichts"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-11",
+    "order": 11,
+    "topic": "Scope",
+    "question": "Was gibt dieser Code aus?\n\n```python\nx = 1\n\ndef test():\n    x = 2\n    return x\n\nprint(test())\nprint(x)\n```",
+    "options": ["`2` und `2`", "`2` und `1`", "`1` und `2`", "NameError"],
+    "correctIndex": 1
+  },
+  {
+    "id": "pcep-12",
+    "order": 12,
+    "topic": "Tupel",
+    "question": "Welche Aussage ist korrekt?\n\n```python\nt = (1, 2, 3)\n```",
+    "options": [
+      "`t[0] = 9` ist erlaubt",
+      "Tupel sind unveränderbar (immutable)",
+      "`t.append(4)` funktioniert",
+      "Tupel können nur Strings enthalten"
+    ],
+    "correctIndex": 1
+  }
+]

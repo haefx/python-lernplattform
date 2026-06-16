@@ -42,11 +42,12 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { visitorId, displayName, lessonProgress, mazeCompletedLevels } = body as {
+  const { visitorId, displayName, lessonProgress, mazeCompletedLevels, pcepChallengeCompleted } = body as {
     visitorId?: string;
     displayName?: string;
     lessonProgress?: LessonProgress[];
     mazeCompletedLevels?: number[];
+    pcepChallengeCompleted?: boolean;
   };
 
   if (!visitorId?.trim()) {
@@ -69,6 +70,7 @@ export async function POST(request: Request) {
     displayName.trim().slice(0, 40),
     lessonProgress,
     normalizeMazeCompletedLevels(mazeCompletedLevels),
+    Boolean(pcepChallengeCompleted),
   );
 
   return NextResponse.json({ ok: true });

@@ -22,6 +22,11 @@ import {
 import { scheduleLearnerBoardSync } from "@/lib/learnerSync";
 import { applyServerProgressResetIfNeeded } from "@/lib/progressReset";
 import { isLabyrinthUnlocked, readMazeProgress } from "@/lib/maze/progress";
+import {
+  isPcepChallengeUnlocked,
+  PCEP_CHALLENGE_PROGRESS_EVENT,
+} from "@/lib/pcepChallenge/progress";
+import PytoPcepChallengeReward from "./pcepChallenge/PytoPcepChallengeReward";
 import LessonCard from "./LessonCard";
 import LearnerMonitor from "./LearnerMonitor";
 import ProgressBar from "./ProgressBar";
@@ -65,6 +70,7 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
   } | null>(null);
   const [labyrinthUnlocked, setLabyrinthUnlocked] = useState(false);
   const [mazeCompletedLevels, setMazeCompletedLevels] = useState<number[]>([]);
+  const [pcepChallengeUnlocked, setPcepChallengeUnlocked] = useState(false);
 
   const refreshProgress = useCallback(() => {
     const progress = getLessonProgressList();
@@ -100,6 +106,7 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     setLessonsDone(totals.lessonsDone);
     setLabyrinthUnlocked(isLabyrinthUnlocked(progress));
     setMazeCompletedLevels(readMazeProgress().completedLevels);
+    setPcepChallengeUnlocked(isPcepChallengeUnlocked(progress));
     setNewlyAvailableLesson(
       newlyAvailable
         ? {
@@ -152,7 +159,11 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
     if (!hydrated) return;
     const onUpdate = () => refreshProgress();
     window.addEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
-    return () => window.removeEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
+    window.addEventListener(PCEP_CHALLENGE_PROGRESS_EVENT, onUpdate);
+    return () => {
+      window.removeEventListener(PROGRESS_UPDATED_EVENT, onUpdate);
+      window.removeEventListener(PCEP_CHALLENGE_PROGRESS_EVENT, onUpdate);
+    };
   }, [hydrated, refreshProgress]);
 
   const pyto = getPytoForHome(
@@ -295,6 +306,8 @@ export default function HomeClient({ lessons: baseLessons }: HomeClientProps) {
       {labyrinthUnlocked && (
         <PytoLabyrinthReward completedLevels={mazeCompletedLevels} />
       )}
+
+      {pcepChallengeUnlocked && <PytoPcepChallengeReward />}
 
       <section>
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
