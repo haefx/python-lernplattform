@@ -30,5 +30,21 @@
     "order": 4,
     "published": false,
     "pcepTopic": "PCEP Modul 4: Functions and Exceptions"
+  },
+  {
+    "id": "lektion-vokabeln",
+    "title": "Zusatz – Python Vokabeln",
+    "description": "Code-Elemente erkennen: Schlüsselwörter, Operatoren und Literale – Englisch und Deutsch.",
+    "order": 5,
+    "published": false,
+    "pcepTopic": "Zusatz: Python-Sprachvokabular"
+  },
+  {
+    "id": "lektion-code-lesen",
+    "title": "Zusatz – Code lesen und verstehen",
+    "description": "Längere Code-Abschnitte analysieren und Syntaxfehler finden – wie in echten Prüfungsaufgaben.",
+    "order": 6,
+    "published": false,
+    "pcepTopic": "Zusatz: Code-Analyse und Fehlersuche"
   }
 ]

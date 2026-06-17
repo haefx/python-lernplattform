@@ -40,6 +40,8 @@ export interface Flashcard {
   order: number;
   question: string;
   tip: string;
+  /** Wird beim Laden der Karte automatisch in Pytos Sprechblase angezeigt. */
+  pytoIntroMessage?: string;
   tip2Messages?: string[];
   tip3Messages?: string[];
   answer: string;

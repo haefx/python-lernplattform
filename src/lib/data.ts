@@ -45,6 +45,7 @@ type FlashcardRow = {
   order: number;
   question: string;
   tip: string;
+  pyto_intro_message?: string | null;
   tip2_messages: string[];
   tip3_messages: string[];
   answer: string;
@@ -94,6 +95,7 @@ function mapFlashcard(row: FlashcardRow): Flashcard {
     order: row.order,
     question: row.question,
     tip: row.tip,
+    pytoIntroMessage: row.pyto_intro_message ?? undefined,
     tip2Messages: row.tip2_messages?.length ? row.tip2_messages : undefined,
     tip3Messages: row.tip3_messages?.length ? row.tip3_messages : undefined,
     answer: row.answer,
@@ -146,6 +148,7 @@ function flashcardToRow(card: Flashcard): FlashcardRow {
     order: card.order,
     question: card.question,
     tip: card.tip,
+    pyto_intro_message: card.pytoIntroMessage ?? null,
     tip2_messages: card.tip2Messages ?? [],
     tip3_messages: card.tip3Messages ?? [],
     answer: card.answer,

@@ -52,6 +52,7 @@ const cardRows = cards.map((c) => ({
   order: c.order,
   question: c.question,
   tip: c.tip ?? "",
+  pyto_intro_message: c.pytoIntroMessage ?? null,
   tip2_messages: c.tip2Messages ?? [],
   tip3_messages: c.tip3Messages ?? [],
   answer: c.answer,

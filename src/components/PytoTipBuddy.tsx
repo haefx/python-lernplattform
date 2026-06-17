@@ -71,10 +71,10 @@ export default function PytoTipBuddy({
     setTipCount(0);
     setSleeping(false);
     setThinking(false);
-    setMessage(null);
+    setMessage(card.pytoIntroMessage ?? null);
     setShowLink(false);
     clearSleepTimer();
-  }, [card.id, clearSleepTimer]);
+  }, [card.id, card.pytoIntroMessage, clearSleepTimer]);
 
   useEffect(() => {
     const interval = setInterval(() => {

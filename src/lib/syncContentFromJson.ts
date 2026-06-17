@@ -28,6 +28,7 @@ function flashcardToRow(card: Flashcard) {
     order: card.order,
     question: card.question,
     tip: card.tip ?? "",
+    pyto_intro_message: card.pytoIntroMessage ?? null,
     tip2_messages: card.tip2Messages ?? [],
     tip3_messages: card.tip3Messages ?? [],
     answer: card.answer,

@@ -369,7 +369,12 @@
     "answer": "**Kurzantwort:** ==`ja`==",
     "detail": "**`x > 5` ist `True`**, deshalb wird der `if`-Zweig ausgeführt und `ja` ausgegeben.",
     "multipleChoice": {
-      "options": ["`nein`", "`ja`", "`True`", "nichts – SyntaxError"],
+      "options": [
+        "`nein`",
+        "`ja`",
+        "`True`",
+        "nichts – SyntaxError"
+      ],
       "correctIndex": 1
     }
   },
@@ -383,7 +388,12 @@
     "answer": "**Kurzantwort:** ==0, 1, 2 (jeweils in einer Zeile)==",
     "detail": "**`range(3)` erzeugt 0, 1, 2** – die 3 ist nicht mehr enthalten.",
     "multipleChoice": {
-      "options": ["`1, 2, 3`", "`0, 1, 2`", "`3`", "`0, 1, 2, 3`"],
+      "options": [
+        "`1, 2, 3`",
+        "`0, 1, 2`",
+        "`3`",
+        "`0, 1, 2, 3`"
+      ],
       "correctIndex": 1
     }
   },
@@ -435,7 +445,12 @@
     "answer": "**Kurzantwort:** ==`[]`==",
     "detail": "**Eine leere Liste ist falsy.** `1`, `\"0\"` und `[0]` sind truthy.",
     "multipleChoice": {
-      "options": ["`1`", "`\"0\"`", "`[]`", "`[0]`"],
+      "options": [
+        "`1`",
+        "`\"0\"`",
+        "`[]`",
+        "`[0]`"
+      ],
       "correctIndex": 2
     }
   },
@@ -468,7 +483,12 @@
     "answer": "**Kurzantwort:** ==`B`==",
     "detail": "**`x > 10` ist falsch, aber `x > 5` ist wahr** – deshalb läuft der `elif`-Zweig.",
     "multipleChoice": {
-      "options": ["`A`", "`B`", "`C`", "`B` und `C`"],
+      "options": [
+        "`A`",
+        "`B`",
+        "`C`",
+        "`B` und `C`"
+      ],
       "correctIndex": 1
     }
   },
@@ -482,7 +502,12 @@
     "answer": "**Kurzantwort:** ==3, 2, 1 (jeweils in einer Zeile)==",
     "detail": "**`n` wird in jedem Durchlauf um 1 verkleinert** – bei `n == 0` endet die `while`-Bedingung.",
     "multipleChoice": {
-      "options": ["`3, 2, 1, 0`", "`3, 2, 1`", "`1, 2, 3`", "Endlosschleife"],
+      "options": [
+        "`3, 2, 1, 0`",
+        "`3, 2, 1`",
+        "`1, 2, 3`",
+        "Endlosschleife"
+      ],
       "correctIndex": 1
     }
   },
@@ -496,7 +521,12 @@
     "answer": "**Kurzantwort:** ==0-mal==",
     "detail": "**`False` ist von Anfang an falsy** – der Schleifenkörper wird nie betreten.",
     "multipleChoice": {
-      "options": ["0-mal", "1-mal", "Unendlich oft", "SyntaxError"],
+      "options": [
+        "0-mal",
+        "1-mal",
+        "Unendlich oft",
+        "SyntaxError"
+      ],
       "correctIndex": 0
     }
   },
@@ -510,7 +540,12 @@
     "answer": "**Kurzantwort:** ==`B`==",
     "detail": "**85 ist kleiner als 90, aber mindestens 80** – der verschachtelte `if`-Zweig gibt `B` aus.",
     "multipleChoice": {
-      "options": ["`A`", "`B`", "`C`", "`B` und `C`"],
+      "options": [
+        "`A`",
+        "`B`",
+        "`C`",
+        "`B` und `C`"
+      ],
       "correctIndex": 1
     }
   },
@@ -524,7 +559,12 @@
     "answer": "**Kurzantwort:** ==`Eintritt`==",
     "detail": "**Beide Teile sind wahr:** `age >= 18` und `has_ticket` – deshalb `Eintritt`.",
     "multipleChoice": {
-      "options": ["`Eintritt`", "`Abgelehnt`", "`True`", "nichts"],
+      "options": [
+        "`Eintritt`",
+        "`Abgelehnt`",
+        "`True`",
+        "nichts"
+      ],
       "correctIndex": 0
     }
   },
@@ -538,7 +578,12 @@
     "answer": "**Kurzantwort:** ==`ok`==",
     "detail": "**`x == 0` ist wahr** – der `or`-Ausdruck ist damit insgesamt wahr.",
     "multipleChoice": {
-      "options": ["`ok`", "`nein`", "`False`", "SyntaxError"],
+      "options": [
+        "`ok`",
+        "`nein`",
+        "`False`",
+        "SyntaxError"
+      ],
       "correctIndex": 0
     }
   },
@@ -552,7 +597,12 @@
     "answer": "**Kurzantwort:** ==`not flag`==",
     "detail": "**`flag` ist `False`, also ist `not flag` gleich `True`.**",
     "multipleChoice": {
-      "options": ["`flag`", "`not flag`", "`flag == True`", "`not not flag` und `flag`"],
+      "options": [
+        "`flag`",
+        "`not flag`",
+        "`flag == True`",
+        "`not not flag` und `flag`"
+      ],
       "correctIndex": 1
     }
   },
@@ -585,7 +635,12 @@
     "answer": "**Kurzantwort:** ==`[2, 3, 4, 5]`==",
     "detail": "**`range(2, 6)` startet bei 2 und endet vor 6** – also 2, 3, 4, 5.",
     "multipleChoice": {
-      "options": ["`[2, 3, 4, 5, 6]`", "`[2, 3, 4, 5]`", "`[2, 6]`", "`[1, 2, 3, 4, 5]`"],
+      "options": [
+        "`[2, 3, 4, 5, 6]`",
+        "`[2, 3, 4, 5]`",
+        "`[2, 6]`",
+        "`[1, 2, 3, 4, 5]`"
+      ],
       "correctIndex": 1
     }
   },
@@ -599,7 +654,12 @@
     "answer": "**Kurzantwort:** ==`[0, 3, 6, 9]`==",
     "detail": "**Es wird in Schritten von 3 gezählt**, bis 10 (exklusiv) erreicht wäre.",
     "multipleChoice": {
-      "options": ["`[0, 3, 6, 9, 12]`", "`[0, 3, 6, 9]`", "`[3, 6, 9]`", "`[0, 1, 2, 3]`"],
+      "options": [
+        "`[0, 3, 6, 9, 12]`",
+        "`[0, 3, 6, 9]`",
+        "`[3, 6, 9]`",
+        "`[0, 1, 2, 3]`"
+      ],
       "correctIndex": 1
     }
   },
@@ -613,7 +673,12 @@
     "answer": "**Kurzantwort:** ==`8`==",
     "detail": "**`n` wird verdoppelt: 2, 4, 8** – bei `n == 8` greift `break`, danach wird `8` ausgegeben.",
     "multipleChoice": {
-      "options": ["`4`", "`8`", "`16`", "`64`"],
+      "options": [
+        "`4`",
+        "`8`",
+        "`16`",
+        "`64`"
+      ],
       "correctIndex": 1
     }
   },
@@ -627,7 +692,12 @@
     "answer": "**Kurzantwort:** ==6 Sterne, `count` ist 6==",
     "detail": "**2 × 3 = 6 Durchläufe** in der inneren Schleife – `count` endet bei 6.",
     "multipleChoice": {
-      "options": ["3", "5", "6", "9"],
+      "options": [
+        "3",
+        "5",
+        "6",
+        "9"
+      ],
       "correctIndex": 2
     }
   },
@@ -641,7 +711,12 @@
     "answer": "**Kurzantwort:** ==1 und 3 (jeweils in einer Zeile)==",
     "detail": "**`continue` überspringt `print(n)` nur für `n == 2`.**",
     "multipleChoice": {
-      "options": ["`1, 2, 3`", "`1` und `3`", "nur `2`", "nichts"],
+      "options": [
+        "`1, 2, 3`",
+        "`1` und `3`",
+        "nur `2`",
+        "nichts"
+      ],
       "correctIndex": 1
     }
   },
@@ -693,7 +768,12 @@
     "answer": "**Kurzantwort:** ==`20`==",
     "detail": "**Index 1 ist das zweite Element** – `[10, 20, 30]` hat an Position 1 den Wert `20`.",
     "multipleChoice": {
-      "options": ["`10`", "`20`", "`30`", "`1`"],
+      "options": [
+        "`10`",
+        "`20`",
+        "`30`",
+        "`1`"
+      ],
       "correctIndex": 1
     }
   },
@@ -707,7 +787,12 @@
     "answer": "**Kurzantwort:** ==`blau`==",
     "detail": "**`-1` ist das letzte Element** – `blau` steht an der letzten Position.",
     "multipleChoice": {
-      "options": ["`rot`", "`grün`", "`blau`", "IndexError"],
+      "options": [
+        "`rot`",
+        "`grün`",
+        "`blau`",
+        "IndexError"
+      ],
       "correctIndex": 2
     }
   },
@@ -721,7 +806,12 @@
     "answer": "**Kurzantwort:** ==`yth`==",
     "detail": "**Indizes 1, 2 und 3** – das sind die Zeichen `y`, `t` und `h`. Index 4 (`n`) gehört nicht dazu.",
     "multipleChoice": {
-      "options": ["`Pyt`", "`yth`", "`ytho`", "`Python`"],
+      "options": [
+        "`Pyt`",
+        "`yth`",
+        "`ytho`",
+        "`Python`"
+      ],
       "correctIndex": 1
     }
   },
@@ -735,7 +825,12 @@
     "answer": "**Kurzantwort:** ==`[99, 2, 3]`==",
     "detail": "**Elemente einer Liste können per Index überschrieben werden** – das erste Element wird von `1` auf `99` geändert.",
     "multipleChoice": {
-      "options": ["`[1, 2, 3]`", "`[99, 2, 3]`", "TypeError", "SyntaxError"],
+      "options": [
+        "`[1, 2, 3]`",
+        "`[99, 2, 3]`",
+        "TypeError",
+        "SyntaxError"
+      ],
       "correctIndex": 1
     }
   },
@@ -749,7 +844,12 @@
     "answer": "**Kurzantwort:** ==`[1, 2, 3]`==",
     "detail": "**`append(3)` fügt die Zahl 3 als neues letztes Element hinzu** – die Liste wird länger, nicht verschachtelt.",
     "multipleChoice": {
-      "options": ["`[1, 2]`", "`[1, 2, 3]`", "`[3, 1, 2]`", "`[1, 2, [3]]`"],
+      "options": [
+        "`[1, 2]`",
+        "`[1, 2, 3]`",
+        "`[3, 1, 2]`",
+        "`[1, 2, [3]]`"
+      ],
       "correctIndex": 1
     }
   },
@@ -782,7 +882,12 @@
     "answer": "**Kurzantwort:** ==`1`==",
     "detail": "**Tupel sind Sequenzen** – Index `0` liefert das erste Element `1`.",
     "multipleChoice": {
-      "options": ["`1`", "`(1,)`", "`(1, 2, 3)`", "TypeError"],
+      "options": [
+        "`1`",
+        "`(1,)`",
+        "`(1, 2, 3)`",
+        "TypeError"
+      ],
       "correctIndex": 0
     }
   },
@@ -815,7 +920,12 @@
     "answer": "**Kurzantwort:** ==`\"Ben\" in namen`==",
     "detail": "**`\"Ben\"` ist ein Element der Liste** – `in` liefert `True`. `\"ben\"` wäre wegen Groß-/Kleinschreibung falsch.",
     "multipleChoice": {
-      "options": ["`\"ben\" in namen`", "`\"Ben\" in namen`", "`2 in namen`", "`\"Anna\" not in namen`"],
+      "options": [
+        "`\"ben\" in namen`",
+        "`\"Ben\" in namen`",
+        "`2 in namen`",
+        "`\"Anna\" not in namen`"
+      ],
       "correctIndex": 1
     }
   },
@@ -829,7 +939,12 @@
     "answer": "**Kurzantwort:** ==`6`==",
     "detail": "**Der String `\"Python\"` hat 6 Zeichen** – Leerzeichen würden mitgezählt werden.",
     "multipleChoice": {
-      "options": ["`5`", "`6`", "`7`", "`\"6\"`"],
+      "options": [
+        "`5`",
+        "`6`",
+        "`7`",
+        "`\"6\"`"
+      ],
       "correctIndex": 1
     }
   },
@@ -843,7 +958,12 @@
     "answer": "**Kurzantwort:** ==`[1, 2, 3, 4]`==",
     "detail": "**Listen-Konkatenation erzeugt eine neue Liste** – `a` und `b` selbst bleiben unverändert.",
     "multipleChoice": {
-      "options": ["`[4, 6]`", "`[1, 2, 3, 4]`", "`[1, 2]`", "TypeError"],
+      "options": [
+        "`[4, 6]`",
+        "`[1, 2, 3, 4]`",
+        "`[1, 2]`",
+        "TypeError"
+      ],
       "correctIndex": 1
     }
   },
@@ -857,7 +977,12 @@
     "answer": "**Kurzantwort:** ==`[0, 0, 0, 0]`==",
     "detail": "**`[0] * 4` erzeugt eine Liste mit vier Nullen** – nicht `0` mal `4` gerechnet.",
     "multipleChoice": {
-      "options": ["`[0, 4]`", "`[0, 0, 0, 0]`", "`0`", "`[4]`"],
+      "options": [
+        "`[0, 4]`",
+        "`[0, 0, 0, 0]`",
+        "`0`",
+        "`[4]`"
+      ],
       "correctIndex": 1
     }
   },
@@ -871,7 +996,12 @@
     "answer": "**Kurzantwort:** ==`[1, 3, 2]`==",
     "detail": "**Nur die erste `2` wird entfernt** – die `2` am Ende bleibt erhalten.",
     "multipleChoice": {
-      "options": ["`[1, 3]`", "`[1, 3, 2]`", "`[1, 2, 3]`", "ValueError"],
+      "options": [
+        "`[1, 3]`",
+        "`[1, 3, 2]`",
+        "`[1, 2, 3]`",
+        "ValueError"
+      ],
       "correctIndex": 1
     }
   },
@@ -885,7 +1015,12 @@
     "answer": "**Kurzantwort:** ==`3`==",
     "detail": "**`matrix[1]` ist `[3, 4]`** – Index `0` darin liefert `3`.",
     "multipleChoice": {
-      "options": ["`1`", "`2`", "`3`", "`4`"],
+      "options": [
+        "`1`",
+        "`2`",
+        "`3`",
+        "`4`"
+      ],
       "correctIndex": 2
     }
   },
@@ -899,7 +1034,12 @@
     "answer": "**Kurzantwort:** ==`HALLO`==",
     "detail": "**`.upper()` gibt einen neuen String in Großbuchstaben zurück** – `text` bleibt `\"Hallo\"`.",
     "multipleChoice": {
-      "options": ["`Hallo`", "`HALLO`", "`hallo`", "TypeError"],
+      "options": [
+        "`Hallo`",
+        "`HALLO`",
+        "`hallo`",
+        "TypeError"
+      ],
       "correctIndex": 1
     }
   },
@@ -913,7 +1053,12 @@
     "answer": "**Kurzantwort:** ==`['a', 'b', 'c']`==",
     "detail": "**`split(\",\")` zerlegt den String an jedem Komma** in eine Liste von Teilstrings.",
     "multipleChoice": {
-      "options": ["`'a,b,c'`", "`['a', 'b', 'c']`", "`('a', 'b', 'c')`", "`['a,b,c']`"],
+      "options": [
+        "`'a,b,c'`",
+        "`['a', 'b', 'c']`",
+        "`('a', 'b', 'c')`",
+        "`['a,b,c']`"
+      ],
       "correctIndex": 1
     }
   },
@@ -927,7 +1072,12 @@
     "answer": "**Kurzantwort:** ==`[1, 3, 4]`==",
     "detail": "**Index 1 (die `2`) wird gelöscht** – die übrigen Elemente rutschen nicht „leer“, die Liste wird kürzer.",
     "multipleChoice": {
-      "options": ["`[1, 2, 4]`", "`[1, 3, 4]`", "`[2, 3, 4]`", "`[1, None, 3, 4]`"],
+      "options": [
+        "`[1, 2, 4]`",
+        "`[1, 3, 4]`",
+        "`[2, 3, 4]`",
+        "`[1, None, 3, 4]`"
+      ],
       "correctIndex": 1
     }
   },
@@ -941,7 +1091,12 @@
     "answer": "**Kurzantwort:** ==`10 20`==",
     "detail": "**Tuple Unpacking weist `10` an `x` und `20` an `y` zu** – `print` trennt mit Leerzeichen.",
     "multipleChoice": {
-      "options": ["`(10, 20)`", "`10 20`", "`20 10`", "ValueError"],
+      "options": [
+        "`(10, 20)`",
+        "`10 20`",
+        "`20 10`",
+        "ValueError"
+      ],
       "correctIndex": 1
     }
   },
@@ -955,7 +1110,12 @@
     "answer": "**Kurzantwort:** ==`nohtyP`==",
     "detail": "**`[::-1]` liefert den String rückwärts** – von hinten nach vorne mit Schritt `-1`.",
     "multipleChoice": {
-      "options": ["`Python`", "`nohtyP`", "`Pyt`", "SyntaxError"],
+      "options": [
+        "`Python`",
+        "`nohtyP`",
+        "`Pyt`",
+        "SyntaxError"
+      ],
       "correctIndex": 1
     }
   },
@@ -988,7 +1148,12 @@
     "answer": "**Kurzantwort:** ==`Hallo, Pyto!`==",
     "detail": "**Die Funktion wird aufgerufen und ihr Rückgabewert wird ausgegeben.**",
     "multipleChoice": {
-      "options": ["`Hallo, Pyto!`", "`gruss(\"Pyto\")`", "`None`", "SyntaxError"],
+      "options": [
+        "`Hallo, Pyto!`",
+        "`gruss(\"Pyto\")`",
+        "`None`",
+        "SyntaxError"
+      ],
       "correctIndex": 0
     }
   },
@@ -1002,7 +1167,12 @@
     "answer": "**Kurzantwort:** ==`None`==",
     "detail": "**`print` zeigt etwas an, liefert aber keinen Wert zurück** – nur `return` erzeugt einen Rückgabewert.",
     "multipleChoice": {
-      "options": ["`5`", "`None`", "`0`", "SyntaxError"],
+      "options": [
+        "`5`",
+        "`None`",
+        "`0`",
+        "SyntaxError"
+      ],
       "correctIndex": 1
     }
   },
@@ -1035,7 +1205,12 @@
     "answer": "**Kurzantwort:** ==`10` und `6` (jeweils in einer Zeile)==",
     "detail": "**`verdoppeln()` nutzt den Default `5` → `10`. `verdoppeln(3)` → `6`.**",
     "multipleChoice": {
-      "options": ["`10` und `6`", "`5` und `3`", "TypeError", "`10` und `10`"],
+      "options": [
+        "`10` und `6`",
+        "`5` und `3`",
+        "TypeError",
+        "`10` und `10`"
+      ],
       "correctIndex": 0
     }
   },
@@ -1049,7 +1224,12 @@
     "answer": "**Kurzantwort:** ==`10`==",
     "detail": "**Das globale `x` bleibt unverändert** – die Zuweisung in `setze()` betrifft nur die lokale Variable.",
     "multipleChoice": {
-      "options": ["`5`", "`10`", "NameError", "`None`"],
+      "options": [
+        "`5`",
+        "`10`",
+        "NameError",
+        "`None`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1063,7 +1243,12 @@
     "answer": "**Kurzantwort:** ==`return`==",
     "detail": "**`return` beendet die Funktion sofort** und übergibt den Wert an den Aufrufer.",
     "multipleChoice": {
-      "options": ["`break`", "`return`", "`yield`", "`stop`"],
+      "options": [
+        "`break`",
+        "`return`",
+        "`yield`",
+        "`stop`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1077,7 +1262,12 @@
     "answer": "**Kurzantwort:** ==`5.0`==",
     "detail": "**`10 / 2` ergibt `5.0`** – der Rückgabewert wird ausgegeben.",
     "multipleChoice": {
-      "options": ["`5`", "`5.0`", "`2`", "ZeroDivisionError"],
+      "options": [
+        "`5`",
+        "`5.0`",
+        "`2`",
+        "ZeroDivisionError"
+      ],
       "correctIndex": 1
     }
   },
@@ -1091,7 +1281,12 @@
     "answer": "**Kurzantwort:** ==`ZeroDivisionError`==",
     "detail": "**Ohne `try/except` bricht das Programm mit einer Exception ab.**",
     "multipleChoice": {
-      "options": ["`0`", "`8`", "`ZeroDivisionError`", "`None`"],
+      "options": [
+        "`0`",
+        "`8`",
+        "`ZeroDivisionError`",
+        "`None`"
+      ],
       "correctIndex": 2
     }
   },
@@ -1105,7 +1300,12 @@
     "answer": "**Kurzantwort:** ==`Fehler`==",
     "detail": "**Die Konvertierung schlägt fehl** – `except ValueError` fängt den Fehler ab und gibt `Fehler` aus.",
     "multipleChoice": {
-      "options": ["`OK`", "`Fehler`", "Programmabbruch ohne Ausgabe", "`abc`"],
+      "options": [
+        "`OK`",
+        "`Fehler`",
+        "Programmabbruch ohne Ausgabe",
+        "`abc`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1119,7 +1319,12 @@
     "answer": "**Kurzantwort:** ==`finally`==",
     "detail": "**`try` / `except` / `else` / `finally`** – nur `finally` läuft in jedem Fall.",
     "multipleChoice": {
-      "options": ["`else`", "`except`", "`finally`", "`return`"],
+      "options": [
+        "`else`",
+        "`except`",
+        "`finally`",
+        "`return`"
+      ],
       "correctIndex": 2
     }
   },
@@ -1152,7 +1357,12 @@
     "answer": "**Kurzantwort:** ==`False`==",
     "detail": "**`0` ist nicht positiv** – der zweite `return False` wird ausgeführt.",
     "multipleChoice": {
-      "options": ["`True`", "`False`", "`None`", "SyntaxError"],
+      "options": [
+        "`True`",
+        "`False`",
+        "`None`",
+        "SyntaxError"
+      ],
       "correctIndex": 1
     }
   },
@@ -1166,7 +1376,12 @@
     "answer": "**Kurzantwort:** ==`None`==",
     "detail": "**Eine leere Funktion gibt implizit `None` zurück.**",
     "multipleChoice": {
-      "options": ["`pass`", "`0`", "`None`", "SyntaxError"],
+      "options": [
+        "`pass`",
+        "`0`",
+        "`None`",
+        "SyntaxError"
+      ],
       "correctIndex": 2
     }
   },
@@ -1180,7 +1395,12 @@
     "answer": "**Kurzantwort:** ==`def f(a=1, b):`==",
     "detail": "**Nach einem Default-Parameter dürfen keine Pflichtparameter mehr folgen.**",
     "multipleChoice": {
-      "options": ["`def f(a, b=2):`", "`def f(a=1, b):`", "`def f(a, b):`", "`def f(b=2, a=1):`"],
+      "options": [
+        "`def f(a, b=2):`",
+        "`def f(a=1, b):`",
+        "`def f(a, b):`",
+        "`def f(b=2, a=1):`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1194,7 +1414,12 @@
     "answer": "**Kurzantwort:** ==`5.0` und `Ende` (zwei Zeilen)==",
     "detail": "**Division gelingt** – `except` wird übersprungen, `Ende` wird trotzdem ausgegeben.",
     "multipleChoice": {
-      "options": ["nur `5.0`", "`5.0` und `Ende`", "nur `Ende`", "`Fehler` und `Ende`"],
+      "options": [
+        "nur `5.0`",
+        "`5.0` und `Ende`",
+        "nur `Ende`",
+        "`Fehler` und `Ende`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1265,7 +1490,12 @@
     "answer": "**Kurzantwort:** ==`8`==",
     "detail": "**`verdoppeln(2)` → 4, dann `verdoppeln(4)` → 8.**",
     "multipleChoice": {
-      "options": ["`4`", "`8`", "`6`", "`2`"],
+      "options": [
+        "`4`",
+        "`8`",
+        "`6`",
+        "`2`"
+      ],
       "correctIndex": 1
     }
   },
@@ -1279,8 +1509,501 @@
     "answer": "**Kurzantwort:** ==`global`==",
     "detail": "**`global x` in der Funktion** erlaubt Zuweisung an die globale Variable – sparsam einsetzen.",
     "multipleChoice": {
-      "options": ["`nonlocal`", "`global`", "`extern`", "`static`"],
+      "options": [
+        "`nonlocal`",
+        "`global`",
+        "`extern`",
+        "`static`"
+      ],
       "correctIndex": 1
+    }
+  },
+  {
+    "id": "cv-01",
+    "lessonId": "lektion-vokabeln",
+    "order": 1,
+    "cardType": "multiple_choice",
+    "question": "Was ist `def` in diesem Code?\n\n```python\ndef begruessung(name):\n    print(\"Hallo\", name)\n```",
+    "tip": "*Mit `def` startest du eine Funktionsdefinition.*",
+    "answer": "**Kurzantwort:** ==Schlüsselwort `def` (Funktionsdefinition / function definition)==",
+    "detail": "**`def` leitet eine Funktion ein** – danach folgen Funktionsname, Parameter in Klammern und ein Doppelpunkt.",
+    "multipleChoice": {
+      "options": [
+        "Schlüsselwort `def` (Funktionsdefinition / function definition)",
+        "Schlüsselwort `class` (Klassendefinition / class definition)",
+        "Variable `def` (Bezeichner / identifier)",
+        "Kommentar (Erläuterung / comment)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-02",
+    "lessonId": "lektion-vokabeln",
+    "order": 2,
+    "cardType": "multiple_choice",
+    "question": "Was ist `return` hier?\n\n```python\ndef quadrat(n):\n    return n * n\n```",
+    "tip": "*`return` gibt einen Wert aus der Funktion zurück.*",
+    "answer": "**Kurzantwort:** ==Anweisung `return` (Rückgabe / return statement)==",
+    "detail": "**`return` beendet die Funktion** und liefert den Wert an den Aufrufer zurück.",
+    "multipleChoice": {
+      "options": [
+        "Anweisung `return` (Rückgabe / return statement)",
+        "Schleife `return` (Wiederholung / loop)",
+        "Vergleich `return` (Gleichheit / equality check)",
+        "Ausgabe `return` (Drucken / print output)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-03",
+    "lessonId": "lektion-vokabeln",
+    "order": 3,
+    "cardType": "multiple_choice",
+    "question": "Was bedeutet `if` hier?\n\n```python\npunkte = 85\nif punkte >= 50:\n    print(\"Bestanden\")\n```",
+    "tip": "*`if` prüft eine Bedingung – nur bei `True` wird der Block ausgeführt.*",
+    "answer": "**Kurzantwort:** ==Schlüsselwort `if` (Bedingung / conditional)==",
+    "detail": "**`if` startet eine Verzweigung** – der eingerückte Block läuft nur, wenn die Bedingung wahr ist.",
+    "multipleChoice": {
+      "options": [
+        "Schlüsselwort `if` (Bedingung / conditional)",
+        "Schlüsselwort `for` (Zählschleife / for-loop)",
+        "Operator `if` (Zuweisung / assignment)",
+        "Funktion `if` (Ausgabe / output function)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-04",
+    "lessonId": "lektion-vokabeln",
+    "order": 4,
+    "cardType": "multiple_choice",
+    "question": "Was ist `else` in diesem Code?\n\n```python\nif temperatur > 30:\n    print(\"heiß\")\nelse:\n    print(\"angenehm\")\n```",
+    "tip": "*`else` gehört zum `if` – der Plan B, wenn die Bedingung falsch ist.*",
+    "answer": "**Kurzantwort:** ==Schlüsselwort `else` (Alternativzweig / else branch)==",
+    "detail": "**`else` fängt den Fall ab**, in dem die `if`-Bedingung `False` ist.",
+    "multipleChoice": {
+      "options": [
+        "Schlüsselwort `else` (Alternativzweig / else branch)",
+        "Schlüsselwort `elif` (weitere Bedingung / elif branch)",
+        "Schlüsselwort `except` (Fehlerbehandlung / exception handler)",
+        "Schlüsselwort `pass` (Platzhalter / placeholder)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-05",
+    "lessonId": "lektion-vokabeln",
+    "order": 5,
+    "cardType": "multiple_choice",
+    "question": "Was ist `for` hier?\n\n```python\nfor buchstabe in \"Pyto\":\n    print(buchstabe)\n```",
+    "tip": "*`for` durchläuft jedes Element einer Sequenz.*",
+    "answer": "**Kurzantwort:** ==Schlüsselwort `for` (Schleife / for-loop)==",
+    "detail": "**`for … in …` iteriert** über alle Elemente – hier jeden Buchstaben des Strings.",
+    "multipleChoice": {
+      "options": [
+        "Schlüsselwort `for` (Schleife / for-loop)",
+        "Schlüsselwort `while` (Bedingungsschleife / while-loop)",
+        "Schlüsselwort `if` (Verzweigung / conditional)",
+        "Funktion `for` (Rückgabe / return)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-06",
+    "lessonId": "lektion-vokabeln",
+    "order": 6,
+    "cardType": "multiple_choice",
+    "question": "Was bedeutet `while` hier?\n\n```python\nzaehler = 0\nwhile zaehler < 3:\n    print(zaehler)\n    zaehler += 1\n```",
+    "tip": "*Die Schleife läuft, solange die Bedingung `True` bleibt.*",
+    "answer": "**Kurzantwort:** ==Schlüsselwort `while` (Bedingungsschleife / while-loop)==",
+    "detail": "**`while` wiederholt den Block**, bis die Bedingung `False` wird.",
+    "multipleChoice": {
+      "options": [
+        "Schlüsselwort `while` (Bedingungsschleife / while-loop)",
+        "Schlüsselwort `for` (Zählschleife / for-loop)",
+        "Schlüsselwort `break` (Abbruch / break statement)",
+        "Schlüsselwort `def` (Funktion / function definition)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-07",
+    "lessonId": "lektion-vokabeln",
+    "order": 7,
+    "cardType": "multiple_choice",
+    "question": "Was ist `print` in diesem Code?\n\n```python\nname = \"Lena\"\nprint(name)\n```",
+    "tip": "*`print` schreibt etwas in die Konsole.*",
+    "answer": "**Kurzantwort:** ==Funktion `print` (Ausgabe / output function)==",
+    "detail": "**`print` ist eine eingebaute Funktion** – sie gibt Werte auf dem Bildschirm aus.",
+    "multipleChoice": {
+      "options": [
+        "Funktion `print` (Ausgabe / output function)",
+        "Schlüsselwort `print` (Schleife / loop)",
+        "Variable `print` (Bezeichner / identifier)",
+        "Operator `print` (Vergleich / comparison)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-08",
+    "lessonId": "lektion-vokabeln",
+    "order": 8,
+    "cardType": "multiple_choice",
+    "question": "Was bedeutet `=` hier?\n\n```python\nalter = 16\n```",
+    "tip": "*Ein einzelnes `=` weist einen Wert zu – es vergleicht nicht.*",
+    "answer": "**Kurzantwort:** ==Operator `=` (Zuweisung / assignment operator)==",
+    "detail": "**`=` speichert den Wert rechts** in der Variable links – `alter` enthält danach `16`.",
+    "multipleChoice": {
+      "options": [
+        "Operator `=` (Zuweisung / assignment operator)",
+        "Operator `==` (Gleichheitsvergleich / equality comparison)",
+        "Operator `=` (Addition / addition)",
+        "Schlüsselwort `=` (Bedingung / conditional)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-09",
+    "lessonId": "lektion-vokabeln",
+    "order": 9,
+    "cardType": "multiple_choice",
+    "question": "Was ist `==` hier?\n\n```python\nif punkte == 100:\n    print(\"Perfekt!\")\n```",
+    "tip": "*Zwei Gleichheitszeichen vergleichen Werte – sie weisen nicht zu.*",
+    "answer": "**Kurzantwort:** ==Operator `==` (Gleichheitsvergleich / equality comparison)==",
+    "detail": "**`==` prüft, ob beide Seiten gleich sind** – hier ob `punkte` genau `100` ist.",
+    "multipleChoice": {
+      "options": [
+        "Operator `==` (Gleichheitsvergleich / equality comparison)",
+        "Operator `=` (Zuweisung / assignment)",
+        "Operator `==` (Ungleichheit / inequality)",
+        "Operator `==` (Potenzierung / exponentiation)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-10",
+    "lessonId": "lektion-vokabeln",
+    "order": 10,
+    "cardType": "multiple_choice",
+    "question": "Was bedeutet das `:` nach `if wahr`?\n\n```python\nif wahr:\n    print(\"ja\")\n```",
+    "tip": "*Nach `if`, `for`, `while` und `def` kommt immer ein Doppelpunkt.*",
+    "answer": "**Kurzantwort:** ==Zeichen `:` (Blockanfang / block starter)==",
+    "detail": "**Der Doppelpunkt markiert den Start eines eingerückten Blocks** – alles darunter gehört zur `if`-Anweisung.",
+    "multipleChoice": {
+      "options": [
+        "Zeichen `:` (Blockanfang / block starter)",
+        "Zeichen `:` (Vergleich / comparison)",
+        "Zeichen `:` (Zuweisung / assignment)",
+        "Zeichen `:` (String-Ende / end of string)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-11",
+    "lessonId": "lektion-vokabeln",
+    "order": 11,
+    "cardType": "multiple_choice",
+    "question": "Was ist `\"Hallo Welt\"` hier?\n\n```python\nnachricht = \"Hallo Welt\"\n```",
+    "tip": "*Text in Anführungszeichen ist ein Literal.*",
+    "answer": "**Kurzantwort:** ==Literal `\"Hallo Welt\"` (Zeichenkette / string literal)==",
+    "detail": "**Anführungszeichen erzeugen einen String** – eine Folge von Zeichen, kein Variablenname.",
+    "multipleChoice": {
+      "options": [
+        "Literal `\"Hallo Welt\"` (Zeichenkette / string literal)",
+        "Variable `Hallo Welt` (Bezeichner / identifier)",
+        "Kommentar (Erläuterung / comment)",
+        "Zahl (Ganzzahl / integer literal)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cv-12",
+    "lessonId": "lektion-vokabeln",
+    "order": 12,
+    "cardType": "multiple_choice",
+    "question": "Was bedeutet `[1]` hier?\n\n```python\nzahlen = [10, 20, 30]\nprint(zahlen[1])\n```",
+    "tip": "*Listen starten bei Index 0 – `[1]` ist das zweite Element.*",
+    "answer": "**Kurzantwort:** ==Index `[1]` (Listenzugriff / list indexing)==",
+    "detail": "**Eckige Klammern nach einer Liste greifen auf ein Element zu** – `[1]` liefert hier `20`.",
+    "multipleChoice": {
+      "options": [
+        "Index `[1]` (Listenzugriff / list indexing)",
+        "Funktion `[1]` (Ausgabe / output)",
+        "Schlüsselwort `[1]` (Schleife / loop)",
+        "Vergleich `[1]` (Gleichheit / equality)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-01",
+    "lessonId": "lektion-code-lesen",
+    "order": 1,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … Mit **82 Punkten** bin ich mir sicher, dass ich bestanden habe!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nname = \"Lena\"\npunkte = 82\nbestehensgrenze = 50\n\nprint(\"Prüfungsergebnis für\", name)\nprint(\"Erreichte Punkte:\", punkte)\n\nif punkte >= bestehensgrenze\n    print(\"Status: Bestanden\")\n    print(\"Glückwunsch!\")\nelse:\n    print(\"Status: Nicht bestanden\")\n    print(\"Nochmal üben.\")\n\nprint(\"Programm beendet.\")\n```",
+    "tip": "*Nach einer `if`-Bedingung erwartet Python immer einen **Doppelpunkt** `:` – direkt am Zeilenende.*",
+    "tip2Messages": [
+      "Schau dir **Zeile 9** an: `if punkte >= bestehensgrenze` – da fehlt etwas Wichtiges am Ende der Zeile."
+    ],
+    "tip3Messages": [
+      "Korrektur: `if punkte >= bestehensgrenze:` – ohne `:` gibt es einen **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Fehlender Doppelpunkt nach `if` (SyntaxError / syntax error)==",
+    "detail": "**Nach `if …` muss `:` stehen**, sonst erkennt Python den Block nicht und bricht mit `SyntaxError` ab.",
+    "multipleChoice": {
+      "options": [
+        "Fehlender Doppelpunkt nach `if` (SyntaxError / syntax error)",
+        "Falsche Einrückung im `else`-Block (IndentationError / indentation error)",
+        "Variable `punkte` ist nicht definiert (NameError / name error)",
+        "Vergleich mit `=` statt `==` (SyntaxError / syntax error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-02",
+    "lessonId": "lektion-code-lesen",
+    "order": 2,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **4 Stifte à 2,50 €** – die Rechnung müsste doch klappen!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\ndef berechne_rechnung(preis, menge):\n    zwischensumme = preis * menge\n    mwst = zwischensumme * 0.19\n    gesamt = zwischensumme + mwst\nreturn gesamt\n\nartikel = \"Stift\"\neinzelpreis = 2.50\nanzahl = 4\n\nprint(\"Artikel:\", artikel)\nprint(\"Gesamtbetrag:\", berechne_rechnung(einzelpreis, anzahl))\n```",
+    "tip": "*Alles, was **zur Funktion gehört**, muss **eingerückt** sein – auch `return`.*",
+    "tip2Messages": [
+      "`return gesamt` steht auf derselben Ebene wie `def` – gehört das wirklich noch in die Funktion?"
+    ],
+    "tip3Messages": [
+      "`return gesamt` muss **eingerückt** werden wie die Zeilen darüber → sonst **IndentationError** (Einrückungsfehler / indentation error)."
+    ],
+    "answer": "**Kurzantwort:** ==Falsche Einrückung bei `return` (IndentationError / indentation error)==",
+    "detail": "**Der Funktionskörper muss einheitlich eingerückt sein.** `return` auf Spalte 0 gehört nicht mehr zur Funktion.",
+    "multipleChoice": {
+      "options": [
+        "Falsche Einrückung bei `return` (IndentationError / indentation error)",
+        "Fehlender Doppelpunkt nach `def` (SyntaxError / syntax error)",
+        "Zu viele Parameter in `def` (TypeError / type error)",
+        "Variable `gesamt` ist nicht definiert (NameError / name error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-03",
+    "lessonId": "lektion-code-lesen",
+    "order": 3,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **12 + 8 + 15 + 3 + 20** – ich hab die Summe schon: **58**!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nzahlen = [12, 8, 15, 3, 20]\nsumme = 0\nmaximum = zahlen[0]\n\nprint(\"Analyse der Zahlenliste:\")\nprint(\"Werte:\", zahlen)\n\nfor wert in zahlen\n    summe = summe + wert\n    if wert > maximum:\n        maximum = wert\n\nprint(\"Summe:\", summe)\nprint(\"Maximum:\", maximum)\n```",
+    "tip": "*Schleifenköpfe wie `for … in …` brauchen am Ende der Zeile einen **Doppelpunkt**.*",
+    "tip2Messages": [
+      "Vergleiche Zeile 8 mit einer funktionierenden `for`-Schleife – was steht am Ende von `for wert in zahlen`?"
+    ],
+    "tip3Messages": [
+      "Es fehlt `:` → `for wert in zahlen:` – ohne Doppelpunkt folgt **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Fehlender Doppelpunkt nach `for` (SyntaxError / syntax error)==",
+    "detail": "**`for`-Schleifen beginnen mit `for … in …:`** – der Doppelpunkt leitet den eingerückten Block ein.",
+    "multipleChoice": {
+      "options": [
+        "Fehlender Doppelpunkt nach `for` (SyntaxError / syntax error)",
+        "Liste `zahlen` ist leer (IndexError / index error)",
+        "Falsche Einrückung im `if` (IndentationError / indentation error)",
+        "Operator `+=` ist ungültig (SyntaxError / syntax error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-04",
+    "lessonId": "lektion-code-lesen",
+    "order": 4,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **Milch, Brot, Eier, Käse** – mein Einkauf war doch komplett!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nkunde = \"Max\"\neinkauf = [\"Milch\", \"Brot\", \"Eier\", \"Käse\"\nartikel_anzahl = len(einkauf)\nerster_artikel = einkauf[0]\nletzter_artikel = einkauf[-1]\n\nprint(\"Kunde:\", kunde)\nprint(\"Erster Artikel:\", erster_artikel)\nprint(\"Letzter Artikel:\", letzter_artikel)\nprint(\"Anzahl Artikel:\", artikel_anzahl)\n```",
+    "tip": "*Listen-Literale beginnen mit `[` und müssen mit `]` **geschlossen** werden.*",
+    "tip2Messages": [
+      "Zähle in Zeile 2 die Klammern: `[` ist da – fehlt vielleicht das passende Gegenstück?"
+    ],
+    "tip3Messages": [
+      "Nach `\"Käse\"` fehlt `]` → **SyntaxError** (Syntaxfehler / syntax error), weil die Liste nicht geschlossen ist."
+    ],
+    "answer": "**Kurzantwort:** ==Fehlende schließende Klammer `]` (SyntaxError / syntax error)==",
+    "detail": "**Jede geöffnete `[` braucht eine `]`.** Python erkennt die Liste sonst nicht als abgeschlossenes Literal.",
+    "multipleChoice": {
+      "options": [
+        "Fehlende schließende Klammer `]` (SyntaxError / syntax error)",
+        "Fehlendes Komma zwischen Listenelementen (SyntaxError / syntax error)",
+        "Index `-1` ist ungültig (IndexError / index error)",
+        "Funktion `len` darf keine Liste erhalten (TypeError / type error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-05",
+    "lessonId": "lektion-code-lesen",
+    "order": 5,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **25 °C** im Gewächshaus – das ist doch völlig normal!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nstandort = \"Gewächshaus\"\ntemperatur = 25\ngrenze_heiss = 30\ngrenze_kalt = 10\n\nprint(\"Messung an:\", standort)\nprint(\"Aktuelle Temperatur:\", temperatur, \"°C\")\n\nif temperatur = grenze_heiss:\n    print(\"Warnung: Sehr heiß!\")\n    print(\"Bitte lüften.\")\nelif temperatur < grenze_kalt:\n    print(\"Warnung: Zu kalt!\")\n    print(\"Heizung prüfen.\")\nelse:\n    print(\"Temperatur im normalen Bereich.\")\n\nprint(\"Messung abgeschlossen.\")\n```",
+    "tip": "*In `if`-Bedingungen **vergleichst** du mit `==` – ein einzelnes `=` ist eine **Zuweisung**.*",
+    "tip2Messages": [
+      "Zeile 9: `if temperatur = grenze_heiss` – darf man in einer Bedingung zuweisen?"
+    ],
+    "tip3Messages": [
+      "Richtig wäre `if temperatur == grenze_heiss:` – `=` in der Bedingung ergibt **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Zuweisung `=` statt Vergleich `==` (SyntaxError / syntax error)==",
+    "detail": "**`=` weist zu, `==` vergleicht.** In `if`-Bedingungen ist Zuweisung mit `=` nicht erlaubt.",
+    "multipleChoice": {
+      "options": [
+        "Zuweisung `=` statt Vergleich `==` (SyntaxError / syntax error)",
+        "Fehlender Doppelpunkt nach `elif` (SyntaxError / syntax error)",
+        "Variable `temperatur` hat falschen Typ (TypeError / type error)",
+        "Vergleich mit Strings statt Zahlen (TypeError / type error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-06",
+    "lessonId": "lektion-code-lesen",
+    "order": 6,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … Mit **Note 1,7** gehöre ich doch auf die Ehrentafel!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nschueler = \"Anna\"\nnote = 1.7\n\nprint(\"Zeugnis für\", schueler)\nprint(\"Note:\", note)\n\nif note <= 1.5:\n    bewertung = \"sehr gut\"\nelif note >= 2.5\n    bewertung = \"gut\"\nelse:\n    bewertung = \"befriedigend\"\n\nprint(\"Bewertung:\", bewertung)\nprint(\"Zeugnis fertig.\")\n```",
+    "tip": "*Nicht nur `if` und `else` – auch **`elif`** braucht am Zeilenende einen Doppelpunkt.*",
+    "tip2Messages": [
+      "Vergleiche Zeile 10 (`elif note >= 2.5`) mit Zeile 8 (`if note <= 1.5:`) – was fehlt?"
+    ],
+    "tip3Messages": [
+      "Korrektur: `elif note >= 2.5:` – ohne `:` → **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Fehlender Doppelpunkt nach `elif` (SyntaxError / syntax error)==",
+    "detail": "**Jeder Zweig einer Verzweigung endet mit `:`** – gilt für `if`, `elif` und `else`.",
+    "multipleChoice": {
+      "options": [
+        "Fehlender Doppelpunkt nach `elif` (SyntaxError / syntax error)",
+        "Variable `bewertung` ist nicht definiert (NameError / name error)",
+        "Gleitkommazahl in `if` ist verboten (TypeError / type error)",
+        "Falsche Einrückung bei `else` (IndentationError / indentation error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-07",
+    "lessonId": "lektion-code-lesen",
+    "order": 7,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … Die Summe ist **58** – steht doch schwarz auf weiß in der Ausgabe!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nwerte = [12, 8, 15, 3, 20]\nsumme = 0\n\nfor zahl in werte:\n    summe = summe + zahl\n\nprint(\"Liste:\", werte)\nprint(\"Anzahl Werte:\", len(werte))\nprint(\"Summe:\", summe\nprint(\"Durchschnitt:\", summe / len(werte))\nprint(\"Berechnung abgeschlossen.\")\n```",
+    "tip": "*Jede geöffnete **runde Klammer** `(` muss irgendwann wieder **geschlossen** werden.*",
+    "tip2Messages": [
+      "Zähle in Zeile 10 die Klammern von `print(\"Summe:\", summe` – stimmt die Anzahl?"
+    ],
+    "tip3Messages": [
+      "Es fehlt `)` am Ende von `print(\"Summe:\", summe` → **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Nicht geschlossene Klammer in `print` (SyntaxError / syntax error)==",
+    "detail": "**Offene `(` ohne `)`** lassen den Parser nicht weiterlesen – typischer Fehler bei mehrzeiligen Programmen.",
+    "multipleChoice": {
+      "options": [
+        "Nicht geschlossene Klammer in `print` (SyntaxError / syntax error)",
+        "Division durch null (ZeroDivisionError / zero division error)",
+        "Fehlender Doppelpunkt nach `for` (SyntaxError / syntax error)",
+        "Liste `werte` ist zu kurz (IndexError / index error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-08",
+    "lessonId": "lektion-code-lesen",
+    "order": 8,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … Mein Name ist **Sven** – steht doch direkt da!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\nname = \"Sven\nalter = 16\nklasse = \"10b\"\n\nprint(\"Schülerdaten\")\nprint(\"Name:\", name)\nprint(\"Alter:\", alter)\nprint(\"Klasse:\", klasse)\n\nif alter >= 18:\n    print(\"Volljährig\")\nelse:\n    print(\"Minderjährig\")\n```",
+    "tip": "*Strings müssen mit **demselben Anführungszeichen** geöffnet und geschlossen werden.*",
+    "tip2Messages": [
+      "Schau dir Zeile 1 an: `\"Sven` – ist der String wirklich zu Ende?"
+    ],
+    "tip3Messages": [
+      "Das schließende `\"` fehlt → **SyntaxError: unterminated string literal** (nicht abgeschlossener String / unterminated string)."
+    ],
+    "answer": "**Kurzantwort:** ==String nicht geschlossen (SyntaxError / unterminated string literal)==",
+    "detail": "**Offene Anführungszeichen** ohne Gegenstück führen zu `unterminated string literal`.",
+    "multipleChoice": {
+      "options": [
+        "String nicht geschlossen (SyntaxError / unterminated string literal)",
+        "Variable `name` ist ein Keyword (SyntaxError / syntax error)",
+        "Falsche Einrückung im `if` (IndentationError / indentation error)",
+        "Vergleich `alter >= 18` ist ungültig (TypeError / type error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-09",
+    "lessonId": "lektion-code-lesen",
+    "order": 9,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **10 geteilt durch 0** – was soll da schon schiefgehen?",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\ndef sichere_eingabe(text):\n    try:\n        zahl = int(text)\n        ergebnis = 100 / zahl\n        return ergebnis\n    print(\"Verarbeitung läuft …\")\n\nwerte = [\"10\", \"0\", \"abc\"]\n\nfor eingabe in werte:\n    print(\"Eingabe:\", eingabe)\n    print(\"Ergebnis:\", sichere_eingabe(eingabe))\n```",
+    "tip": "*Ein `try`-Block allein reicht nicht – du brauchst mindestens **`except`** oder **`finally`**.*",
+    "tip2Messages": [
+      "Nach dem `try`-Block kommt direkt `print` – wo ist der Fehlerbehandler (`except` / `finally`)?"
+    ],
+    "tip3Messages": [
+      "`try:` ohne `except` oder `finally` → **SyntaxError** (Syntaxfehler / syntax error). Exception Handling braucht diese Struktur."
+    ],
+    "answer": "**Kurzantwort:** ==`try` ohne `except`/`finally` (SyntaxError / syntax error)==",
+    "detail": "**`try` muss mit `except` und/oder `finally` gepaart sein** – sonst ist die Struktur unvollständig.",
+    "multipleChoice": {
+      "options": [
+        "`try` ohne `except`/`finally` (SyntaxError / syntax error)",
+        "Division durch null zur Laufzeit (ZeroDivisionError / zero division error)",
+        "Funktion ohne `return` (SyntaxError / syntax error)",
+        "Schleife über Strings ist verboten (TypeError / type error)"
+      ],
+      "correctIndex": 0
+    }
+  },
+  {
+    "id": "cc-10",
+    "lessonId": "lektion-code-lesen",
+    "order": 10,
+    "cardType": "multiple_choice",
+    "pytoIntroMessage": "Oh, irgendwas stimmt hier nicht … **3 plus 7** ist doch **10** – das ist Kinderspiel!",
+    "question": "Warum läuft dieser Code **nicht**?\n\n```python\ndef addiere(a b):\n    summe = a + b\n    return summe\n\nzahl_a = 3\nzahl_b = 7\n\nprint(\"Rechner gestartet\")\nprint(\"Zahl A:\", zahl_a)\nprint(\"Zahl B:\", zahl_b)\nprint(\"Summe:\", addiere(zahl_a, zahl_b))\nprint(\"Fertig.\")\n```",
+    "tip": "*Mehrere Parameter in `def` trennst du mit **Kommata**.*",
+    "tip2Messages": [
+      "Schau dir die Parameterliste in Zeile 1 an: `def addiere(a b)` – fehlt ein Trennzeichen?"
+    ],
+    "tip3Messages": [
+      "Richtig: `def addiere(a, b):` – ohne Komma zwischen `a` und `b` → **SyntaxError** (Syntaxfehler / syntax error)."
+    ],
+    "answer": "**Kurzantwort:** ==Fehlendes Komma in Parameterliste (SyntaxError / syntax error)==",
+    "detail": "**Parameter werden mit `,` getrennt.** `a b` ohne Komma ist keine gültige Parameterliste.",
+    "multipleChoice": {
+      "options": [
+        "Fehlendes Komma in Parameterliste (SyntaxError / syntax error)",
+        "Fehlender Doppelpunkt nach `def` (SyntaxError / syntax error)",
+        "Zu viele Argumente beim Aufruf (TypeError / type error)",
+        "Rückgabewert fehlt (SyntaxError / syntax error)"
+      ],
+      "correctIndex": 0
     }
   }
 ]
