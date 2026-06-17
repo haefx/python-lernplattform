@@ -19,6 +19,15 @@ async function requireAdmin() {
   return null;
 }
 
+function getErrorMessage(err: unknown, fallback: string): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "object" && err !== null && "message" in err) {
+    const message = (err as { message: unknown }).message;
+    if (typeof message === "string" && message.trim()) return message;
+  }
+  return fallback;
+}
+
 function parseNumberArray(value: unknown): number[] {
   if (!Array.isArray(value)) return [];
   return [...new Set(
@@ -126,8 +135,15 @@ export async function POST(request: Request) {
     if (!learnerId?.trim()) {
       return NextResponse.json({ error: "learnerId fehlt" }, { status: 400 });
     }
-    await deleteLearnerRecords([learnerId]);
-    return NextResponse.json({ ok: true });
+    try {
+      await deleteLearnerRecords([learnerId]);
+      return NextResponse.json({ ok: true });
+    } catch (err) {
+      return NextResponse.json(
+        { error: getErrorMessage(err, "Löschen fehlgeschlagen") },
+        { status: 500 },
+      );
+    }
   }
 
   if (action === "update-learner") {
@@ -167,16 +183,23 @@ export async function POST(request: Request) {
       exercises,
     );
 
-    await upsertLearnerRecord(
-      learnerId,
-      displayName.trim().slice(0, 40),
-      lessonProgress,
-      parseNumberArray(mazeCompletedLevels),
-      Boolean(pcepChallengeCompleted),
-      parseNumberArray(expertCompletedLevels),
-    );
+    try {
+      await upsertLearnerRecord(
+        learnerId,
+        displayName.trim().slice(0, 40),
+        lessonProgress,
+        parseNumberArray(mazeCompletedLevels),
+        Boolean(pcepChallengeCompleted),
+        parseNumberArray(expertCompletedLevels),
+      );
 
-    return NextResponse.json({ ok: true });
+      return NextResponse.json({ ok: true });
+    } catch (err) {
+      return NextResponse.json(
+        { error: getErrorMessage(err, "Speichern fehlgeschlagen") },
+        { status: 500 },
+      );
+    }
   }
 
   return NextResponse.json({ error: "Unbekannte Aktion" }, { status: 400 });
